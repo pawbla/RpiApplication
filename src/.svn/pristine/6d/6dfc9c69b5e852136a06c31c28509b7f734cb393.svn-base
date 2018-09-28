@@ -1,0 +1,36 @@
+package controllers;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import users.ManageUserDB;
+import users.User;
+
+
+@Controller
+public class RegistrationController {
+	private static final Logger logger = LogManager.getLogger(RegistrationController.class);
+	
+	@Autowired
+	private ManageUserDB db;
+	
+	@RequestMapping(value = "/registration", method=GET)
+	public String Registration(Model model) {
+		logger.trace("Registration controller Test start");
+		model.addAttribute("user", new User());
+		return "registration";
+	}
+	
+	@RequestMapping(value="/registration", method=POST)
+	public String processRegistration(User user, Model model) {
+		db.addUser(user);
+		model.addAttribute("userRegistered", true);
+		return "registration";
+	}
+}

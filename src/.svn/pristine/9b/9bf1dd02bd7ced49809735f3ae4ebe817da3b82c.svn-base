@@ -1,0 +1,195 @@
+package sensors;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+import com.pi4j.wiringpi.I2C;
+
+@Component
+@Qualifier("bmp180")
+@Profile("prod")
+public class WeatherSensorBMP180 extends WeatherSensor {
+	//logger 
+	private static final Logger logger = LogManager.getLogger(WeatherSensorBMP180.class);
+	//parameters
+	private int fd;
+	private int pressAddr = (0x34 + (1 << 6));
+	private int tempAddr = 0x2E;
+	
+	//calibration datas
+	private int c_AC1;
+	private int c_AC2;
+	private int c_AC3;
+	private int c_AC4;
+	private int c_AC5;
+	private int c_AC6;
+	private int c_B1;
+	private int c_B2;
+	//private int c_MB;											// parameter is never used
+	private int c_MC;
+	private int c_MD;
+	
+	// Calibration registers
+	private final static int r_AC1 = 0xAA;
+	private final static int r_AC2 = 0xAC;
+	private final static int r_AC3 = 0xAE;
+	private final static int r_AC4 = 0xB0;
+	private final static int r_AC5 = 0xB2;
+	private final static int r_AC6 = 0xB4;
+	private final static int r_B1 = 0xB6;
+	private final static int r_B2 = 0xB8;
+	//private final static int r_MB = 0xBA;
+	private final static int r_MC = 0xBC;
+	private final static int r_MD = 0xBE;
+	
+	private Sensors sensor;
+	private String nameS = "pressure";
+	private String nameT = "tempIn";
+	
+	@Autowired
+	public void setSensors (Sensors sensor) {
+		this.sensor = sensor;
+	}
+
+	public WeatherSensorBMP180() {
+		super(0x77);
+		//logger.info("Create object. Pin " + pin);
+		fd = I2C.wiringPiI2CSetup(getPin());
+	}
+	
+	void initialConditions() {
+		sensor.registerSensor(nameS);
+		sensor.registerSensor(nameT);
+		c_AC1 = readCalibrationDatasS(r_AC1); 
+		c_AC2 = readCalibrationDatasS(r_AC2);
+		c_AC3 = readCalibrationDatasS(r_AC3);
+		c_AC4 = readCalibrationDatasU(r_AC4);
+		c_AC5 = readCalibrationDatasU(r_AC5);
+		c_AC6 = readCalibrationDatasU(r_AC6);
+		c_B1 = readCalibrationDatasS(r_B1);
+		c_B2 = readCalibrationDatasS(r_B2);
+		//c_MB = readCalibrationDatasS(r_MB);					//parameter is never used
+		c_MC = readCalibrationDatasS(r_MC);
+		c_MD = readCalibrationDatasS(r_MD);
+	}
+	
+	void measurements() {
+		//Measure values and convert to real values
+		int UT = 0;
+		int UP = 0;
+		int X1 = 0;
+		int X2 = 0;
+		int X3 = 0;
+		int B3 = 0;
+		int B4 = 0;
+		int B5 = 0;
+		int B6 = 0;
+		int B7 = 0;
+		int pR;
+		int tR;
+		
+		UT = readTemperature();
+		UP = readPressure();
+		X1 = (((UT - c_AC6) * c_AC5) >> 15);
+		X2 = ((c_MC << 11) / (X1 + c_MD));
+		B5 = X1 + X2;
+		B6 = B5 - 4000;
+		X1 = ((c_B2 * ((B6 * B6) >> 12)) >> 11);
+		X2 = ((c_AC2 * B6) >> 11);
+		X3 = X1 + X2;
+		B3 = (((((c_AC1 * 4) + X3) << 1) + 2) / 4);		// <<1 where '1' is mode - standard
+		X1 = ((c_AC3 * B6) >> 13);
+		X2 = ((c_B1 * ((B6 * B6) >> 12)) >> 16);
+		X3 = (((X1 + X2) + 2) >> 2);
+		B4 = ((c_AC4 * (X3 + 32768)) >> 15);
+		B7 = ((UP - B3) * (50000 >> 1));					// >> 1 where '1' is mode - standard
+		if (B7 < 0x80000000) {
+			pR = ((B7 * 2) / B4);
+		} else {
+			pR = ((B7 / B4) * 2);
+		}
+		X1 = ((pR >> 8) * (pR >> 8));
+		X1 = ((X1 * 3038) >> 16);
+		X2 = ((-7357 * pR) >> 16);
+		pR = (pR + ((X1 + X2 + 3791) >> 4));
+		logger.info("Pressure: " + pR);
+		sensor.updateValue(nameS, Integer.toString(pR/100)+"."+Integer.toString(pR%100));
+		setPressure(pR);
+		//calculate real temperature
+		X1 = ((UT - c_AC6) * c_AC5) / 32768;
+		X2 = (c_MC * 2048)  / (X1 + c_MD);
+		B5 = X1 + X2;
+		tR = (B5 + 8) / 16;
+		logger.trace("X1:" + X1 + " UT: " + UT + " c_AC6: " + c_AC6 + " c_AC5:" + c_AC5);
+		logger.trace("X2:" + X2 + " c_MC:" + c_MC + " c_MD:" + c_MD + " B5:" + B5);
+		logger.info("Temperature: " + tR);
+		sensor.updateValue(nameT, Integer.toString(tR/10)+"."+Integer.toString(tR%10));
+		setTemperature(tR);
+	}
+	
+	private int readCalibrationDatasS (int reg) {
+		//signed
+		int msb = 0;
+		int lsb = 0;
+		int data = 0;
+		
+		msb = I2C.wiringPiI2CReadReg8(fd, reg);
+		lsb = I2C.wiringPiI2CReadReg8(fd, reg + 1);
+		data = ((msb << 8) + lsb);
+		if (data > 32767) {
+			data -= 65536;
+		}
+		logger.info("Calibration data. Register: " + reg + " value: " + data);
+		return data;
+	}
+	
+	private int readCalibrationDatasU (int reg) {
+		//unisgned
+		int msb = 0;
+		int lsb = 0;
+		
+		msb = I2C.wiringPiI2CReadReg8(fd, reg);
+		lsb = I2C.wiringPiI2CReadReg8(fd, reg + 1);
+		logger.info("Calibration data. Register: " + reg + " value: " + ((msb << 8) + lsb));
+		return ((msb << 8) + lsb);
+	}
+	
+	private static void waitfor(long howMuch) 				//method for wait neccesary for the next method
+	{
+		try { Thread.sleep(howMuch); } catch (InterruptedException ie) { ie.printStackTrace(); }
+	}
+	
+	private int readPressure () {								//always read in standard mode (set in constructor)
+		int data = 0;
+		int msb = 0;
+		int lsb = 0;
+		int xlsb = 0;
+		int readAddr = 0xF6;									//address to read pressure value
+		I2C.wiringPiI2CWriteReg8(fd, 0xF4, pressAddr);
+		waitfor(8);
+		msb = I2C.wiringPiI2CReadReg8(fd, readAddr);
+		lsb = I2C.wiringPiI2CReadReg8(fd, readAddr + 1);
+		xlsb = I2C.wiringPiI2CReadReg8(fd, readAddr + 2);
+		data = (((msb << 16) + (lsb << 8) + xlsb) >> (8-1));		//(8-1) where '1' is mode - standard
+		logger.info("Read pure pressure = " + data);
+		return data;
+	}
+	
+	private int readTemperature () {
+		int data = 0;
+		int msb = 0;
+		int lsb = 0;
+		int readAddr = 0xF6;									//address to read pressure value
+		I2C.wiringPiI2CWriteReg8(fd, 0xF4, tempAddr);
+		waitfor(5);
+		msb = I2C.wiringPiI2CReadReg8(fd, readAddr);
+		lsb = I2C.wiringPiI2CReadReg8(fd, readAddr + 1);
+		data = ((msb << 8) + lsb);
+		logger.info("Read pure temperature = " + data);
+		return data;	
+	}			
+}

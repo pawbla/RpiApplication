@@ -1,0 +1,26 @@
+package controllers;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import sensors.*;
+
+@Controller
+@RequestMapping(value = "/weather")
+public class WeatherController {
+	
+	@Autowired
+	@Qualifier("internal")
+	private Sensor sens;
+	
+	@RequestMapping(method=GET)
+	public String settings(Model model) {
+		model.addAttribute("inSensor", sens.getData());
+		return "weather";
+	}
+}

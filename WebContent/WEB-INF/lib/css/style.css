@@ -1,0 +1,268 @@
+/* CSS Document */
+body {
+  background: #888888;
+}
+
+div {
+  width: 1100px;  
+  min-width: 900px; 
+  background: #CCCCCC;
+  
+  border-radius: 30px; 
+  border-color: white;
+  border-style: solid;
+  border-width: 5px;
+  
+  margin-top: 40px; 
+  margin-bottom: 60px; 
+  margin-left: auto; 
+  margin-right: auto;
+  
+  color: #222222;
+}
+
+header {
+  margin: 7px 10px 3px 10px;
+  border: white;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;  
+  text-shadow: 3px 3px #EEEEEE;
+}
+
+nav {
+  margin: 7px 10px 3px 10px;
+}
+
+section {
+  margin: 7px 10px 3px 10px;
+  border: white;
+  border-top-style: solid;
+  border-top-width: 3px; 
+  
+  border-bottom-style: solid;
+  border-bottom-width: 3px; 
+}
+
+footer {
+  margin: 7px 10px 7px 10px;
+  height: 20px;
+}
+
+/* navigation section */
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+    border-right: 1px solid white;   
+}
+
+li a {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+li a.active {
+  background-color: #4CAF50;
+}
+
+li:first-child {
+    border-left: 1px solid white;
+}
+
+li:last-child {
+    border-left: 1px solid white;
+}
+
+li a:hover:not(.active) {
+    background-color: #AAAAAA;
+}
+
+/* title definition font */
+
+.title {
+  text-align: center;
+}
+
+/* main box  */
+main {
+  background: #FFFFFF;
+  border-style: none;
+  border-radius: 30px;
+  /* margin/padding top right bottom left*/
+  margin: 20px 50px 20px 50px;
+  padding: 40px 40px 40px 40px;
+  min-height: 200px;
+  box-shadow: 8px 8px grey;
+}
+
+/* table in home page */
+table.weatherTable {
+  border-collapse:collapse;
+  width: 100%;
+  text-align: center;
+  color:  #666666;
+}
+
+.tempCell {
+  font-size: 80px;
+  text-align: center;
+  vertical-align: top;
+  color: #3F3F3F;
+  text-shadow: 3px 3px grey;
+}
+
+.humCell {
+  font-size: 55px;
+  text-align: center;
+  vertical-align: top;
+  color: #3F3F3F;
+  text-shadow: 3px 3px grey;
+}
+
+.unitCell {
+    font-size: 30px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.labelCell {
+    font-size: 70px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.pressCell {
+    font-size: 70px;
+    text-align: center;
+    color: #3F3F3F;
+    vertical-align: top;
+    text-shadow: 3px 3px grey;
+}
+
+/* MAIN PAGE log in submitt button*/
+
+.login{
+ 	font-size: 17px;
+ 	padding: 4px 52px;
+ 	border-radius: 8px;
+   	background-color: 	#A9A9A9;
+   	border: 3px solid #FFFFFF;
+   	margin-top: 7px;
+   	margin-bottom: 7px;
+}
+
+.logout{
+    float: left;
+    border: 0px;
+    border-right: 1px solid white;   
+    text-align: center;
+    padding: 14px 16px;
+    font-size: 22px;
+    font-weight: bold;
+    background-color: transparent;
+    display: block;
+}
+
+.entry {
+  border: 0px;
+}
+    /*
+ input[type=button] {
+ 	font-size: 17px;
+ 	padding: 4px 52px;
+ 	border-radius: 8px;
+   	background-color: 	#A9A9A9;
+   	border: 3px solid #FFFFFF;
+   	margin-top: 7px;
+   	margin-bottom: 7px;
+}       */
+
+input[type=text] {
+  width: 50%;
+  padding: 5px 5px;
+  margin: 4px 4px;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+input[type=password] {
+  width: 50%;
+  padding: 5px 5px;
+  margin: 4px 4px;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+
+label {
+  font-size: 17px;
+}
+
+/* Settings page */
+table {
+	border: 2px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+	border: 1px solid black;
+	text-align: centre;    
+    background-color: #ddff77;
+    padding: 3px;
+}
+
+td {
+	border: 1px solid black;
+	padding: 3px;	
+	padding-left: 10px;
+}
+
+tr:nth-child(even) {
+	background-color: #FFFFFF;
+}
+
+tr:nth-child(odd) {
+	background-color: #DDDDDD;
+}
+
+fieldset {
+	margin: 4px 4px 4px 4px;
+	padding: 15px 10px 15px 10px;
+	border: 1px solid black;	
+}
+
+legend {
+	font-size: 20px;
+}
+
+fieldset.weather {
+	margin: 4px 20px 4px 20px;
+	border: 4px solid #CCCCCC;
+	width: 42%;
+	min-height: 180px;
+	border-radius: 10px;	
+	display: inline;
+	vertical-align: top;
+}
+
+p.weather {
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.error {
+	color: red;
+	font-weight: bold;
+}

@@ -1,0 +1,56 @@
+package webService.config;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	
+	@Autowired
+	DataSource userDatabase;
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+			.formLogin()
+				.loginPage("/login")
+				.usernameParameter("username").passwordParameter("password")
+				.failureUrl("/login-error.html")
+				.permitAll()
+		.and()
+			.logout()
+			.logoutSuccessUrl("/")
+		.and()			
+			.httpBasic()
+		.and()
+			.authorizeRequests()
+			.antMatchers("/registration").permitAll()
+			.antMatchers(HttpMethod.POST, "/*").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+			.antMatchers("/*").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
+	}
+	
+	@Override 
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth
+		/*
+		.inMemoryAuthentication()
+		.withUser("user").password("password").authorities("ROLE_USER").and()
+		.withUser("admin").password("password").authorities("ROLE_USER", "ROLE_ADMIN").and()
+		.withUser("Pawel").password("4d08a27fc60ba000").authorities("ROLE_USER", "ROLE_ADMIN");*/
+		.jdbcAuthentication()
+		.dataSource(userDatabase)
+		.usersByUsernameQuery("select username, password, enabled from users where username=?")
+		.authoritiesByUsernameQuery("select username, role from roles where username=?");
+	}
+}
+	

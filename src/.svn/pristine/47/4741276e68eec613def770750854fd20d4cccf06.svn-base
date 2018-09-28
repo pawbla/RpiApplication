@@ -1,0 +1,29 @@
+package webService.web;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@Controller
+public class RegistrationController {
+	private static final Logger logger = LogManager.getLogger(RegistrationController.class);
+	
+	
+	@RequestMapping(value = "/registration", method=GET)
+	public String Registration(Model model) {
+		logger.trace("Registration controller Test start");
+		return "registration";
+	}
+		
+	
+	@RequestMapping(value="/registration", method=POST)
+	public String processRegistration() {
+		return "registration";
+	}
+}

@@ -1,0 +1,34 @@
+package sensors;
+
+import java.util.HashMap;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
+
+@Component
+public class SensorMeasurements implements Sensors {
+	private static final Logger logger = LogManager.getLogger(SensorMeasurements.class);
+
+	private HashMap<String, String> dict;
+	
+	public SensorMeasurements() {
+		logger.info("Construc object.");
+		dict = new HashMap<String, String>();
+	}
+	
+	public void registerSensor(String k) {
+		logger.info("Register Sensor: " + k);
+		dict.get(k);
+	}
+	
+	public void updateValue (String k, String v) {
+		logger.info("Update value = " + v + " for sensor " + k);
+		dict.put(k, v);
+	}
+
+	public HashMap<String, String> getSensorMeasurements() {
+		logger.info("Return measurement hash map.");
+		return dict;
+	}
+}

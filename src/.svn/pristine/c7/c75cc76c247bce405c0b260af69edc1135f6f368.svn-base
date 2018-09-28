@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <Appenders>
+    <Console name="Console">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%sn] [%-5level] [%t] [%l] - %msg%n"/>
+    </Console>
+    <SocketHub name="socketHubExample" port="7020">
+  <SerializedLayout />
+</SocketHub>
+  </Appenders>
+  <Loggers>
+    <Root level="trace">
+      <AppenderRef ref="socketHubExample"/>
+    </Root>
+  </Loggers>
+</Configuration>

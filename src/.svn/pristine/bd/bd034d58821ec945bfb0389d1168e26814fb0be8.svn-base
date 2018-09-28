@@ -1,0 +1,27 @@
+package sensors;
+
+import java.util.HashMap;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class SensorMeasurements implements Sensors {
+
+	private HashMap<String, Integer> dict;
+	
+	public SensorMeasurements() {
+		dict = new HashMap<String, Integer>();
+	}
+	
+	public void registerSensor(String k) {
+		dict.get(k);
+	}
+	
+	public void updateValue (String k, int v) {
+		dict.put(k, v);
+	}
+
+	public HashMap<String, Integer> getSensorMeasurements() {
+		return dict;
+	}
+}

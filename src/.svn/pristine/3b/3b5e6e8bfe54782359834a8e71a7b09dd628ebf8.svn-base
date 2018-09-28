@@ -1,0 +1,19 @@
+package homeSystem;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+import sensors.*;
+
+public class EmbeddedApp {
+	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);
+	
+	public static void main(String[] args) {
+		logger.trace("TEST LOGGER INFO");
+		//AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(EmbeddedApplicationConfig.class);
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("springConfig.xml");
+		//WeatherSensor bmp180 = context.getBean(WeatherSensorBMP180.class);
+		context.close();
+	}
+}

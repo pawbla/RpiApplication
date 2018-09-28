@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head>
+	  <link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}"/>
+		<title>RPI Home System - Pogoda</title>
+	</head>
+	<body>
+		<div>
+      <header>
+        <h1 class="title">RPI Home System -  Web Control Panel</h1>
+      </header>     
+      <nav th:replace="fragments :: nav">     
+      </nav>
+      <section>
+        <main> 
+        	<p th:if="${inSensor.statusCode}!=200" class="error" th:text="'Poniższe dane dla czujnika wewnątrz mieszkania nie są aktualne.'"/>
+        	<p th:if="${inSensor.statusCode}!=200" class="error" th:text="'Ostatni poprawny pomiar: ' + ${inSensor.date} + '.  Kod błędu: ' + ${inSensor.statusCode}"/>
+        	<fieldset class="weather">
+		      	<legend>Wewnątrz</legend>
+		      	<p class="weather" th:text="${inSensor.temperature} +'&deg;C'"></p>
+		      	<p class="weather" th:text="${inSensor.pressure} + 'hPa'"></p>
+		      	<p class="weather" th:text="${inSensor.humidity} + '%'"></p>
+	      	</fieldset>
+        	<fieldset class="weather">
+		      	<legend>Na zewnątrz</legend>
+		      	Brak
+	      	</fieldset>	
+        </main>
+      </section>     
+		<footer th:replace="fragments :: footer">...</footer>
+    </div>
+	</body>
+</html>

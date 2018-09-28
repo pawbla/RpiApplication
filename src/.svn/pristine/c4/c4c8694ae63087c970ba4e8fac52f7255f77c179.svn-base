@@ -1,0 +1,43 @@
+package webService.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+			.formLogin()
+				.loginPage("/login")
+				.failureUrl("/login-error.html")
+				.permitAll()
+		.and()
+			.logout()
+			.logoutSuccessUrl("/")
+		.and()			
+			.httpBasic()
+		.and()
+			.authorizeRequests()
+			.antMatchers("/registration").permitAll()
+			.antMatchers(HttpMethod.POST, "/spittles").access("hasRole('ROLE_USER')")
+			.antMatchers("/*").access("hasRole('ROLE_USER')");
+		}
+	
+	@Override 
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.
+		inMemoryAuthentication()
+		.withUser("user").password("password").authorities("ROLE_USER").and()
+		.withUser("admin").password("password").authorities("ROLE_USER", "ROLE_ADMIN").and()
+		.withUser("Pawel").password("4d08a27fc60ba000").authorities("ROLE_USER", "ROLE_ADMIN");
+	}
+}
+	

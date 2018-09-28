@@ -1,0 +1,54 @@
+package webService.web;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import users.ManageUserDB;
+import users.User;
+
+@Controller
+@RequestMapping()
+public class SettingsController {
+	private static final Logger logger = LogManager.getLogger(SettingsController.class);
+	
+	@Autowired
+	private ManageUserDB db;
+	
+	@RequestMapping(value = "/settings", method=GET)
+	public String settings(Model model) {
+		model.addAttribute("user", new User());
+		logger.trace("Settings controller start");
+		return "settings";
+	}
+	
+	@RequestMapping(value = "/settingsPass", method=POST)
+	public String changePassword (User user, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    user.setUsername(auth.getName());
+		if (!user.setNewPassword(db.getPassword(user))) {
+			model.addAttribute("passError", true);
+		} else {
+			db.setPassword(user);
+			model.addAttribute("confirmPassChange", true);
+		}
+		return "settings";
+	}
+	
+	@RequestMapping(value = "/settingsEmail", method=POST)
+	public String changeEmail (User user, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    user.setUsername(auth.getName());
+	    db.setEmail(user);
+	    model.addAttribute("confirmEmailChange", true);
+	    return "settings";
+	}
+}

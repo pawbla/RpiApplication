@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head>
+	  <link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}"/>
+	</head>
+	<body>
+		<div >
+	      <header th:fragment="header">
+	        <h1 class="title">RPI Home System -  Web Control Panel</h1>
+	      </header>     
+		</div>
+		<div>
+	      <nav th:fragment="nav">     
+		       <ul>
+		       <li><a th:href="@{/home}">Home</a></li>
+		        <li><a th:href="@{/weather}">Pogoda</a></li>
+		        <li><a th:href="@{/settings}">Opcje</a></li>
+		        <li sec:authorize="hasRole('ROLE_ADMIN')"> <a>Admin</a></li>
+		        <li style="float:right">
+			       <form name='f' th:action='@{/logout}' method='POST'> 
+			       	<input type="submit" value="Wyloguj" class="logout"/>
+			       </form>		        
+		        </li>
+		       </ul>
+	      </nav>
+		</div>
+		<div >     
+	      <footer th:fragment="footer"> 
+	      	 &copy; 2017 Footer by Admin
+	      </footer>
+    </div>
+	</body>
+</html>

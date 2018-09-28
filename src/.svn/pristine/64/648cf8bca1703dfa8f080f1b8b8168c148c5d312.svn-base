@@ -1,0 +1,47 @@
+package users;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class ManageUserDB implements ManageUsers {
+	
+	private static final String INSERT_USER = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
+	private static final String INSERT_USER_INROLE = "INSERT INTO roles (username) VALUES (?)";
+	private static final String SQL_SELECT_PASSWORD = "SELECT password FROM users WHERE username = ?";
+	private static final String SQL_UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE username = ? ";
+	private static final String SQL_UPDATE_EMAIL = "UPDATE users SET email = ? WHERE username = ? ";
+
+	@Autowired
+    private JdbcTemplate jdbcTemplate;
+	
+	public void addUser (User u) {
+		jdbcTemplate.update(INSERT_USER, u.getUsername(), u.getPassword(),u.getEmail());
+		u.setPassword(" ");
+		jdbcTemplate.update(INSERT_USER_INROLE,u.getUsername());
+	}
+
+	public void setPassword (User user) {
+		jdbcTemplate.update(SQL_UPDATE_PASSWORD, user.getPassword(), user.getUsername());
+	}
+	
+	public boolean setEmail (User user) {
+		if (user.getUsername().equals(null) || user.getEmail().equals(null)) {
+			return false;
+		}
+		jdbcTemplate.update(SQL_UPDATE_EMAIL, user.getEmail(), user.getUsername());
+		return true;
+	}
+	
+	public String getPassword (User user) {
+		String password;
+		 try {
+			 password = (String) jdbcTemplate.queryForObject(SQL_SELECT_PASSWORD, new Object[] { user.getUsername() }, String.class);
+		 } catch (Exception e) {
+			 return null;
+		 }
+		 return password;
+	}
+	
+}

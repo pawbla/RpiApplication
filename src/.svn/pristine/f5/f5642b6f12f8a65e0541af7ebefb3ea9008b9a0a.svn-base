@@ -1,0 +1,21 @@
+package webService.web;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(value = "/registration")
+public class RegistrationController {
+	private static final Logger logger = LogManager.getLogger(RegistrationController.class);
+	
+	@RequestMapping(method=GET)
+	public String home() {
+		System.out.println("Registration controller ->");
+		logger.trace("Registration controller Test start");
+		return "registration";
+	}
+}

@@ -1,0 +1,11 @@
+package sensors;
+
+import java.util.HashMap;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface Sensors {
+	HashMap<String, String> getSensorMeasurements();
+	void registerSensor(String k);
+	void updateValue(String k, String v);
+}

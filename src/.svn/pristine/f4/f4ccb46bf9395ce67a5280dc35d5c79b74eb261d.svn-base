@@ -1,0 +1,101 @@
+package sensors;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+import com.pi4j.wiringpi.Gpio;
+
+public abstract class WeatherSensor implements Runnable {
+	//logger 
+	private static final Logger logger = LogManager.getLogger(WeatherSensor.class);
+	
+	private int tSleep = 5000;
+	private int pin;
+	private static int iniFlag = 0;
+	
+	private float t;
+	private float h;
+	private int p;
+	
+	
+	
+	//threads
+	private Thread thread;
+	
+	public WeatherSensor (int pin) {
+		logger.info("Create object.");
+		initlizeGPIO();
+		this.pin = pin;
+		logger.info("Start thread.");
+		thread = new Thread (this);
+        thread.start ();
+	}
+	
+	public void run () {										//measure parameter thread
+		try {
+			logger.info("Thread started - sleep 2000.");
+			Thread.sleep(2000);
+			initialConditions();
+			while (true) {	
+				System.out.println("TEST SESNOR");
+				logger.info("Thread while loop.");
+				measurements();
+				logger.info("Thread sleep time: " + tSleep);
+				Thread.sleep(tSleep);								//wait 10 seconds
+			}	
+		}
+		catch (Exception e) {
+			logger.error("Thread has stoped for " + e);
+		}
+	}
+	
+	public void initlizeGPIO () {
+		logger.info("Initlize GPIO. iniFlag = " + iniFlag);
+		if (iniFlag == 0) {
+			iniFlag = 1;
+		    if (Gpio.wiringPiSetup() == -1) {
+		    	logger.error("GPIO Initialization failed.");
+		    }		
+		}
+	}
+	
+	abstract void initialConditions();
+
+	abstract void measurements();
+	
+	public void setThreadSleep(int time) {
+		logger.info("Time = " + time);
+		tSleep = time;
+	}
+	
+	public void setTemperature(float t) {
+		logger.info("Temperature = " + t);
+		this.t = t;
+	}
+	
+	public void setHumidity(float h) {
+		logger.info("Humidity = " + h);
+		this.h = h;
+	}
+	
+	public void setPressure(int p) {
+		logger.info("Pressure = " + p);
+		this.p = p;
+	}
+	
+	public float getTemperature() {
+		return t;
+	}
+	
+	public float getHumidity() {
+		return h;
+	}
+	
+	public int getPressure() {
+		return p;
+	}
+	
+	public int getPin() {
+		return pin;
+	}
+}

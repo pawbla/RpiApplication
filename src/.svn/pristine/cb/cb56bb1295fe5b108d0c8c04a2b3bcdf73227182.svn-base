@@ -1,0 +1,40 @@
+package webService.web;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import sensors.*;
+import users.User;
+
+@Controller
+@RequestMapping(value = "/weather")
+public class WeatherController {
+	//25863340 or 7146645
+
+	private Sensors sensor;
+	
+	@Autowired
+	public void setSensors (Sensors sensor) {
+		this.sensor = sensor;
+	}
+	
+	@RequestMapping(method=GET)
+	public HashMap<String, Integer> l () {
+		System.out.println("Sensors: " + sensor.getSensorMeasurements()); 
+		return sensor.getSensorMeasurements();
+	}
+}

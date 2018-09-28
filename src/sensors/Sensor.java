@@ -1,0 +1,8 @@
+package sensors;
+
+public interface Sensor {
+	public WeatherSensor getData();
+}
+
+//open weather map link:
+//http://api.openweathermap.org/data/2.5/weather?id=3094802&appid=687d050dcb5e9bec0e31d3a59ca8113c

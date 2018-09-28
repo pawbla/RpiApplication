@@ -1,0 +1,137 @@
+package sensors;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+import com.pi4j.wiringpi.Gpio;
+import com.pi4j.wiringpi.GpioUtil;
+
+@Component
+@Qualifier("dht11")
+@Profile("prod")
+public class WeatherSensorDHT11 extends WeatherSensor {
+	//logger 
+	private static final Logger logger = LogManager.getLogger(WeatherSensorDHT11.class);
+	
+	
+	private static final int DHT_MAXCOUNT = 100;
+	private static final int DHT_PULSES = 41;
+	private int controlVal = 0;
+	
+	private Sensors sensor;
+	private String nameH = "humIn";
+	private String nameT = "tempIn";
+	
+	@Autowired
+	public void setSensors (Sensors sensor) {
+		this.sensor = sensor;
+
+	}
+
+	public WeatherSensorDHT11 () {
+		super(7);
+		//super(pin);
+		//logger.info("Create object. Pin = " + pin);
+	}
+	
+	void initialConditions() {
+		logger.info("Initial conditions.");
+		sensor.registerSensor(nameH);
+		sensor.registerSensor(nameT);
+		GpioUtil.export(getPin(), GpioUtil.DIRECTION_OUT);
+	}
+
+	void measurements() {
+		logger.info("Measurements.");
+		controlVal++;
+		if (controlVal > 5) {
+			logger.warn("ControlValue has been exceeded" + controlVal);
+		}
+		int [] pulseCounts = new int [DHT_PULSES*2];
+			
+		for (int i=0; i < DHT_PULSES*2; i++) {
+			pulseCounts[i] = 0;
+		}
+			
+		Gpio.pinMode(getPin(), Gpio.OUTPUT);
+		Gpio.digitalWrite(getPin(), Gpio.HIGH);
+		Gpio.delay(500);
+		 
+		Gpio.pinMode(getPin(), Gpio.OUTPUT);
+		Gpio.digitalWrite(getPin(), Gpio.LOW);
+		Gpio.delay(20);
+		   
+		Gpio.pinMode(getPin(), Gpio.INPUT);
+		   
+		for (int i = 0; i < 50; ++i) {
+			//do nothing
+		}
+			   
+		//Wait for DHT pull pin down
+		int count = 0;
+			while (Gpio.digitalRead(getPin()) == Gpio.HIGH) {
+			Gpio.delayMicroseconds(1);
+			count++;
+			if (count >= DHT_MAXCOUNT) {
+				//
+			}
+		}
+			   
+		// Record pulse widths for the expected result bits.
+		for (int i=0; i < DHT_PULSES*2; i+=2) {
+			// Count how long pin is low and store in pulseCounts[i]
+			while (Gpio.digitalRead(getPin()) == Gpio.LOW) {
+				Gpio.delayMicroseconds(1);
+				if (++pulseCounts[i] >= DHT_MAXCOUNT) {
+					logger.info("DHT error reading - 1");
+					return ;
+				}
+			}
+			// Count how long pin is high and store in pulseCounts[i+1]
+			while (Gpio.digitalRead(getPin()) == Gpio.HIGH) {
+			Gpio.delayMicroseconds(1);
+			if (++pulseCounts[i+1] >= DHT_MAXCOUNT) {
+				// Timeout waiting for response.
+				logger.info("DHT error reading - 2 - too high timeout response.");
+				return ;
+				}
+			}
+		}
+		   
+		int threshold = 0;
+		for (int i=2; i < DHT_PULSES*2; i+=2) {
+			threshold += pulseCounts[i];
+		}
+		threshold /= DHT_PULSES-1;
+	
+		// Interpret each high pulse as a 0 or 1 by comparing it to the 50us reference.
+		// If the count is less than 50us it must be a ~28us 0 pulse, and if it's higher
+		// then it must be a ~70us 1 pulse.
+		int[] data = {0, 0, 0, 0, 0};
+		for (int i=3; i < DHT_PULSES*2; i+=2) {
+			int index = (i-3)/16;
+			data[index] <<= 1;
+			if (pulseCounts[i] >= threshold) {
+				// One bit for long pulse.
+				data[index] |= 1;
+			}
+			// Else zero bit for short pulse.
+		}
+		// Verify checksum of received data.
+		if (data[4] == ((data[0] + data[1] + data[2] + data[3]) & 0xFF)) {
+			controlVal = 0;
+			sensor.updateValue(nameH, data[0]);
+			sensor.updateValue(nameH, data[2]);
+			setHumidity(data[0]);   // for DHT11
+			setTemperature(data[2]);   // for DHT11   
+			logger.info("Measured values: humidity " + data[0] + " temperature " + data[2]);
+		} else {
+			logger.info("DHT error reading - 3 - wrong checksum.");  
+			//Data not good -> skip
+		}	
+	}
+}

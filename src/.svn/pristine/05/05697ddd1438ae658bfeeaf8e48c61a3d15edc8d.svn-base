@@ -1,0 +1,44 @@
+package webService.web;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import java.util.Map;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import sensors.*;
+
+@Controller
+@RequestMapping(value = "/weather")
+public class WeatherController {
+	private static final Logger logger = LogManager.getLogger(WeatherController.class);
+	
+	private WeatherSensor bmp180;
+	private WeatherSensor dht11;
+	
+	@Autowired
+	@Qualifier("bmp180")
+	public void setPressureSensor (WeatherSensor bmp180) {
+		this.bmp180 = bmp180;
+	}
+	
+	@Autowired
+	@Qualifier("dht11")
+	public void setInSensor (WeatherSensor dht11) {
+		this.dht11 = dht11;
+	}
+	
+	@RequestMapping(method=GET)
+	public String home (Map<String,Object> model) {
+		model.put("pressure", bmp180.getPressure());	
+		model.put("tempIn", dht11.getTemperature());
+		model.put("humIn", dht11.getHumidity());
+		logger.trace("Weather controller Test start");
+		return "weather";
+	}
+}

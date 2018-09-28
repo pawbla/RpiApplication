@@ -1,0 +1,64 @@
+package webService.web;
+
+
+import java.util.Map;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
+@Controller
+@RequestMapping(value = "/")
+public class HomeController {
+	private static final Logger logger = LogManager.getLogger(HomeController.class);
+	
+	DummyTest dummy = new DummyTest();
+	
+	@RequestMapping(method=GET)
+	public String home(Map<String,Object> model) {
+		logger.info("Home controller start");
+		model.put("tin", dummy.getTin());
+		model.put("tout", dummy.getTout());
+		return "home";
+	}
+}
+
+class DummyTest {
+	private int tempIN;
+	private int tempOUT;
+	private int hIN;
+	private int hOUT;
+	private int p;
+	
+	public DummyTest() {
+		tempIN = 22;
+		tempOUT = -10;
+		hIN = 15;
+		hOUT = 32;
+		p = 1123;
+	}
+
+	public int getTin() {
+		return tempIN;
+	}
+	
+	public int getTout() {
+		return tempOUT;
+	}
+	
+	public int getHin() {
+		return hIN;
+	}
+	
+	public int getHout() {
+		return hOUT;
+	}
+	
+	public int getP() {
+		return p;
+	}
+}

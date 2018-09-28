@@ -1,0 +1,29 @@
+package webService.web;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import sensors.*;
+
+@Controller
+@RequestMapping(value = "/weather")
+public class WeatherController {
+	//25863340 or 7146645
+
+	private Sensors sensor;
+	
+	@Autowired
+	public void setSensors (Sensors sensor) {
+		this.sensor = sensor;
+	}
+	
+	@RequestMapping(method=GET)
+	public HashMap<String, Integer> l () {
+		System.out.println("Sensors: " + sensor.getSensorMeasurements()); 
+		return sensor.getSensorMeasurements();
+	}
+}

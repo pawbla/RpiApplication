@@ -1,0 +1,22 @@
+package webService.web;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(value = "/weather")
+public class WeatherController {
+	private static final Logger logger = LogManager.getLogger(WeatherController.class);
+	
+	
+	@RequestMapping(method=GET)
+	public String home() {
+		System.out.println("Weather controller ->");
+		logger.trace("Weather controller Test start");
+		return "weather";
+	}
+}

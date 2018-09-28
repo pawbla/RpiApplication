@@ -1,0 +1,59 @@
+package configurations;
+
+import homeSystem.EmbeddedApp;
+
+import javax.sql.DataSource;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+
+@Configuration
+@ComponentScan({"users"})
+public class DatabaseConfiguration {
+	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);
+	
+    //MySQL DB connection
+    @Profile("prod")
+	@Bean
+	public DriverManagerDataSource dataSource() {
+    	logger.info("Create mySQL databse connection.");
+	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+	    driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/rpiDatabase");
+	    driverManagerDataSource.setUsername("user");
+	    driverManagerDataSource.setPassword("pass");
+	    return driverManagerDataSource;
+	}
+    
+	@Profile("prod")
+	@Bean
+	public JdbcTemplate jdbcTemplate (DataSource dataSource) {
+	 return new JdbcTemplate(dataSource);
+	}
+         
+     //database for test purpose - embedded DB
+     @Profile("dev")
+     @Bean 
+     public DataSource eDataSource() {
+    	 logger.info("Create embedded database connection - for tests.");
+    	 return new EmbeddedDatabaseBuilder()
+    	 .setType(EmbeddedDatabaseType.H2)
+    	 .addScript("classpath:/Resources/schema.sql")
+    	 .addScript("classpath:/Resources/data.sql")
+    	 .build();
+     }
+     
+     @Profile("dev")
+     @Bean
+     public JdbcTemplate jdbcTemplateE (DataSource eDataSource) {
+    	 return new JdbcTemplate(eDataSource);
+     }
+}
