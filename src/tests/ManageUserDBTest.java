@@ -1,6 +1,8 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -8,16 +10,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import configurations.DatabaseConfiguration;
+import configurations.SecurityConfig;
 import users.ManageUsers;
 import users.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatabaseConfiguration.class})
+@ContextConfiguration(classes = {DatabaseConfiguration.class, SecurityConfig.class})
 @ActiveProfiles("dev")
 public class ManageUserDBTest {
 	
@@ -28,6 +32,8 @@ public class ManageUserDBTest {
 	private User user2;
 	private User user3;
 	private User user4;
+	private User userA_1;
+	private User userA_2;
 	
 	@Before
 	public void createUsers() {
@@ -51,6 +57,14 @@ public class ManageUserDBTest {
 		user4.setUsername("User4");
 		user4.setPassword("Pass4");
 		user4.setEmail("email@04");
+		
+		userA_1 = new User();
+	    userA_1.setUsername("Usertt");
+		userA_1.setPassword("Passt41");
+		
+		userA_2 = new User();
+	    userA_2.setUsername("Usertt2");
+		userA_2.setPassword("Passt42");
 	}
 	
 	@Test 
@@ -90,6 +104,20 @@ public class ManageUserDBTest {
     		System.out.println("User: " + u.getId());
     	}
     }
-
+    
+    @Test
+    public void addUserAndroidPositiveTest () {
+		assertEquals("User1",user1.getUsername());
+		db.loadUsers();
+		assertTrue(db.addUser(userA_2));
+    }
+    
+    @Test
+    public void addUserAndroidNegativeTest () {
+    	db.addUser(userA_1);
+		assertEquals("Usertt",userA_1.getUsername());
+		db.loadUsers();
+		assertFalse(db.addUser(userA_1));
+    }
 }
 	

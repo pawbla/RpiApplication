@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -46,16 +47,23 @@ public class ManageUserDB implements ManageUsers {
 		// if false - user has existing
 		logger.info("Add user " + u.getUsername());
 		System.out.println("Comparision:");
-		for (User user : users) {
+		/*for (User user : users) {
 			System.out.println("Comparision: " + u.getUsername() + " userName " + user.getUsername());
 			if (u.getUsername().equals(user.getUsername())) {
 				System.out.println("Comparision fuck");
 				return false;
 			}
-		}	
-		jdbcTemplate.update(INSERT_USER, u.getUsername(), passwordEncoder.encode(u.getPassword()),u.getEmail());
-		u.setPassword(" ");
-		jdbcTemplate.update(INSERT_USER_INROLE,u.getUsername());
+		}	*/
+		try {
+			jdbcTemplate.update(INSERT_USER, u.getUsername(), passwordEncoder.encode(u.getPassword()),u.getEmail());
+			u.setPassword(" ");
+			jdbcTemplate.update(INSERT_USER_INROLE,u.getUsername());
+		} catch (DataAccessException e) {
+			System.out.println("Comparision fuck");
+			logger.warn("Exception during addUser has occured: " + e);
+			return false;			
+		}
+
 		return true;
 	}
 

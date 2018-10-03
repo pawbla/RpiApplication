@@ -40,7 +40,7 @@ public class RegistrationController {
 	
 	@RequestMapping(value="/registration", method=POST)
 	public String processRegistration(User user, Model model) {
-		db.loadUsers();
+		//db.loadUsers();
 		model.addAttribute("userRegistered", db.addUser(user));
 		return "registration";
 	}
@@ -49,9 +49,13 @@ public class RegistrationController {
 	public @ResponseBody Map<String,String> reg (@RequestBody User user) {
 		System.out.println("OKOK");
 		System.out.println("User: " + user.getUsername());
-		db.loadUsers();
-		db.addUser(user);
-		ret.put("status", "ok");
+		//db.loadUsers();
+		if(db.addUser(user)) {
+			ret.put("status", "ok");
+		} else {
+			ret.put("status", "nok");
+		}
+		
 		return ret;
 	}
 }
