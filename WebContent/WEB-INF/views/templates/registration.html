@@ -17,7 +17,7 @@
           <a th:if="${userRegistered}" th:href="@{/login}">Login</a>
           <p th:if="${userRegistered} == false" class="error">Podany użytkownik już istnieje.</p> 
           <form th:action="@{/registration}" method="POST" th:object="${user}"> 
-            <label>Nick</label>:<br /> 
+            <label>Login</label>:<br /> 
             <input class="regist" type="text" th:field="*{username}"/><br />
             <label>E-mail</label>:<br />
             <input type="text" th:field="*{email}" /><br />

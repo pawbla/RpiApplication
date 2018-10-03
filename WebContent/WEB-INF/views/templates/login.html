@@ -15,21 +15,12 @@
       <section>   
       	<p th:if="${loginError}" class="error">Złe hasło lub login!!!!</p>  
       	<form name='f' th:action='@{/login}' method='POST'> 
-        <label>Nick</label>:<br />
+        <label>Login</label>:<br />
         <input type='text' id='username' name='username' value='' /><br />
         <label>Haslo</label>:<br />
         <input type='password' id='password' name='password'/><br />
         <input name="submit" type="submit" value="Zaloguj" class="login"/><br />
         <a th:href="@{/registration}">Zarejestruj</a>
-			<!--<table>
-				<tr><td>Użytkownik:</td></tr>
-				<tr><td><input type='text' id='username' name='username' value='' /></td></tr>
-				<tr><td>Password:</td></tr>
-				<tr><td><input type='password' id='password' name='password'/></td></tr>
-				<tr><td>
-				<input name="submit" type="submit" value="Zaloguj" class="login"/></td></tr>
-				<tr><td><a th:href="@{/registration}">Zarejestruj</a></td></tr>
-			</table>  -->
 		</form>
       </section>     
       <footer> 

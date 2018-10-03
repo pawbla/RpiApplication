@@ -46,7 +46,7 @@
 		      	<table class="usersTable"> 
 		 			<tr>
 		 				<th class="usersTable_th">ID</th>
-		  				<th class="usersTable_th">Nick</th>
+		  				<th class="usersTable_th">Login</th>
 		  				<th class="usersTable_th">e-mail</th>
 		  				<th class="usersTable_th">Rola</th>
 		  				<th class="usersTable_th">Aktywny</th>
@@ -68,7 +68,7 @@
 				    	<td><input th:if="${u.enabled} == false" type="checkbox" th:field="*{users[__${i.index}__].toRemove}"/></td>
 				    </tr>
 		      	</table>
-		      	<input type="submit" value="Zarejestruj" class="login"/> <br />
+		      	<input type="submit" value="Akceptuj zmiany" class="login"/> <br />
 		      </form>
 	      </fieldset>
 	      </p>
