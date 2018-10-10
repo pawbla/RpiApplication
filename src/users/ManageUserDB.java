@@ -47,13 +47,6 @@ public class ManageUserDB implements ManageUsers {
 		// if false - user has existing
 		logger.info("Add user " + u.getUsername());
 		System.out.println("Comparision:");
-		/*for (User user : users) {
-			System.out.println("Comparision: " + u.getUsername() + " userName " + user.getUsername());
-			if (u.getUsername().equals(user.getUsername())) {
-				System.out.println("Comparision fuck");
-				return false;
-			}
-		}	*/
 		try {
 			jdbcTemplate.update(INSERT_USER, u.getUsername(), passwordEncoder.encode(u.getPassword()),u.getEmail());
 			u.setPassword(" ");
@@ -152,5 +145,10 @@ public class ManageUserDB implements ManageUsers {
 		}
 		//no admin role enabled has found
 		return false;
+	}
+	
+	public String checkUserStatus (String userName) {
+		System.out.println("adasDSDSA" + userName);
+		return "ok";
 	}
 }

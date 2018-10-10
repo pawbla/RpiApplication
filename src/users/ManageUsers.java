@@ -12,4 +12,5 @@ public interface ManageUsers {
 	public ArrayList<User> getUsers();
 	public void setUsers(ArrayList<User> users);
 	public ArrayList<String> getRoles();
+	public String checkUserStatus (String userName);
 }
