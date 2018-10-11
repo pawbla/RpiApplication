@@ -66,7 +66,6 @@ public class RegistrationController {
 	@RequestMapping(value = "/registrationCheck/{userName}", method=GET)
 	public @ResponseBody Map<String,String> RegistrationCheck (@PathVariable(value="userName") String userName) {
 		logger.trace("Registration Check Android user " + userName);
-		System.out.println("Registration Check Android user " + userName);
 		registrationCheck.put("status", db.checkUserStatus(userName));
 		return registrationCheck;
 	}

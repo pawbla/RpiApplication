@@ -33,6 +33,8 @@ public class ManageUserDBTest {
 	private User user4;
 	private User userA_1;
 	private User userA_2;
+	private User checkUser_e;
+	private User checkUser_d;
 	
 	@Before
 	public void createUsers() {
@@ -64,6 +66,16 @@ public class ManageUserDBTest {
 		userA_2 = new User();
 	    userA_2.setUsername("Usertt2");
 		userA_2.setPassword("Passt42");
+		
+		checkUser_e = new User();
+		checkUser_e.setUsername("User_checkEnabled");
+		checkUser_e.setPassword("pass");
+		checkUser_e.setEnabled(true);
+		
+		checkUser_d = new User();
+		checkUser_d.setUsername("User_checkDisabled");
+		checkUser_d.setPassword("pass");
+		checkUser_d.setEnabled(false);
 	}
 	
 	@Test 
@@ -117,6 +129,20 @@ public class ManageUserDBTest {
 		assertEquals("Usertt",userA_1.getUsername());
 		db.loadUsers();
 		assertFalse(db.addUser(userA_1));
+    }
+    
+    
+    @Test
+    public void checkUserStatus_userAddandDisabled ( ) {
+    	db.addUser(checkUser_d);
+    	String testUserName = "User_checkDisabled";
+    	assertEquals("noEn",db.checkUserStatus(testUserName));
+    }
+    
+    @Test
+    public void checkUserStatus_NoAdd ( ) {
+    	String testUserName = "User_checkNoAdd";
+    	assertEquals("noAdd",db.checkUserStatus(testUserName));
     }
 }
 	

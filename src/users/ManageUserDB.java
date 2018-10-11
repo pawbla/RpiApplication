@@ -22,6 +22,7 @@ public class ManageUserDB implements ManageUsers {
 	private static final String INSERT_USER_INROLE = "INSERT INTO roles (username) VALUES (?)";
 	private static final String SQL_SELECT_PASSWORD = "SELECT password FROM users WHERE username = ?";
 	private static final String SQL_SELECT_USERS_DATA = "SELECT users.id, users.username, users.email, users.enabled, roles.role FROM users INNER JOIN roles ON users.username = roles.username";
+	private static final String SQL_SELECT_ENABLED = "SELECT enabled FROM users WHERE username = ?";
 	private static final String SQL_UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE username = ? ";
 	private static final String SQL_UPDATE_ENABLED = "UPDATE users SET enabled = ? WHERE username = ? ";
 	private static final String SQL_UPDATE_ROLE = "UPDATE roles SET role = ? WHERE username = ? ";
@@ -46,13 +47,11 @@ public class ManageUserDB implements ManageUsers {
 	public boolean addUser (User u) {
 		// if false - user has existing
 		logger.info("Add user " + u.getUsername());
-		System.out.println("Comparision:");
 		try {
 			jdbcTemplate.update(INSERT_USER, u.getUsername(), passwordEncoder.encode(u.getPassword()),u.getEmail());
 			u.setPassword(" ");
 			jdbcTemplate.update(INSERT_USER_INROLE,u.getUsername());
 		} catch (DataAccessException e) {
-			System.out.println("Comparision fuck");
 			logger.warn("Exception during addUser has occured: " + e);
 			return false;			
 		}
@@ -148,7 +147,24 @@ public class ManageUserDB implements ManageUsers {
 	}
 	
 	public String checkUserStatus (String userName) {
-		System.out.println("adasDSDSA" + userName);
-		return "ok";
+		System.out.println("checkUserStatus: " + userName);
+		String res = "";
+		//get enabled from sql database
+		try {
+			Boolean ifEnabled = (Boolean) jdbcTemplate.queryForObject(SQL_SELECT_ENABLED, new Object[] { userName }, Boolean.class);
+			System.out.println("checkUserStatus: " + ifEnabled);
+			if (!ifEnabled) {
+				//user add but disabled
+				res = "noEn";
+			} else {
+				//user add and enabled
+				res = "ok";
+			}
+		} catch (DataAccessException e) {
+			//no user in db
+			logger.trace("EXPECTED Exception !! probably user checks status for no existing username: " + e);
+			res = "noAdd";
+		}
+		return res;
 	}
 }

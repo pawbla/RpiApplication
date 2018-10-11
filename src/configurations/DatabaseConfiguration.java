@@ -2,8 +2,6 @@ package configurations;
 
 import homeSystem.EmbeddedApp;
 
-import java.io.File;
-
 import javax.sql.DataSource;
 
 import org.apache.log4j.LogManager;
