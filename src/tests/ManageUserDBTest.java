@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -133,16 +134,16 @@ public class ManageUserDBTest {
     
     
     @Test
-    public void checkUserStatus_userAddandDisabled ( ) {
+    public void checkUserStatus_userAddAndDisabled ( ) {
     	db.addUser(checkUser_d);
     	String testUserName = "User_checkDisabled";
-    	assertEquals("noEn",db.checkUserStatus(testUserName));
+    	assertEquals(HttpStatus.FORBIDDEN, db.checkUserStatus(testUserName));
     }
     
     @Test
     public void checkUserStatus_NoAdd ( ) {
     	String testUserName = "User_checkNoAdd";
-    	assertEquals("noAdd",db.checkUserStatus(testUserName));
+    	assertEquals(HttpStatus.UNAUTHORIZED, db.checkUserStatus(testUserName));
     }
 }
 	

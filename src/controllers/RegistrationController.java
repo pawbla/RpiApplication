@@ -8,6 +8,8 @@ import java.util.Map;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,11 +30,9 @@ public class RegistrationController {
 	private ManageUserDB db;
 	
 	private Map<String,String> ret;
-	private Map<String,String> registrationCheck;
 	
 	public RegistrationController () {
 		ret = new HashMap<String,String>();
-		registrationCheck = new HashMap<String,String>();
 	}
 	
 	@RequestMapping(value = "/registration", method=GET)
@@ -64,9 +64,8 @@ public class RegistrationController {
 	}
 	// example http://localhost:8080/registrationCheck/a
 	@RequestMapping(value = "/registrationCheck/{userName}", method=GET)
-	public @ResponseBody Map<String,String> RegistrationCheck (@PathVariable(value="userName") String userName) {
+	public @ResponseBody ResponseEntity<?> RegistrationCheck (@PathVariable(value="userName") String userName) {
 		logger.trace("Registration Check Android user " + userName);
-		registrationCheck.put("status", db.checkUserStatus(userName));
-		return registrationCheck;
+		return new ResponseEntity<String>(db.checkUserStatus(userName));
 	}
 }

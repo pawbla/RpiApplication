@@ -2,6 +2,8 @@ package users;
 
 import java.util.ArrayList;
 
+import org.springframework.http.HttpStatus;
+
 public interface ManageUsers {
 	public boolean addUser (User user);
 	public boolean setEmail (User user);
@@ -12,5 +14,5 @@ public interface ManageUsers {
 	public ArrayList<User> getUsers();
 	public void setUsers(ArrayList<User> users);
 	public ArrayList<String> getRoles();
-	public String checkUserStatus (String userName);
+	public HttpStatus checkUserStatus (String userName);
 }

@@ -10,6 +10,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -146,25 +148,24 @@ public class ManageUserDB implements ManageUsers {
 		return false;
 	}
 	
-	public String checkUserStatus (String userName) {
+	public HttpStatus checkUserStatus (String userName) {
 		System.out.println("checkUserStatus: " + userName);
-		String res = "";
+		HttpStatus status;
 		//get enabled from sql database
 		try {
 			Boolean ifEnabled = (Boolean) jdbcTemplate.queryForObject(SQL_SELECT_ENABLED, new Object[] { userName }, Boolean.class);
 			System.out.println("checkUserStatus: " + ifEnabled);
 			if (!ifEnabled) {
-				//user add but disabled
-				res = "noEn";
+				//user add but disabled - 403
+				status = HttpStatus.FORBIDDEN;
 			} else {
-				//user add and enabled
-				res = "ok";
+				status = HttpStatus.OK;
 			}
 		} catch (DataAccessException e) {
-			//no user in db
+			//no user in db - 401
 			logger.trace("EXPECTED Exception !! probably user checks status for no existing username: " + e);
-			res = "noAdd";
+			status = HttpStatus.UNAUTHORIZED;
 		}
-		return res;
+		return status;
 	}
 }
