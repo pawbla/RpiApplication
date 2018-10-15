@@ -29,12 +29,6 @@ public class RegistrationController {
 	@Autowired
 	private ManageUserDB db;
 	
-	private Map<String,String> ret;
-	
-	public RegistrationController () {
-		ret = new HashMap<String,String>();
-	}
-	
 	@RequestMapping(value = "/registration", method=GET)
 	public String Registration(Model model) {
 		logger.trace("Registration controller Test start");
@@ -50,17 +44,18 @@ public class RegistrationController {
 	}
 	
 	@RequestMapping(value="/registrationRest", method=POST, produces = "application/json", consumes = "application/json")
-	public @ResponseBody Map<String,String> RegistrationRest (@RequestBody User user) {
+	public @ResponseBody ResponseEntity<?> RegistrationRest (@RequestBody User user) {
+		HttpStatus status;
 		System.out.println("OKOK");
 		System.out.println("User: " + user.getUsername());
 		//db.loadUsers();
 		if(db.addUser(user)) {
-			ret.put("status", "ok");
+			status = HttpStatus.OK;
 		} else {
-			ret.put("status", "nok");
+			status = HttpStatus.CONFLICT;
 		}
 		
-		return ret;
+		return new ResponseEntity<String>(status);
 	}
 	// example http://localhost:8080/registrationCheck/a
 	@RequestMapping(value = "/registrationCheck/{userName}", method=GET)
