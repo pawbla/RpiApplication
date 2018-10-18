@@ -46,8 +46,7 @@ public class RegistrationController {
 	@RequestMapping(value="/registrationRest", method=POST, produces = "application/json", consumes = "application/json")
 	public @ResponseBody ResponseEntity<?> RegistrationRest (@RequestBody User user) {
 		HttpStatus status;
-		System.out.println("OKOK");
-		System.out.println("User: " + user.getUsername());
+		logger.debug("User: " + user.getUsername());
 		//db.loadUsers();
 		if(db.addUser(user)) {
 			status = HttpStatus.OK;
@@ -60,7 +59,7 @@ public class RegistrationController {
 	// example http://localhost:8080/registrationCheck/a
 	@RequestMapping(value = "/registrationCheck/{userName}", method=GET)
 	public @ResponseBody ResponseEntity<?> RegistrationCheck (@PathVariable(value="userName") String userName) {
-		logger.trace("Registration Check Android user " + userName);
+		logger.debug("UserTrace - Registration Check Android user " + userName);
 		return new ResponseEntity<String>(db.checkUserStatus(userName));
 	}
 }
