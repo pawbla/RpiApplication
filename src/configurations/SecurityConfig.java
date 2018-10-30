@@ -1,5 +1,9 @@
-package configurations;
+	package configurations;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +13,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 
 @Configuration
@@ -39,8 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.authorizeRequests()
 			.antMatchers("/registration", "/registrationRest", "/registrationCheck/*").permitAll()
-			.antMatchers("/*").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
-		
+			.antMatchers("/*").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+		.and()
+			.exceptionHandling().authenticationEntryPoint(unauthenticatedRequestHandler());
+	}
+	
+	@Bean
+	UnauthenticatedRequestHandler unauthenticatedRequestHandler() {
+	    return new UnauthenticatedRequestHandler();
 	}
 	
 	@Bean
@@ -56,6 +68,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.usersByUsernameQuery("select username, password, enabled from users where username=?")
 		.authoritiesByUsernameQuery("select username, role from roles where username=?")
 		.passwordEncoder(passwordEncoder());
+	}
+	
+	private static class UnauthenticatedRequestHandler implements AuthenticationEntryPoint {
+
+	    @Override
+	    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+	        if (request.getServletPath().startsWith("/weatherRest")) {
+	            response.setStatus(403);
+	        } else {
+	            response.sendRedirect("/login");
+	        }
+	    }
 	}
 	
 

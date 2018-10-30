@@ -148,6 +148,7 @@ public class ManageUserDB implements ManageUsers {
 		return false;
 	}
 	
+	//check user status for registration Android user request
 	public HttpStatus checkUserStatus (String userName) {
 		System.out.println("checkUserStatus: " + userName);
 		HttpStatus status;
