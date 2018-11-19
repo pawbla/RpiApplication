@@ -1,268 +1,313 @@
 /* CSS Document */
 body {
-  background: #888888;
+  background: #000000;
+  color: #FFFFFF;
+}
+/* login Page */
+section.loginPage { 
+  width: 30%;
+  padding-bottom: 8px;
+  border: 4px double #00bb00;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 70px;
 }
 
-div {
-  width: 1100px;  
-  min-width: 900px; 
-  background: #CCCCCC;
-  
-  border-radius: 30px; 
-  border-color: white;
-  border-style: solid;
-  border-width: 5px;
-  
-  margin-top: 40px; 
-  margin-bottom: 60px; 
-  margin-left: auto; 
-  margin-right: auto;
-  
-  color: #222222;
+h1.loginPage {
+  text-align: center;
+  color: #00bb00;
+  font-family: "Comic Sans MS", cursive, sans-serif;
 }
+
+h2.loginPage {
+  text-align: center;
+  color: #00bb00;
+  text-decoration: underline;  
+}
+
+form.loginPage {
+  text-align: center;
+}
+
+form label {
+  margin-top: 4px;
+}
+
+form input.text {
+  border-radius: 4px;
+  border: 2px solid;
+  width: 50%;
+  padding: 3px 3px;
+  margin: 4px 4px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+form input.submit {
+  font-size: 13px;
+  padding: 4px 52px;
+  border-radius: 4px;
+  border: 2px solid #FFFFFF;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  background-color: #00bb00;
+  color: #000000;
+}
+
+.button {
+  font-size: 15px;
+  margin-left: 35px;
+  color: #00bb00;
+}
+
+/* header */
 
 header {
-  margin: 7px 10px 3px 10px;
-  border: white;
-  border-bottom-style: solid;
-  border-bottom-width: 3px;  
-  text-shadow: 3px 3px #EEEEEE;
+  width: 85%;
+  margin: auto;
+  margin-top: 30px;
+  border-top:4px double #00bb00;
+  border-right: 4px double #00bb00;
+  border-left: 4px double #00bb00;
+  border-bottom: 1px solid #00bb00;
+  border-top-left-radius: 20px; 
+  border-top-right-radius: 20px;
+  min-width: 800px;
 }
 
+header h1 {
+  text-align: center;
+  color: #00bb00;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 30px;
+
+}
+/* nav */
 nav {
-  margin: 7px 10px 3px 10px;
+  width: 85%;
+  margin: auto;
+  border-right: 4px double #00bb00;
+  border-left: 4px double #00bb00;
+  border-bottom: 1px solid #00bb00;  
+  min-width: 800px;
 }
 
-section {
-  margin: 7px 10px 3px 10px;
-  border: white;
-  border-top-style: solid;
-  border-top-width: 3px; 
-  
-  border-bottom-style: solid;
-  border-bottom-width: 3px; 
-}
-
-footer {
-  margin: 7px 10px 7px 10px;
-  height: 20px;
-}
-
-/* navigation section */
-
-ul {
+nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
 }
 
-li {
-    float: left;
-    border-right: 1px solid white;   
+nav li { 
+    margin-top: 5px; 
+    margin-bottom: 5px; 
+    color: #00bb00;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
-li a {
+nav li.left {
+  float: left; 
+  border-right: 1px solid #00bb00; 
+}
+
+nav li.right {
+  float: right; 
+  border-left: 1px solid #00bb00; 
+}
+
+nav li a {
     display: block;
     text-align: center;
-    padding: 14px 16px;
+    padding: 8px 16px;
     text-decoration: none;
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 15px;
 }
 
-li a.active {
-  background-color: #4CAF50;
+nav li a:hover:not(.active) {
+    background-color: #00bb00;
+    color: #000000;
 }
 
-li:first-child {
-    border-left: 1px solid white;
+nav li a:visited {
+  color: #00bb00;
 }
 
-li:last-child {
-    border-left: 1px solid white;
-}
-
-li a:hover:not(.active) {
-    background-color: #AAAAAA;
-}
-
-/* title definition font */
-
-.title {
+/* footer */
+footer {
+  width: 85%;
+  margin: auto;
+  margin-bottom: 10px;
+  border-top: 1px double #00bb00;
+  border-right: 4px double #00bb00;
+  border-left: 4px double #00bb00;
+  border-bottom: 4px double #00bb00;
+  border-bottom-left-radius: 20px; 
+  border-bottom-right-radius: 20px;  
   text-align: center;
+  min-width: 800px;
 }
 
-/* main box  */
-main {
-  background: #FFFFFF;
-  border-style: none;
-  border-radius: 30px;
-  /* margin/padding top right bottom left*/
-  margin: 20px 50px 20px 50px;
-  padding: 40px 40px 40px 40px;
-  min-height: 200px;
-  box-shadow: 8px 8px grey;
+footer h4 {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-/* table in home page */
-table.weatherTable {
-  border-collapse:collapse;
+/* section */
+section {
+  width: 85%;
+  margin: auto;
+  border-right: 4px double #00bb00;
+  border-left: 4px double #00bb00; 
+  min-height: 200px; 
+  min-width: 800px;
+  padding-top: 20px;
+}
+
+/* settings page */
+
+section div {
+  padding: 10px 10px 10px 10px;
+  height: 230px;
+}
+
+div form {
+  text-align: center;
+  padding: 3px 3px 3px 3px;
+  height: 95%;
+  border: 1px solid #00bb00;
+  border-radius: 10px;
+}
+
+form.setPass {
+  float: left; 
+  width: 49%;
+}
+
+form.setEmail {
+  float: right; 
+  width: 49%;
+}
+
+form.mngUsers {
+  float: left; 
+  width: 74%;
+}
+
+form.delUser {
+  float: right; 
+  width: 24%;
+}
+
+div h3 {
+  text-align: center;
+  color: #00bb00;
+  font-size: 20px;
+}
+
+select.deleteUser {
+  margin: 10px 4px 10px 4px;
+  width: 220px;
+  padding: 5px 5px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+table.usersTable {
+  border-collapse: collapse;
   width: 100%;
   text-align: center;
-  color:  #666666;
-}
-
-.tempCell {
-  font-size: 80px;
-  text-align: center;
-  vertical-align: top;
-  color: #3F3F3F;
-  text-shadow: 3px 3px grey;
-}
-
-.humCell {
-  font-size: 55px;
-  text-align: center;
-  vertical-align: top;
-  color: #3F3F3F;
-  text-shadow: 3px 3px grey;
-}
-
-.unitCell {
-    font-size: 30px;
-    text-align: center;
-    vertical-align: top;
-}
-
-.labelCell {
-    font-size: 70px;
-    text-align: center;
-    vertical-align: top;
-}
-
-.pressCell {
-    font-size: 70px;
-    text-align: center;
-    color: #3F3F3F;
-    vertical-align: top;
-    text-shadow: 3px 3px grey;
-}
-
-/* MAIN PAGE log in submitt button*/
-
-.login{
- 	font-size: 17px;
- 	padding: 4px 52px;
- 	border-radius: 8px;
-   	background-color: 	#A9A9A9;
-   	border: 3px solid #FFFFFF;
-   	margin-top: 7px;
-   	margin-bottom: 7px;
-}
-
-.logout{
-    float: left;
-    border: 0px;
-    border-right: 1px solid white;   
-    text-align: center;
-    padding: 14px 16px;
-    font-size: 22px;
-    font-weight: bold;
-    background-color: transparent;
-    display: block;
-}
-
-.entry {
-  border: 0px;
-}
-    /*
- input[type=button] {
- 	font-size: 17px;
- 	padding: 4px 52px;
- 	border-radius: 8px;
-   	background-color: 	#A9A9A9;
-   	border: 3px solid #FFFFFF;
-   	margin-top: 7px;
-   	margin-bottom: 7px;
-}       */
-
-input[type=text] {
-  width: 50%;
-  padding: 5px 5px;
-  margin: 4px 4px;
-  border-radius: 4px;
-  font-size: 15px;
-}
-
-input[type=password] {
-  width: 50%;
-  padding: 5px 5px;
-  margin: 4px 4px;
-  border-radius: 4px;
-  font-size: 15px;
-}
-
-
-label {
-  font-size: 17px;
-}
-
-/* Settings page */
-table {
-	border: 2px solid black;
-    border-collapse: collapse;
-    width: 100%;
+  color:  #00bb00;
+  border: 2px solid white;
 }
 
 th {
-	border: 1px solid black;
-	text-align: centre;    
-    background-color: #ddff77;
-    padding: 3px;
+  border: 1px solid white;
+  text-align: center;    
+  background-color: #000000; 
 }
 
 td {
-	border: 1px solid black;
-	padding: 3px;	
-	padding-left: 10px;
+  border: 1px solid white;
+  color: #FFFFFF;
+
 }
 
 tr:nth-child(even) {
-	background-color: #FFFFFF;
+  background-color: #000000;
 }
 
 tr:nth-child(odd) {
-	background-color: #DDDDDD;
+  background-color: #696969;
 }
 
-fieldset {
-	margin: 4px 4px 4px 4px;
-	padding: 15px 10px 15px 10px;
-	border: 1px solid black;	
+th.usrEn, td.usrEn {
+  width: 80px;
 }
 
-legend {
-	font-size: 20px;
+th.usrId, td.usrId {
+  width: 45px;
 }
 
-fieldset.weather {
-	margin: 4px 20px 4px 20px;
-	border: 4px solid #CCCCCC;
-	width: 42%;
-	min-height: 180px;
-	border-radius: 10px;	
-	display: inline;
-	vertical-align: top;
+th.usrRole, td.usrRole {
+  width: 170px;
 }
 
-p.weather {
-	font-size: 25px;
-	font-weight: bold;
-	text-align: center;
+select.roleSelect {
+  width: 100%;
 }
 
-.error {
-	color: red;
-	font-weight: bold;
+p.error {
+  margin: 0px 11px 5px 11px;
+  width: 85 %;
+  text-align: center;
+  padding: 5px 5px 5px 5px;
+  border: 1px solid #00bb00;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+/* weather page */
+
+div.weather div {
+  text-align: center;
+  padding: 3px 3px 3px 3px;
+  height: 95%;
+  border: 1px solid #00bb00;
+  border-radius: 10px;
+  margin: 3px 3px 3px 3px;
+}
+
+div.inWeather {
+  float: left;
+  width: 32%;
+}
+
+div.outWeather {
+  float: left;
+  width: 32%;
+}
+
+div.press {
+  float: left;
+  width: 32%;
+}
+
+div.weather p {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  margin: 15px;
+}
+
+p.temp {
+  font-size: 45px;
+}
+
+p.hum {
+  font-size: 38px;
+}
+
+p.press {
+  font-size: 42px;
 }

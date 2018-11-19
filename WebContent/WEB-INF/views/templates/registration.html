@@ -2,33 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head>
 	  <link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{/css/style.css}"/>
-		<title>RPI Home System</title>
+		<title>RPi IoT Home System</title>
 	</head>
+	
 	<body>
-		<div>
-      <header>
-        <h1 class="title">RPI Home System -  Web Control Panel</h1>
-      </header>     
-      <!--no nav section due to registration page-->
-      <section>
-        <main>       
-          <h2> Rejestracja </h2> 
-          <p th:if="${userRegistered}" class="error">Zostales zarejestrowany. Teraz Administrator musi uaktywnic Twoje konto.</p>    
-          <a th:if="${userRegistered}" th:href="@{/login}">Login</a>
-          <p th:if="${userRegistered} == false" class="error">Podany użytkownik już istnieje.</p> 
-          <form th:action="@{/registration}" method="POST" th:object="${user}"> 
-            <label>Login</label>:<br /> 
-            <input class="regist" type="text" th:field="*{username}"/><br />
-            <label>E-mail</label>:<br />
-            <input type="text" th:field="*{email}" /><br />
-            <label>Haslo</label> <br />  
-            <input type="password" th:field="*{password}" /> <br />
-            <input type="submit" value="Zarejestruj" class="login"/> <br />
-          </form>           
-        </main>
-      </section>     
-      <footer> 
-      </footer>
-    </div>
+    	<section class="loginPage">
+	      <h1 class="loginPage">RPi IoT Home System</h1>
+	      <h2 class="loginPage">Rejestacja</h2>    
+	      <p th:if="${userRegistered} == false" class="error">Podany użytkownik już istnieje.</p> 
+	      <form th:action="@{/registration}" method="POST" th:object="${user}" class="loginPage"> 
+	        <label class="label">Login</label>:<br /> 
+	        <input class="text" type="text" th:field="*{username}"/><br />
+	        <label class="label">E-mail</label>:<br />
+	        <input class="text" th:field="*{email}" /><br />
+	        <label class="label">Haslo</label> <br />  
+	        <input class="text" type="password" th:field="*{password}" /> <br />
+	        <input type="submit" value="Zarejestruj" class="submit"/> <br />
+	      </form> 
+	    </section> 
 	</body>
 </html>

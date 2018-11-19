@@ -2,6 +2,7 @@ package controllers;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -69,4 +71,12 @@ public class SettingsController {
 		redirectAttributes.addFlashAttribute("confirmUsrChMsg", msg);
 	    return "redirect:/settings";
 	}	
+	
+	@RequestMapping(value = "/settingsDeleteUsers", method=POST)
+	public String deleteUser (User user, RedirectAttributes redirectAttributes) {
+		logger.debug("=====> Delete user: " + user.getUsername());
+		redirectAttributes.addFlashAttribute("deleteUsersChange", true);
+		redirectAttributes.addFlashAttribute("deleteUsrChMsg", "Użytkownik '" + user.getUsername() + "' został usunięty.");
+		return "redirect:/settings";
+	}
 }

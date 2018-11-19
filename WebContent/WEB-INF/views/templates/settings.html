@@ -4,77 +4,76 @@
 	  <link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}"/>
 		<title>RPI Home System - Opcje</title>
 	</head>
-	<body>
-		<div>
-		
+	<body>		
       <header th:replace="fragments :: header">
       </header>
       <nav th:replace="fragments :: nav">     
       </nav>
-      <section>
-        <main>
-	      <fieldset>
-	      <legend>Zmiana hasła</legend>   
-	          <p th:if="${passError}" class="error">Bład podczas wprowadzania haseł. Ponów próbę.</p>  
-	          <p th:if="${confirmPassChange}" class="error">Hasło zostało zmienione.</p>
-	          <form th:action="@{/settingsPass}" method="POST" th:object="${user}"> 
-	            <label>Hasło</label>:<br /> 
-	            <input type="password" th:field="*{oldPass}" /> <br />
-	            <label>Nowe hasło</label>:<br />
-	            <input type="password" th:field="*{newPass1}" /> <br />
-	            <label>Powtórz nowe hasło</label>: <br />  
-	            <input type="password" th:field="*{newPass2}" /> <br />
-	            <input type="submit" value="Zmień hasło" class="login"/> <br /> 
-	          </form> 	
-          </fieldset>
-	      <fieldset>
-	      <legend>Zmiana e-mail</legend>  
-	          <p th:if="${confirmEmailChange}" class="error">Adres e-mail został zmieniony.</p>   
-	          <form th:action="@{/settingsEmail}" method="POST" th:object="${user}"> 
-	            <label>Podaj nowy adres e-mail</label>:<br /> 
-	            <input type="text" th:field="*{email}" /> <br />
-	            <input type="submit" value="Zmień e-mail" class="login"/> <br />
-	          </form> 		
-	      </fieldset>
-	      
-	      <p sec:authorize="hasRole('ROLE_ADMIN')"> 
-	      <hr />	     
-	      <fieldset> 
-	      	<legend>Lista użytkowników</legend>	  
-	      	<p th:if="${confirmUsersChange}" class="error" th:text="${confirmUsrChMsg}"></p>    
-		      <form th:action="@{/settingsUsers}" method="POST" th:object="${userDatas}">
-		      	<table class="usersTable"> 
-		 			<tr>
-		 				<th class="usersTable_th">ID</th>
-		  				<th class="usersTable_th">Login</th>
-		  				<th class="usersTable_th">e-mail</th>
-		  				<th class="usersTable_th">Rola</th>
-		  				<th class="usersTable_th">Aktywny</th>
-		  				<th class="usersTable_th">Usuń</th>
-		  			</tr>
-					<tr th:each="u, i : ${userDatas.users}">
-						<td th:text="${u.id}"></td>
-						<td th:text="${u.username}"></td>
-						<td th:text="${u.email}"></td>
-				    	<td>
-				    		<select th:field="*{users[__${i.index}__].role}">
-				    			<option th:each="r : ${userDatas.roles}"
-				    					th:value="${r}"
-				    					th:text="${r}">
-				    			</option>
-				    		</select>
-				    	</td>	
-				    	<td><input type="checkbox" th:field="*{users[__${i.index}__].enabled}" th:checked="${u.enabled}"/></td>
-				    	<td><input th:if="${u.enabled} == false" type="checkbox" th:field="*{users[__${i.index}__].toRemove}"/></td>
-				    </tr>
-		      	</table>
-		      	<input type="submit" value="Akceptuj zmiany" class="login"/> <br />
-		      </form>
-	      </fieldset>
-	      </p>
-		</main>				
-      </section>     
-        	<footer th:replace="fragments :: footer">...</footer>
-		</div>
+        <section  class="main">
+	      <p th:if="${passError}" class="error">Bład podczas wprowadzania haseł. Ponów próbę.</p>  
+	      <p th:if="${confirmPassChange}" class="error">Hasło zostało zmienione.</p>
+	      <p th:if="${confirmEmailChange}" class="error">Adres e-mail został zmieniony.</p>
+	      <p th:if="${confirmUsersChange}" class="error" th:text="${confirmUsrChMsg}"></p> 
+	      <p th:if="${deleteUsersChange}" class="error" th:text="${deleteUsrChMsg}"></p>
+	      <div class="mainDiv">
+	        <form th:action="@{/settingsPass}" method="POST" th:object="${user}" class="setPass"> 
+	          <h3> Zmiana hasła </h3>
+	          <label>Hasło</label>:<br /> 
+	          <input type="password" th:field="*{oldPass}" /> <br />
+	          <label>Nowe hasło</label>:<br />
+	          <input type="password" th:field="*{newPass1}" /> <br />
+	          <label>Powtórz nowe hasło</label>: <br />  
+	          <input type="password" th:field="*{newPass2}" /> <br />
+	          <input type="submit" value="Zmień hasło" class="submit"/> <br /> 
+	        </form> 
+	        <form th:action="@{/settingsEmail}" method="POST" th:object="${user}" class="setEmail"> 
+	          <h3>Zmiana adresu e-mail</h3>
+	          <label>Podaj nowy adres e-mail</label>:<br /> 
+	          <input type="text" th:field="*{email}" /> <br />
+	          <input type="submit" value="Zmień e-mail" class="submit"/> <br />
+	        </form>  
+	      </div>
+	      <div sec:authorize="hasRole('ROLE_ADMIN')">
+	        <form th:action="@{/settingsUsers}" method="POST" th:object="${userDatas}" class="mngUsers">
+	          <h3>Zarządzanie użytkownikami</h3>
+	          <table class="usersTable"> 
+	            <tr>
+	              <th class="usrID">ID</th>
+	              <th>Login</th>
+	              <th>e-mail</th>
+	              <th class="usrRole">Rola</th>
+	              <th class="usrEn">Aktywny</th>
+	            </tr>
+	            <tr th:each="u, i : ${userDatas.users}">
+	              <td class="usrID" th:text="${u.id}"></td>
+	              <td th:text="${u.username}"></td>
+	              <td th:text="${u.email}"></td>
+	              <td class="usrRole">
+	                <select class="roleSelect" th:field="*{users[__${i.index}__].role}">
+	                  <option th:each="r : ${userDatas.roles}"
+	                    th:value="${r}"
+	                    th:text="${r}">
+	                  </option>
+	                </select>
+	              </td> 
+	              <td><input  class="usrEn" type="checkbox" th:field="*{users[__${i.index}__].enabled}" th:checked="${u.enabled}"/></td>
+	            </tr>
+	          </table>
+	          <input type="submit" value="Akceptuj zmiany" class="submit"/> <br />
+	        </form>
+	        <form th:action="@{/settingsDeleteUsers}" th:method="POST" th:object="${user}" class="delUser"> 
+	          <h3>Usuwanie użytkowników</h3>
+	          <input type="submit" value="Usuń użytkownika" class="submit"/> <br />
+	          <select class="deleteUser" th:field="*{username}">
+	            <option th:each="r : ${userDatas.users}" 
+	              th:if="${r.enabled}== false"
+	              th:value="${r.username}"
+	              th:text="${r.username}">
+	            </option>
+	          </select><br />
+	        </form>
+	      </div>
+	    </section>
+        <footer th:replace="fragments :: footer">...</footer>
 	</body>
 </html>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import users.ManageUserDB;
 import users.User;
@@ -37,17 +38,15 @@ public class RegistrationController {
 	}
 	
 	@RequestMapping(value="/registration", method=POST)
-	public String ProcessRegistration(User user, Model model) {
-		//db.loadUsers();
-		model.addAttribute("userRegistered", db.addUser(user));
-		return "registration";
+	public String ProcessRegistration(User user, Model model, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("userRegistered", db.addUser(user));
+		return "redirect:/login";
 	}
 	
 	@RequestMapping(value="/registrationRest", method=POST, produces = "application/json", consumes = "application/json")
 	public @ResponseBody ResponseEntity<?> RegistrationRest (@RequestBody User user) {
 		HttpStatus status;
 		logger.debug("User: " + user.getUsername());
-		//db.loadUsers();
 		if(db.addUser(user)) {
 			status = HttpStatus.OK;
 		} else {
