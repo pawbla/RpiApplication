@@ -29,6 +29,8 @@ public class ManageUserDB implements ManageUsers {
 	private static final String SQL_UPDATE_ENABLED = "UPDATE users SET enabled = ? WHERE username = ? ";
 	private static final String SQL_UPDATE_ROLE = "UPDATE roles SET role = ? WHERE username = ? ";
 	private static final String SQL_UPDATE_EMAIL = "UPDATE users SET email = ? WHERE username = ? ";
+	private static final String SQL_DELETE_USER = "DELETE FROM users WHERE username = ?";
+	private static final String SQL_DELETE_ROLE = "DELETE FROM roles WHERE username = ?";
 	
 	@Autowired
     private JdbcTemplate jdbcTemplate;
@@ -46,6 +48,9 @@ public class ManageUserDB implements ManageUsers {
 		roles.add("ROLE_ADMIN");
 	}
 	
+	/**
+	 * Add user into database
+	 */
 	public boolean addUser (User u) {
 		// if false - user has existing
 		logger.info("Add user " + u.getUsername());
@@ -57,15 +62,20 @@ public class ManageUserDB implements ManageUsers {
 			logger.warn("Exception during addUser has occured: " + e);
 			return false;			
 		}
-
 		return true;
 	}
 
+	/**
+	 * Change password into database for selected user
+	 */
 	public void setPassword (String p, String n) {
 		logger.info("Set password for user: " + n);
 		jdbcTemplate.update(SQL_UPDATE_PASSWORD, p, n);
 	}
 	
+	/**
+	 * Change email into database for selected user
+	 */
 	public boolean setEmail (User user) {
 		logger.info("Set email for user: " + user.getUsername());
 		if (user.getUsername().equals(null) || user.getEmail().equals(null)) {
@@ -76,6 +86,9 @@ public class ManageUserDB implements ManageUsers {
 		return true;
 	}
 	
+	/**
+	 * Get password from database
+	 */
 	public String getPassword (User user) {
 		logger.info("Get password for user: " + user.getUsername());
 		String password;
@@ -87,6 +100,9 @@ public class ManageUserDB implements ManageUsers {
 		 return password;
 	}
 	
+	/**
+	 * Load user from database to list
+	 */
 	public void loadUsers() {
 		logger.info("Load users");
 		users.clear();
@@ -102,16 +118,25 @@ public class ManageUserDB implements ManageUsers {
 		}
 	}
 	
+	/**
+	 * Get users list
+	 */
 	public ArrayList<User> getUsers() {
 		logger.info("get Users");
 		return users;
 	}
 
+	/**
+	 * Set users list
+	 */
 	public void setUsers(ArrayList<User> users) {
 		logger.info("set Users");
 		this.users = users;
 	}	
 	
+	/**
+	 * Change enabled value for specified user
+	 */
 	public String updateEnabled(ArrayList<User> users) {
 		logger.info("Update enabled disabled users");
 		int i = 0;
@@ -130,12 +155,19 @@ public class ManageUserDB implements ManageUsers {
 		return "Lista użytkowników została zaktualizowana.";
 	}
 	
+	/**
+	 * Get available roles from database
+	 */
 	public ArrayList<String> getRoles() {
 		logger.info("Get roles form DB");
 		return roles;
 	}
 	
-	//check if at least one admin role is set as enabled in db
+	/**
+	 * Check if at least one admin role is enabled
+	 * @param users
+	 * @return
+	 */
 	private boolean checkAdminEnabled (ArrayList<User> users) {
 		logger.info("Check if at least one admin is enabled?");
 		//check changes to admin
@@ -148,7 +180,9 @@ public class ManageUserDB implements ManageUsers {
 		return false;
 	}
 	
-	//check user status for registration Android user request
+	/**
+	 * Check user status for Android app request\
+	 */
 	public HttpStatus checkUserStatus (String userName) {
 		System.out.println("checkUserStatus: " + userName);
 		HttpStatus status;
@@ -168,5 +202,14 @@ public class ManageUserDB implements ManageUsers {
 			status = HttpStatus.UNAUTHORIZED;
 		}
 		return status;
+	}
+	
+	/**
+	 * Remove user from database
+	 */
+	public void removeUser(User user) {
+		jdbcTemplate.update(SQL_DELETE_ROLE,user.getUsername());
+		jdbcTemplate.update(SQL_DELETE_USER,user.getUsername());
+		
 	}
 }

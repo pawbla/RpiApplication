@@ -239,7 +239,7 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(odd) {
-  background-color: #696969;
+  background-color: #303030;
 }
 
 th.usrEn, td.usrEn {

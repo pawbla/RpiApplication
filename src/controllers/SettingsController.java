@@ -74,7 +74,8 @@ public class SettingsController {
 	
 	@RequestMapping(value = "/settingsDeleteUsers", method=POST)
 	public String deleteUser (User user, RedirectAttributes redirectAttributes) {
-		logger.debug("=====> Delete user: " + user.getUsername());
+		logger.debug("Delete user: " + user.getUsername());
+		db.removeUser(user);
 		redirectAttributes.addFlashAttribute("deleteUsersChange", true);
 		redirectAttributes.addFlashAttribute("deleteUsrChMsg", "Użytkownik '" + user.getUsername() + "' został usunięty.");
 		return "redirect:/settings";

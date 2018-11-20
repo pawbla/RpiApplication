@@ -9,7 +9,8 @@
     	<section class="loginPage">
 	      <h1 class="loginPage">RPi IoT Home System</h1>
 	      <h2 class="loginPage">Rejestacja</h2>    
-	      <p th:if="${userRegistered} == false" class="error">Podany użytkownik już istnieje.</p> 
+	      <p th:if="${userExisted}" class="error">Podany użytkownik już istnieje.</p> 
+	      <p th:if="${userRegisteredError}" class="error">Nie zostały uzupełnione wszystkie wymagane pola: Login i Hasło.</p>
 	      <form th:action="@{/registration}" method="POST" th:object="${user}" class="loginPage"> 
 	        <label class="label">Login</label>:<br /> 
 	        <input class="text" type="text" th:field="*{username}"/><br />

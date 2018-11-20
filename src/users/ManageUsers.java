@@ -15,4 +15,5 @@ public interface ManageUsers {
 	public void setUsers(ArrayList<User> users);
 	public ArrayList<String> getRoles();
 	public HttpStatus checkUserStatus (String userName);
+	public void removeUser(User user);
 }
