@@ -2,6 +2,8 @@ package sensors.services;
 
 import java.util.HashMap;
 
+import sensors.handler.SensorsHandlerInterface;
+
 /**
  * Abstract sensor interface
  * @author blach
@@ -16,8 +18,9 @@ public abstract class AbstractSensorInterface<T> implements SensorInterface<T> {
 	protected HashMap<String,String> map;
 	
 	
-	public AbstractSensorInterface(String ip ) {
+	public AbstractSensorInterface(String ip, SensorsHandlerInterface sensorHandler ) {
 		this.ip = ip;
+		sensorHandler.addSensorService(this);
 	}
 	
 	public abstract T getSensor();

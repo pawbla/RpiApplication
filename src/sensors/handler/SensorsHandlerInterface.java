@@ -1,7 +1,5 @@
 package sensors.handler;
 
-import org.springframework.stereotype.Component;
-
 import sensors.services.SensorInterface;
 
 /**

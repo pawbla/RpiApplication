@@ -1,5 +1,6 @@
 package configurations;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -20,7 +21,6 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
-import sensors.handler.SensorHandler;
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
 import sensors.services.SensorInterface;
@@ -38,17 +38,27 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Value("${custom.ipInternalSensor}")
 	private String ipInternalSensor; 
 	
+	/**
+	 * Thymeleaf resources path configuration
+	 */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
          registry.addResourceHandler("/css/**").addResourceLocations("file:./WebContent/WEB-INF/lib/css/");
     }
     
+    /**
+     * View controller configuration
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
-        
+       
+    /**
+     * Thymeleaf template resolvers and engines
+     * @return
+     */
     @Bean
     public ViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver() ;
@@ -74,6 +84,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return templateResolver;
     }  
     
+    /**
+     * Rest Teplate builder configuration
+     * @param restTemplateBuilder
+     * @return
+     */
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) 
     {
@@ -81,18 +96,25 @@ public class WebConfig extends WebMvcConfigurerAdapter {
            .setConnectTimeout(2000)
            .setReadTimeout(2000)
            .build();
-    }
-        
+    } 
+    
+    /**
+     * Sensors IP configuration
+     * @return
+     */
+    @Autowired
+    SensorsHandlerInterface sensorHandler;
+    
     @Bean
     @Qualifier("internal")
     public SensorInterface<WeatherSensor> internal() {
-    	return new WeatherInternalSensorService(ipInternalSensor);
+    	return new WeatherInternalSensorService(ipInternalSensor, sensorHandler);
     }   
     
     @Bean
     @Qualifier("external")
     public SensorInterface<WeatherSensor> external() {
-    	return new WeatherExternalSensorService(ipInternalSensor);
+    	return new WeatherExternalSensorService(ipInternalSensor, sensorHandler);
     } 
     
 	@Override

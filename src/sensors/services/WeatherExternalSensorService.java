@@ -2,7 +2,6 @@ package sensors.services;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
@@ -19,16 +18,12 @@ public class WeatherExternalSensorService extends AbstractSensorInterface<Weathe
 	 */
 	private static final String SENSOR_NAME = "External Weather Sensor";
 	
-	@Autowired
-	private SensorsHandlerInterface sensorHandler;
-	
 	/**
 	 * Constructor
 	 */
-	public WeatherExternalSensorService(String ip) {
-		super(ip);
+	public WeatherExternalSensorService(String ip, SensorsHandlerInterface sensorHandler) {
+		super(ip, sensorHandler);
 		logger.info("Create " + WeatherExternalSensorService.SENSOR_NAME + " object with IP: " + ip);
-		sensorHandler.addSensorService(this);
 	}
 	
 	public WeatherSensor getSensor() {
