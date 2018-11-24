@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import configurations.DatabaseConfiguration;
 import configurations.SecurityConfig;
-import users.ManageUsers;
+import users.ManageUsersInterface;
 import users.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,7 +26,7 @@ import users.User;
 public class ManageUserDBTest {
 	
 	@Autowired
-	private ManageUsers db;
+	private ManageUsersInterface db;
 
 	private User user1;
 	private User user2;

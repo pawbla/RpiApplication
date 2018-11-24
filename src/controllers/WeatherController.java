@@ -13,14 +13,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import sensors.*;
+import sensors.objects.WeatherSensor;
+import sensors.services.SensorInterface;
 
 @Controller
 public class WeatherController {
 	
 	@Autowired
 	@Qualifier("internal")
-	private Sensor sens;
+	private SensorInterface<WeatherSensor> inWeatherSensor;
+	
+	@Autowired
+	@Qualifier("external")
+	private SensorInterface<WeatherSensor> extWeatherSensor;
 	
 	private Map<String,Object> sensors;
 	
@@ -29,8 +34,8 @@ public class WeatherController {
 	}
 	
 	private Map<String,Object> setSensors() {
-		sensors.put("inSensor", sens.getData());
-		sensors.put("outSensor", sens.getData());
+		sensors.put("inSensor", inWeatherSensor.getSensor());
+		sensors.put("outSensor", inWeatherSensor.getSensor());
 		return sensors;
 	}
 	

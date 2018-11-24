@@ -1,8 +1,6 @@
 package homeSystem;
 
 import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -21,7 +19,7 @@ public class EmbeddedApp {
 	private static final Logger logger = LogManager.getLogger("UserApp");
 	
 	public static void main(String[] args) {
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
+        //ClassLoader cl = ClassLoader.getSystemClassLoader();
 
         //URL[] urls = ((URLClassLoader)cl).getURLs();
         String log4jConfigFile = System.getProperty("user.dir") + File.separator + "log4j.properties";

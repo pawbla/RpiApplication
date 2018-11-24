@@ -20,13 +20,21 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
-import sensors.Sensor;
-import sensors.WebSensor;
+import sensors.handler.SensorHandler;
+import sensors.handler.SensorsHandlerInterface;
+import sensors.objects.WeatherSensor;
+import sensors.services.SensorInterface;
+import sensors.services.WeatherExternalSensorService;
+import sensors.services.WeatherInternalSensorService;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"controllers", "properties"})
+@ComponentScan({"controllers", "properties", "sensors"})
 public class WebConfig extends WebMvcConfigurerAdapter {
+	
+	/**
+	 * Custom values declaration
+	 */
 	@Value("${custom.ipInternalSensor}")
 	private String ipInternalSensor; 
 	
@@ -74,14 +82,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
            .setReadTimeout(2000)
            .build();
     }
-    
+        
     @Bean
     @Qualifier("internal")
-    public Sensor internal() {
-    	return new WebSensor(ipInternalSensor);
-    }
+    public SensorInterface<WeatherSensor> internal() {
+    	return new WeatherInternalSensorService(ipInternalSensor);
+    }   
     
-	
+    @Bean
+    @Qualifier("external")
+    public SensorInterface<WeatherSensor> external() {
+    	return new WeatherExternalSensorService(ipInternalSensor);
+    } 
+    
 	@Override
 	public void configureDefaultServletHandling (DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();

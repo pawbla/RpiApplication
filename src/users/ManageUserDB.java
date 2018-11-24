@@ -11,13 +11,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ManageUserDB implements ManageUsers {
+public class ManageUserDB implements ManageUsersInterface {
 	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);	
 	
 	private static final String INSERT_USER = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
