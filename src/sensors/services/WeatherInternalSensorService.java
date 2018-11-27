@@ -32,16 +32,24 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 		super(ip, sensorHandler);
 		logger.info("Create " + WeatherInternalSensorService.SENSOR_NAME + " object with IP: " + ip);
 		inSensor = new WeatherSensor();
+		/* Set initial values */
+		inSensor.setHumidity("--.-");
+		inSensor.setTemperature("--.-");
+		inSensor.setPressure("--.-");
+		inSensor.setDate("----");
 	}
 	
 	/**
 	 * Method to get and parse data into WeatherSensor object
 	 */
 	public WeatherSensor getSensor() {
-		inSensor.setHumidity(mapper.getMap().get("humidity"));
-		inSensor.setTemperature(mapper.getMap().get("temperature"));
-		inSensor.setPressure(mapper.getMap().get("pressure"));
-		inSensor.setDate(mapper.getDateAsString());
+		if (mapper.getResponseCode() == 200) {
+			inSensor.setHumidity(mapper.getMap().get("humidity"));
+			inSensor.setTemperature(mapper.getMap().get("temperature"));
+			inSensor.setPressure(mapper.getMap().get("pressure"));
+			inSensor.setDate(mapper.getDateAsString());
+		}
+		inSensor.setStatusCode(mapper.getResponseCode());
 		return inSensor;
 	}
 	

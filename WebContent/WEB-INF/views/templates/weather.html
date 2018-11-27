@@ -17,16 +17,16 @@
 	        <div class="inWeather">
 	          <h3>Wewnątrz</h3>
 	          <p class="temp" th:text="${inSensor.temperature} +'&deg;C'"></p>
-	          <p class="hum" th:text="${inSensor.pressure} + 'hPa'"></p>
+	          <p class="hum" th:text="${inSensor.pressure} + '%'"></p>
 	        </div>
 	        <div class="outWeather">
 	          <h3>Na zewnątrz</h3>
 	            <p class="temp" th:text="${inSensor.temperature} +'&deg;C'"></p>
-	            <p class="hum" th:text="${inSensor.pressure} + 'hPa'"></p>
+	            <p class="hum" th:text="${inSensor.pressure} + '%'"></p>
 	        </div>
 	        <div class="press">
 	          <h3>Ciśnienie</h3>
-	          <p class="hum" th:text="${inSensor.humidity} + '%'"></p>
+	          <p class="hum" th:text="${inSensor.humidity} + 'hPa'"></p>
 	        </div>
 	      </div>
 	    </section>   
