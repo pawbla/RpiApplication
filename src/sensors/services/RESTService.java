@@ -44,10 +44,6 @@ public class RESTService {
 	private RestTemplate rest;
 	private HttpEntity<Object> entity;
 	private ResponseEntity<String> resp;
-	private HashMap<String,String> map;
-	private ObjectMapper mapper;
-	private Date date;
-	private DateFormat dateFormat;
 	private SensorIteratorInterface sensorIterator;
 	
     @Autowired
@@ -61,16 +57,9 @@ public class RESTService {
 	public RESTService() {
 		logger.info("Create REST Service object.");
 		rest = new RestTemplate();
-		date = new Date();
-		dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    entity = new HttpEntity<Object>(headers);	
-		map = new HashMap<String,String>();
-		mapper = new ObjectMapper();
-		
-		sensorHandler.getSensorInterfaceIterator();
+	    entity = new HttpEntity<Object>(headers);
 	}
 	
 	/**
@@ -78,35 +67,16 @@ public class RESTService {
 	 */
 	@Scheduled(fixedRate = timeout)
 	private void fetchDatas() {
-		while(!sensorIterator.isLastSensorInterface()) {
+		sensorIterator = sensorHandler.getSensorInterfaceIterator();
+		while(sensorIterator.isLastSensorInterface()) {
 			logger.info("Sensor fetched: " + sensorIterator.getSensorInterface().getSensorName());
-		}
-		logger.info("Fetch datas from ip: " + ip);
-		try {
-			resp = rest.exchange("http://" + ip, HttpMethod.GET, entity, String.class);
-		} catch (Exception e) {
-			logger.warn("Unable to fetch datas from ip " + ip + " caused by exception: " + e);		
-		}
-	}
-	
-	protected List<Object> getData( ) {
-		logger.info("GetDatas from internal weather sensor");
-		//update only when status code 200, unless do not update
-		try {
-			if (resp.getStatusCodeValue() == 200) {
-				try { 
-					map = mapper.readValue(resp.getBody(), new TypeReference<HashMap<String,String>>(){});
-				} catch (Exception e) {
-					logger.warn("Unable to get datas collected from internal weather sensor caused by exception: " + e);
-				}	
+			logger.info("Fetch datas from ip: " + ip);
+			try {
+				resp = rest.exchange("http://" + ip, HttpMethod.GET, entity, String.class);
+			} catch (Exception e) {
+				logger.warn("Unable to fetch datas from ip " + ip + " caused by exception: " + e);		
 			}
-			//inSensor.setStatusCode(resp.getStatusCodeValue());
-		} catch (Exception e) {
-			//inSensor.setStatusCode(110);
-			map = null;
-			logger.warn("Unable to read Status Code Value. Exception" + e);		
+			sensorIterator.getSensorInterface().setResponse(resp);
 		}
-		return null;
-		/* return: DATA, MAP, STATUS CODE VALUE */
 	}
 }

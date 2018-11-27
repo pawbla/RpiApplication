@@ -1,6 +1,9 @@
 package sensors.services;
 
 import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 
 /**
  * Sensor interface
@@ -11,9 +14,7 @@ public interface SensorInterface<T> {
 	public T getSensor();
 	public String getIP();
 	public String getSensorName();
-	public void setMap(HashMap<String,String> map);
-	public void setResponseCode(int responseCode);
-	public void setMeasureDate(String currentDate);
+	public void setResponse(ResponseEntity<String> resp);
 }
 
 //open weather map link:

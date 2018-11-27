@@ -23,7 +23,6 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
-import sensors.services.RESTService;
 import sensors.services.SensorInterface;
 import sensors.services.WeatherExternalSensorService;
 import sensors.services.WeatherInternalSensorService;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import homeSystem.EmbeddedApp;
 import sensors.services.SensorInterface;
@@ -13,6 +14,7 @@ import sensors.services.SensorInterface;
  * @author blach
  *
  */
+@Component
 public class SensorIterator implements SensorIteratorInterface {
 	/**
 	 * Logger
@@ -26,9 +28,12 @@ public class SensorIterator implements SensorIteratorInterface {
 	/**
 	 * Constructor constructs object contains sensor interfaces' list
 	 */
+	
 	public SensorIterator (List<SensorInterface<?>> sensorList) {
+		logger.debug("Create SensorInterface object");
 		this.sensorList = sensorList;
 	}
+	
 
 	/**
 	 * Method allows to get Sensor Interface over iterable list

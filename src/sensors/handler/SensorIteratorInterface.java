@@ -1,5 +1,6 @@
 package sensors.handler;
 
+
 import sensors.services.SensorInterface;
 
 /**
@@ -8,11 +9,12 @@ import sensors.services.SensorInterface;
  *
  */
 public interface SensorIteratorInterface {
+	
 	/**
 	 * abstract methods returns sensor interface
 	 * @return sensor interface
 	 */
-	<T> SensorInterface<T> getSensorInterface();
+	SensorInterface<?> getSensorInterface();
 	
 	/**
 	 * Abstract method return true if list contains more elements

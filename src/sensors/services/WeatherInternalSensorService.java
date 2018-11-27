@@ -38,11 +38,10 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	 * Method to get and parse data into WeatherSensor object
 	 */
 	public WeatherSensor getSensor() {
-		/*
-		inSensor.setHumidity(map.get("humidity"));
-		inSensor.setTemperature(map.get("temperature"));
-		inSensor.setPressure(map.get("pressure"));
-		inSensor.setDate(dateFormat.format(date));*/
+		inSensor.setHumidity(mapper.getMap().get("humidity"));
+		inSensor.setTemperature(mapper.getMap().get("temperature"));
+		inSensor.setPressure(mapper.getMap().get("pressure"));
+		inSensor.setDate(mapper.getDateAsString());
 		return inSensor;
 	}
 	

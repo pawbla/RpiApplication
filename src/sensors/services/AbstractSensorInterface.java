@@ -1,7 +1,13 @@
 package sensors.services;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import sensors.MeasuredValuesMapper;
 import sensors.handler.SensorsHandlerInterface;
 
 /**
@@ -13,14 +19,12 @@ import sensors.handler.SensorsHandlerInterface;
 public abstract class AbstractSensorInterface<T> implements SensorInterface<T> {
 	
 	private String ip;
-	protected int responseCode;
-	protected String currentDate;
-	protected HashMap<String,String> map;
-	
+	protected MeasuredValuesMapper mapper;
 	
 	public AbstractSensorInterface(String ip, SensorsHandlerInterface sensorHandler ) {
 		this.ip = ip;
 		sensorHandler.addSensorService(this);
+		mapper = new MeasuredValuesMapper();
 	}
 	
 	public abstract T getSensor();
@@ -29,13 +33,8 @@ public abstract class AbstractSensorInterface<T> implements SensorInterface<T> {
 	public String getIP() {
 		return ip;
 	}
-	public void setMap(HashMap<String,String> map) {
-		this.map = map;
-	}
-	public void setResponseCode(int responseCode) {
-		this.responseCode = responseCode;
-	}
-	public void setMeasureDate(String currentDate) {
-		this.currentDate = currentDate;
+	
+	public void setResponse(ResponseEntity<String> resp) {
+		this.mapper.setResponse(resp);
 	}
 }

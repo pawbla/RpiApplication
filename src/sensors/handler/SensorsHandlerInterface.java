@@ -1,5 +1,7 @@
 package sensors.handler;
 
+import java.util.List;
+
 import sensors.services.SensorInterface;
 
 /**
@@ -12,7 +14,7 @@ public interface SensorsHandlerInterface {
 	 * Abstract method to register Sensor Interface
 	 * @param sensorService
 	 */
-	public <T> void addSensorService(SensorInterface<T> sensorService);
+	public void addSensorService(SensorInterface<?> sensorService);
 	/**
 	 * Abstract method to get iterator
 	 * @return
