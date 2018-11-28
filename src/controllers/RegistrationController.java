@@ -21,7 +21,7 @@ import users.User;
 
 @Controller
 public class RegistrationController {
-	private static final Logger logger = LogManager.getLogger(RegistrationController.class);
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	@Autowired
 	private ManageUserDB db;

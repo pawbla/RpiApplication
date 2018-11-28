@@ -1,10 +1,5 @@
 package sensors.services;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -18,10 +13,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import homeSystem.EmbeddedApp;
 import sensors.handler.SensorIteratorInterface;
 import sensors.handler.SensorsHandlerInterface;
 
@@ -36,7 +27,7 @@ public class RESTService {
 	/**
 	 * Logger
 	 */
-	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	/**
 	 * Definitions of variables
 	 */
@@ -49,17 +40,14 @@ public class RESTService {
     @Autowired
     private SensorsHandlerInterface sensorHandler;
 		
-	private final long timeout = 10000;
+	private final long timeout = 20000;
 	
 	/**
 	 * Constructor
 	 */
 	public RESTService() {
 		logger.info("Create REST Service object.");
-		rest = new RestTemplate();
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    entity = new HttpEntity<Object>(headers);
+		rest = new RestTemplate();	    
 	}
 	
 	/**
@@ -67,16 +55,21 @@ public class RESTService {
 	 */
 	@Scheduled(fixedRate = timeout)
 	private void fetchDatas() {
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+		entity = new HttpEntity<Object>(headers);
 		sensorIterator = sensorHandler.getSensorInterfaceIterator();
+		SensorInterface<?> sensorInterface;
 		while(sensorIterator.isLastSensorInterface()) {
-			logger.info("Sensor fetched: " + sensorIterator.getSensorInterface().getSensorName());
-			logger.info("Fetch datas from ip: " + ip);
+			sensorInterface = sensorIterator.getSensorInterface();
+			logger.info("Sensor fetched: " + sensorInterface.getSensorName() + " from IP: " + sensorInterface.getIP());
 			try {
-				resp = rest.exchange("http://" + ip, HttpMethod.GET, entity, String.class);
+				resp = rest.exchange("http://" + sensorInterface.getIP(), HttpMethod.GET, entity, String.class);
+				logger.debug("Received response code " + resp.getStatusCodeValue() + " for sensor: " + sensorInterface.getSensorName());
+				sensorInterface.setResponse(resp);
 			} catch (Exception e) {
 				logger.warn("Unable to fetch datas from ip " + ip + " caused by exception: " + e);		
 			}
-			sensorIterator.getSensorInterface().setResponse(resp);
 		}
 	}
 }

@@ -19,7 +19,7 @@ public class SensorIterator implements SensorIteratorInterface {
 	/**
 	 * Logger
 	 */
-	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	private SensorInterface<?> sensorInterface;
 	private List<SensorInterface<?>> sensorList;

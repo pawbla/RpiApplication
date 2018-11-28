@@ -16,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 public class EmbeddedApp {
-	private static final Logger logger = LogManager.getLogger("UserApp");
+	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);
 	
 	public static void main(String[] args) {
         //ClassLoader cl = ClassLoader.getSystemClassLoader();

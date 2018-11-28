@@ -35,7 +35,7 @@ public class WeatherController {
 	
 	private Map<String,Object> setSensors() {
 		sensors.put("inSensor", inWeatherSensor.getSensor());
-		sensors.put("outSensor", inWeatherSensor.getSensor());
+		sensors.put("outSensor", extWeatherSensor.getSensor());
 		return sensors;
 	}
 	

@@ -20,7 +20,7 @@ import users.User;
 
 @Controller
 public class SettingsController {
-	private static final Logger logger = LogManager.getLogger(SettingsController.class);
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	@Autowired
 	private ManageUserDB db;

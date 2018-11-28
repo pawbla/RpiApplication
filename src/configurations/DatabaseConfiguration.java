@@ -1,7 +1,5 @@
 package configurations;
 
-import homeSystem.EmbeddedApp;
-
 import javax.sql.DataSource;
 
 import org.apache.log4j.LogManager;
@@ -19,7 +17,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 @ComponentScan({"users"})
 public class DatabaseConfiguration {
 	
-	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
     //MySQL DB connection
     @Profile("prod")

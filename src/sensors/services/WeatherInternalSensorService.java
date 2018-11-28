@@ -12,12 +12,15 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	/**
 	 * Logger
 	 */
-	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	/**
 	 * Constants
 	 */
 	private static final String SENSOR_NAME = "Internal Weather Sensor";
+	private static final String TEMPERATURE_SENSOR_KEY = "temperature";
+	private static final String HUMIDITY_SENSOR_KEY = "humidity";
+	private static final String PRESSURE_SENSOR_KEY = "pressure";
 	
 	/**
 	 * Variables' declarations
@@ -43,10 +46,11 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	 * Method to get and parse data into WeatherSensor object
 	 */
 	public WeatherSensor getSensor() {
+		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
-			inSensor.setHumidity(mapper.getMap().get("humidity"));
-			inSensor.setTemperature(mapper.getMap().get("temperature"));
-			inSensor.setPressure(mapper.getMap().get("pressure"));
+			inSensor.setHumidity(mapper.getJSONObject().getString(HUMIDITY_SENSOR_KEY));
+			inSensor.setTemperature(mapper.getJSONObject().getString(TEMPERATURE_SENSOR_KEY));
+			inSensor.setPressure(mapper.getJSONObject().getString(PRESSURE_SENSOR_KEY));
 			inSensor.setDate(mapper.getDateAsString());
 		}
 		inSensor.setStatusCode(mapper.getResponseCode());

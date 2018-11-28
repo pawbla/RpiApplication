@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ManageUserDB implements ManageUsersInterface {
-	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);	
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());	
 	
 	private static final String INSERT_USER = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
 	private static final String INSERT_USER_INROLE = "INSERT INTO roles (username) VALUES (?)";

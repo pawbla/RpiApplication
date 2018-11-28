@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import homeSystem.EmbeddedApp;
@@ -22,7 +21,7 @@ public class SensorHandler implements SensorsHandlerInterface {
 	/**
 	 * Logger
 	 */
-	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
 	private List<SensorInterface<?>> sensorList;
 	

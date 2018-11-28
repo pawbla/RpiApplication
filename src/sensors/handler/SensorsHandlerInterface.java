@@ -1,7 +1,5 @@
 package sensors.handler;
 
-import java.util.List;
-
 import sensors.services.SensorInterface;
 
 /**
