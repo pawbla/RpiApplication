@@ -54,14 +54,12 @@ public class RESTService {
 	 * Method executed with set period of time
 	 */
 	@Scheduled(fixedRate = timeout)
-	private void fetchDatas() {
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_JSON);
-		entity = new HttpEntity<Object>(headers);
+	private void fetchDatas() {		
 		sensorIterator = sensorHandler.getSensorInterfaceIterator();
 		SensorInterface<?> sensorInterface;
 		while(sensorIterator.isLastSensorInterface()) {
 			sensorInterface = sensorIterator.getSensorInterface();
+			entity = new HttpEntity<Object>(sensorInterface.getHeader());
 			logger.info("Sensor fetched: " + sensorInterface.getSensorName() + " from IP: " + sensorInterface.getIP());
 			try {
 				resp = rest.exchange("http://" + sensorInterface.getIP(), HttpMethod.GET, entity, String.class);

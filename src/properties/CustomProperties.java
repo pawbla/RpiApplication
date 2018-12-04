@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class CustomProperties {
 	private String ipInternalSensor;
 	private String ipExternalSensor;
+	private String intSensorPassword;
 	
 	public String getIpInternalSensor() {
 		return ipInternalSensor;
@@ -20,5 +21,11 @@ public class CustomProperties {
 	}
 	public void setIpExternalSensor(String ipExternalSensor) {
 		this.ipExternalSensor = ipExternalSensor;
+	}
+	public String getIntSensorPassword() {
+		return intSensorPassword;
+	}
+	public void setIntSensorPassword(String intSensorPassword) {
+		this.intSensorPassword = intSensorPassword;
 	}
 }

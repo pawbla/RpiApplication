@@ -2,8 +2,10 @@ package sensors.services;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
-import homeSystem.EmbeddedApp;
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
 
@@ -18,14 +20,18 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	 * Constants
 	 */
 	private static final String SENSOR_NAME = "Internal Weather Sensor";
-	private static final String TEMPERATURE_SENSOR_KEY = "temperature";
-	private static final String HUMIDITY_SENSOR_KEY = "humidity";
-	private static final String PRESSURE_SENSOR_KEY = "pressure";
+	private static final String TEMPERATURE_SENSOR_KEY = "Temperature";
+	private static final String HUMIDITY_SENSOR_KEY = "Humidity";
+	private static final String PRESSURE_SENSOR_KEY = "Pressure";
 	
 	/**
 	 * Variables' declarations
 	 */
 	private WeatherSensor inSensor;
+	private HttpHeaders headers;
+	
+	@Value("${custom.intSensorPassword}")
+	private String pass;
 	
 	/**
 	 * Constructor
@@ -35,11 +41,9 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 		super(ip, sensorHandler);
 		logger.info("Create " + WeatherInternalSensorService.SENSOR_NAME + " object with IP: " + ip);
 		inSensor = new WeatherSensor();
-		/* Set initial values */
-		inSensor.setHumidity("--.-");
-		inSensor.setTemperature("--.-");
-		inSensor.setPressure("--.-");
-		inSensor.setDate("----");
+	    headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    headers.add("Authentication", "04122018pass");
 	}
 	
 	/**
@@ -59,5 +63,10 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	
 	public String getSensorName() {
 		return WeatherInternalSensorService.SENSOR_NAME;
+	}
+
+	@Override
+	public HttpHeaders getHeader() {
+		return headers;
 	}
 }

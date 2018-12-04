@@ -2,6 +2,8 @@ package sensors.services;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
@@ -24,6 +26,7 @@ public class WeatherExternalSensorService extends AbstractSensorInterface<Weathe
 	 * Variables' declarations
 	 */
 	private WeatherSensor extSensor;
+	private HttpHeaders headers;
 	
 	/**
 	 * Constructor
@@ -32,9 +35,8 @@ public class WeatherExternalSensorService extends AbstractSensorInterface<Weathe
 		super(ip, sensorHandler);
 		logger.info("Create " + WeatherExternalSensorService.SENSOR_NAME + " object with IP: " + ip);
 		extSensor = new WeatherSensor();
-		extSensor.setHumidity("--.-");
-		extSensor.setTemperature("--.-");
-		extSensor.setDate("----");
+	    headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
 	}
 	
 	public WeatherSensor getSensor() {
@@ -52,5 +54,10 @@ public class WeatherExternalSensorService extends AbstractSensorInterface<Weathe
 	
 	public String getSensorName() {
 		return WeatherExternalSensorService.SENSOR_NAME;
+	}
+	
+	@Override
+	public HttpHeaders getHeader() {
+		return headers;
 	}
 }
