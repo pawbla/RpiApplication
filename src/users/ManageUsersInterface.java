@@ -16,4 +16,5 @@ public interface ManageUsersInterface {
 	public ArrayList<String> getRoles();
 	public HttpStatus checkUserStatus (String userName);
 	public void removeUser(User user);
+	public boolean validadeEMail(String email);
 }

@@ -12,6 +12,7 @@
         <section  class="main">
 	      <p th:if="${passError}" class="error">Bład podczas wprowadzania haseł. Ponów próbę.</p>  
 	      <p th:if="${confirmPassChange}" class="error">Hasło zostało zmienione.</p>
+	      <p th:if="${userEmailError}" class="error">Wprowadz poprawy adres email.</p>
 	      <p th:if="${confirmEmailChange}" class="error">Adres e-mail został zmieniony.</p>
 	      <p th:if="${confirmUsersChange}" class="error" th:text="${confirmUsrChMsg}"></p> 
 	      <p th:if="${deleteUsersChange}" class="error" th:text="${deleteUsrChMsg}"></p>

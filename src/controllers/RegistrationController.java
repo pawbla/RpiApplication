@@ -46,6 +46,10 @@ public class RegistrationController {
 	 */
 	@RequestMapping(value="/registration", method=POST)
 	public String ProcessRegistration(User user, Model model, RedirectAttributes redirectAttributes) {
+		if (!user.getEmail().isEmpty() && !db.validadeEMail(user.getEmail())) {
+			redirectAttributes.addFlashAttribute("userEmailError", true);
+			return "redirect:/registration";
+		}
 		if (user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
 			redirectAttributes.addFlashAttribute("userRegisteredError", true);
 			return "redirect:/registration";

@@ -5,6 +5,8 @@ import homeSystem.EmbeddedApp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -210,5 +213,14 @@ public class ManageUserDB implements ManageUsersInterface {
 		jdbcTemplate.update(SQL_DELETE_ROLE,user.getUsername());
 		jdbcTemplate.update(SQL_DELETE_USER,user.getUsername());
 		
+	}
+	
+	public boolean validadeEMail(String email) {
+		logger.info("Validate email: " + email);
+		String emailPatter = "^[A-Za-z0-9\\-\\+\\-\\.]*[A-Za-z0-9]+@{1}[A-Za-z0-9\\-]+\\.?[A-Za-z0-9]+$";
+		Pattern pattern = Pattern.compile(emailPatter);
+		Matcher matcher = pattern.matcher(email);
+		logger.info("Result: " + matcher.matches());
+		return  matcher.matches();
 	}
 }

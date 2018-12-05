@@ -54,6 +54,10 @@ public class SettingsController {
 	
 	@RequestMapping(value = "/settingsEmail", method=POST)
 	public String changeEmail (User user, Model model, RedirectAttributes redirectAttributes) {
+		if (!user.getEmail().isEmpty() && !db.validadeEMail(user.getEmail())) {
+			redirectAttributes.addFlashAttribute("userEmailError", true);
+			return "redirect:/settings";
+		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    user.setUsername(auth.getName());
 	    db.setEmail(user);

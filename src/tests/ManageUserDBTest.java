@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -144,6 +145,37 @@ public class ManageUserDBTest {
     public void checkUserStatus_NoAdd ( ) {
     	String testUserName = "User_checkNoAdd";
     	assertEquals(HttpStatus.UNAUTHORIZED, db.checkUserStatus(testUserName));
+    }
+    
+    @Test
+    public void validateEmailPositive () {
+    	List<String> testCases = new ArrayList<>();
+    	testCases.add("simple@example.com");
+    	testCases.add("very.common@example.com");
+    	testCases.add("disposable.style.email.with+symbol@example.com");
+    	testCases.add("other.email-with-hyphen@example.com");
+    	testCases.add("fully-qualified-domain@example.com");
+    	testCases.add("user.name+tag+sorting@example.com");
+    	testCases.add("x@example.com");
+    	testCases.add("example-indeed@strange-example.com");
+    	testCases.add("admin@mailserver1");
+    	testCases.add("example@s.example");
+    	for (String t : testCases) {
+    		assertTrue(t, db.validadeEMail(t));
+    	}   	
+    }
+    
+    @Test
+    public void validateEmailNegative () {
+    	List<String> testCases = new ArrayList<>();
+    	testCases.add("Abc.example.com");
+    	testCases.add("Abc.example@.com");
+    	testCases.add("Abc.example.@com");
+    	testCases.add("A@b@c@example.com");
+    	testCases.add("john.doe@example..com");
+    	for (String t : testCases) {
+    		assertFalse(t, db.validadeEMail(t));
+    	}   	
     }
 }
 	
