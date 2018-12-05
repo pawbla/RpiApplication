@@ -53,6 +53,7 @@ public class DatabaseConfiguration {
      @Profile("dev")
      @Bean
      public JdbcTemplate jdbcTemplateE (DataSource eDataSource) {
+    	 logger.info("Create embedded database connection");
     	 return new JdbcTemplate(eDataSource);
      }
 }

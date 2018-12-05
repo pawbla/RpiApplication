@@ -33,7 +33,6 @@ public class RegistrationController {
 	 */
 	@RequestMapping(value = "/registration", method=GET)
 	public String Registration(Model model) {
-		logger.trace("Registration controller Test start");
 		model.addAttribute("user", new User());
 		return "registration";
 	}

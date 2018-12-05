@@ -30,7 +30,6 @@ public class SettingsController {
 		
 	@RequestMapping(value = "/settings", method=GET)
 	public String settings(Model model) {
-		logger.trace("Settings controller start");
 		db.loadUsers();
 		model.addAttribute("user", new User());	
 		model.addAttribute("userDatas", db);

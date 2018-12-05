@@ -29,7 +29,6 @@ public class EmbeddedApp {
         }	*/
 		logger.info("************************************************************************");
 		logger.info("********************** START EMBEDDED APPLICATION **********************");
-		logger.info("************************* SHOW ALL CLASSPATH: **************************");
         SpringApplication.run(EmbeddedApp.class, args);
 	}	
 }

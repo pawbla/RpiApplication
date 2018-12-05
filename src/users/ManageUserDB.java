@@ -197,7 +197,7 @@ public class ManageUserDB implements ManageUsersInterface {
 			}
 		} catch (DataAccessException e) {
 			//no user in db - 401
-			logger.trace("EXPECTED Exception !! probably user checks status for no existing username: " + e);
+			logger.warn("EXPECTED Exception !! probably user checks status for no existing username: " + e);
 			status = HttpStatus.UNAUTHORIZED;
 		}
 		return status;

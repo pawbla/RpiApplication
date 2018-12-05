@@ -48,7 +48,5 @@ public class WeatherController {
 	@RequestMapping(value = "/weatherRest",method=GET, produces="application/json")
 	public @ResponseBody Map<String,Object> l (Principal user) {
 		return setSensors();
-	}
-	
-	
+	}	
 }
