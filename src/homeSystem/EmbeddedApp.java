@@ -19,16 +19,14 @@ public class EmbeddedApp {
 	private static final Logger logger = LogManager.getLogger(EmbeddedApp.class);
 	
 	public static void main(String[] args) {
-        //ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-        //URL[] urls = ((URLClassLoader)cl).getURLs();
         String log4jConfigFile = System.getProperty("user.dir") + File.separator + "log4j.properties";
         PropertyConfigurator.configure(log4jConfigFile);
-        /*for(URL url: urls){
-        	logger.info(url.getFile());
-        }	*/
 		logger.info("************************************************************************");
 		logger.info("********************** START EMBEDDED APPLICATION **********************");
+		logger.info("**********************                            **********************");
+		logger.info("************************************************************************");
+		logger.info("User home directory: " + System.getProperty("user.home"));
+		logger.info("User current working directory: " + System.getProperty("user.dir"));
         SpringApplication.run(EmbeddedApp.class, args);
 	}	
 }

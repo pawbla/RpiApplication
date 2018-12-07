@@ -45,8 +45,8 @@ public class DatabaseConfiguration {
     	 logger.info("Create embedded database connection - for tests.");
     	 return new EmbeddedDatabaseBuilder()
     	 .setType(EmbeddedDatabaseType.H2)
-    	 .addScript("classpath:/Resources/schema.sql")
-    	 .addScript("classpath:/Resources/data.sql")
+    	 .addScript("classpath:/resources/schema.sql")
+    	 .addScript("classpath:/resources/data.sql")
     	 .build();
      }
      

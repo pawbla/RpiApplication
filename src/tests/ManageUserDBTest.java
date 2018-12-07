@@ -149,7 +149,7 @@ public class ManageUserDBTest {
     
     @Test
     public void validateEmailPositive () {
-    	List<String> testCases = new ArrayList<>();
+    	List<String> testCases = new ArrayList<String>();
     	testCases.add("simple@example.com");
     	testCases.add("very.common@example.com");
     	testCases.add("disposable.style.email.with+symbol@example.com");
@@ -167,7 +167,7 @@ public class ManageUserDBTest {
     
     @Test
     public void validateEmailNegative () {
-    	List<String> testCases = new ArrayList<>();
+    	List<String> testCases = new ArrayList<String>();
     	testCases.add("Abc.example.com");
     	testCases.add("Abc.example@.com");
     	testCases.add("Abc.example.@com");
