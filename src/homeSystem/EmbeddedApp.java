@@ -28,5 +28,6 @@ public class EmbeddedApp {
 		logger.info("User home directory: " + System.getProperty("user.home"));
 		logger.info("User current working directory: " + System.getProperty("user.dir"));
         SpringApplication.run(EmbeddedApp.class, args);
+        
 	}	
 }
