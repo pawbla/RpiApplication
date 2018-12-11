@@ -42,9 +42,9 @@ public class WeatherExternalSensorService extends AbstractSensorInterface<Weathe
 	public WeatherSensor getSensor() {
 		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
-			extSensor.setHumidity(Integer.toString(mapper.getJSONObject().getJSONObject(OBJECT_SENSOR_KEY).getInt(HUMIDITY_SENSOR_KEY)));
+			extSensor.setHumidity(String.format("%d", mapper.getJSONObject().getJSONObject(OBJECT_SENSOR_KEY).getInt(HUMIDITY_SENSOR_KEY)));
 			/* Get double value in Kelvin and convert to Celcius*/
-			extSensor.setTemperature(Double.toString(mapper.getJSONObject().getJSONObject(OBJECT_SENSOR_KEY).getDouble(TEMPERATURE_SENSOR_KEY) - 273.15));
+			extSensor.setTemperature(String.format("%.0f", mapper.getJSONObject().getJSONObject(OBJECT_SENSOR_KEY).getDouble(TEMPERATURE_SENSOR_KEY) - 273.15));
 			extSensor.setDate(mapper.getDateAsString());
 		}
 		extSensor.setStatusCode(mapper.getResponseCode());
