@@ -14,10 +14,10 @@ public class WeatherSensor {
 	 */
 	public WeatherSensor() { 
 		statusCode = 0;
-		temperature = "";
-		humidity = "";
-		pressure = "";
-		date = "Startup";
+		temperature = "-";
+		humidity = "-";
+		pressure = "-";
+		date = "-";
 	}
 
 	public String getDate() {

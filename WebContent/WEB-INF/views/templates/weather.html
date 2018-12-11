@@ -11,24 +11,28 @@
       <nav th:replace="fragments :: nav">     
       </nav>
 	    <section class="main">
-	      <p th:if="${inSensor.statusCode}!=200" class="error" th:text="'Dane \'wewnątrz\' mieszkania nie są aktualne (poprawny pomiar: ' + ${inSensor.date} + '). HTTP Status Code: ' + ${inSensor.statusCode}"/>
-	      <p th:if="${outSensor.statusCode}!=200" class="error" th:text="'Dane \'na zewnątrz\' nie są aktualne (poprawny pomiar: ' + ${outSensor.date} + '). HTTP Status Code: ' + ${outSensor.statusCode}"/>
+	      <p th:if="${inSensor.statusCode}!=200" class="error" th:text="'Dane \'wewnątrz\' mieszkania nie są aktualne. Error Code: ' + ${inSensor.statusCode}"/>
+	      <p th:if="${outSensor.statusCode}!=200" class="error" th:text="'Dane \'na zewnątrz\' nie są aktualne. Error Code: ' + ${outSensor.statusCode}"/>
 	      <div class="weather">
 	        <div class="inWeather">
 	          <h3>Wewnątrz</h3>
 	          <p class="temp" th:text="${inSensor.temperature} +'&deg;C'"></p>
 	          <p class="hum" th:text="${inSensor.humidity} + '%'"></p>
+	          <p class="actT" th:text="'Akt.: ' + ${inSensor.date}"></p>
 	        </div>
 	        <div class="outWeather">
 	          <h3>Na zewnątrz</h3>
 	            <p class="temp" th:text="${outSensor.temperature} +'&deg;C'"></p>
 	            <p class="hum" th:text="${outSensor.humidity} + '%'"></p>
+	            <p class="actT" th:text="'Akt.: ' + ${outSensor.date}"></p>
 	        </div>
 	        <div class="press">
 	          <h3>Ciśnienie</h3>
 	          <p class="hum" th:text="${inSensor.pressure} + 'hPa'"></p>
+	          <p class="actT" th:text="'Akt.: ' + ${inSensor.date}"></p>
 	        </div>
 	      </div>
+	      
 	    </section>   
 		<footer th:replace="fragments :: footer">...</footer>
 	</body>

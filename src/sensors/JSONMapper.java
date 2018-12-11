@@ -28,7 +28,7 @@ public class JSONMapper {
 	public JSONMapper() {
 		logger.debug("Create MeasuredValuesMapper.");
 		date = new Date();
-		dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat = new SimpleDateFormat("MM.dd HH:mm");
 	}
 	
 	public void setResponse(ResponseEntity<String> resp) {
