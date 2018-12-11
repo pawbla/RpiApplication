@@ -26,9 +26,9 @@ public class DatabaseConfiguration {
     	logger.info("Create mySQL databse connection.");
 	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/rpiDatabase");
-	    driverManagerDataSource.setUsername("user");
-	    driverManagerDataSource.setPassword("pass");
+	    driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/");
+	    driverManagerDataSource.setUsername("");
+	    driverManagerDataSource.setPassword("s");
 	    return driverManagerDataSource;
 	}
     

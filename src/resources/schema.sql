@@ -4,12 +4,15 @@ CREATE TABLE users (
 	password VARCHAR(128) NOT NULL,
 	enabled BOOL NOT NULL DEFAULT False,
 	email VARCHAR(128),
-	PRIMARY KEY (username),
+	PRIMARY KEY (id),
 	UNIQUE (username)
 );
 
 CREATE TABLE roles (
+	id INT NOT NULL AUTO_INCREMENT,
 	username VARCHAR(128) NOT NULL,
 	role VARCHAR(128) NOT NULL DEFAULT 'ROLE_USER',
-	FOREIGN KEY (username) REFERENCES users(username)
+	userID INT, PRIMARY KEY (id),
+ 	FOREIGN KEY (userID) REFERENCES users(id),
+	UNIQUE (username)
 );
