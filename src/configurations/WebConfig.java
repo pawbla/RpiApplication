@@ -29,7 +29,7 @@ import sensors.services.WeatherInternalSensorService;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"controllers", "properties", "sensors"})
+@ComponentScan({"controllers", "properties", "sensors", "sysInfo"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 	
 	/**
