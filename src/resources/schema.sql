@@ -18,6 +18,7 @@ CREATE TABLE roles (
 );
 
 CREATE TABLE logs (
+	id INT NOT NULL AUTO_INCREMENT,
     date TIMESTAMP,
     logger VARCHAR(100),
     level VARCHAR(100),
