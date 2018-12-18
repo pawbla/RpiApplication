@@ -12,11 +12,22 @@
       <section>
       	<div class="sysInErrors" sec:authorize="hasRole('ROLE_ADMIN')">
       		<h3>Błędy systemu:</h3>
+      		<div>
       		<table class="errorList">
+      			<tr>
+      				<th>Data</th>
+      				<th>Level</th>
+      				<th>Message</th>
+      				<th>Exception</th>
+      			</tr>
       			<tr th:each="error : ${errorsList}">
-      				<td th:text="${error}"></td>
+      				<td class="date" th:text="${error.date}"></td>
+      				<td class="lvl" th:text="${error.level}"></td>
+      				<td class="msg" th:text="${error.message}"></td>
+      				<td th:text="${error.exception}"></td>
       			</tr>
       		</table>
+      		</div>
       	</div>			
       </section>     
        <footer th:replace="fragments :: footer">...</footer>

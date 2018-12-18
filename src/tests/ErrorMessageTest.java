@@ -2,14 +2,11 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,20 +30,19 @@ public class ErrorMessageTest {
 	private ErrorMessage errMsg;
 
 	@Before
-	public void setUp() throws Exception {
-		/* Create traces for test */
+	public void setUp() {
+		/* Create traces stored into DB for test */
 		for (int i = 0; i < 20; i++) {
 			logger.warn("Error no: " + i);
 		}
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
 	public void getWarningListTest() {
-
-		assertNull(errMsg.getWarnigs(10));
+		List<Map<String, Object>> rows = errMsg.getWarnigs();
+		for (Map<String, Object> row : rows) {
+			System.out.println("===" + row.get("date")  + row.get("level") + row.get("message"));
+		}
+		assertEquals(20, rows.size());
 	}
 }

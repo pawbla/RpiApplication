@@ -163,12 +163,14 @@ section {
   min-height: 200px; 
   min-width: 800px;
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 /* settings page */
 section div {
   padding: 10px 10px 10px 10px;
 }
+
 /** below parameter for applicable only for settings and weather page */
 section.main div {
   height: 230px;
@@ -224,23 +226,23 @@ table.usersTable {
   border: 2px solid white;
 }
 
-th {
+table.usersTable th {
   border: 1px solid white;
   text-align: center;    
   background-color: #000000; 
 }
 
-td {
+table.usersTable td {
   border: 1px solid white;
   color: #FFFFFF;
 
 }
 
-tr:nth-child(even) {
+table.usersTable tr:nth-child(even) {
   background-color: #000000;
 }
 
-tr:nth-child(odd) {
+table.usersTable tr:nth-child(odd) {
   background-color: #303030;
 }
 
@@ -319,13 +321,40 @@ p.press {
 }
 
 /* sys info page */
+
 div.sysInErrors {
-	border: 1px solid white;
+  text-align: center;
+  padding: 10px 5px 10px 10px;
+  border: 1px solid #00bb00;
+  border-radius: 10px;
+  margin: 5px 15px 0px 15px;
+}
+
+div.sysInErrors div {
+  overflow-y: auto;
+  height: 250px;
 }
 
 table.errorList {
-	border: 1px solid white;
-	width: 85%;
+	margin: 5px 5px 5px 5px;
+	color: red;
+	border: none;
 	height:60px;
-	overflow: auto;
+}
+
+table.errorList td {
+	color: red;
+	font-size: 13px;
+}
+
+table.errorList td.date {
+	width: 10%;
+}
+
+table.errorList td.lvl {
+	width: 5%;
+}
+
+table.errorList td.msg {
+	width: 50%;
 }
