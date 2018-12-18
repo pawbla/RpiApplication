@@ -46,14 +46,23 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-api</artifactId>
-    </dependency>	
-        <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-core</artifactId>
-    </dependency>	
+	    <dependency>
+	        <groupId>org.apache.logging.log4j</groupId>
+	        <artifactId>log4j-api</artifactId>
+	    </dependency>	
+	        <dependency>
+	        <groupId>org.apache.logging.log4j</groupId>
+	        <artifactId>log4j-core</artifactId>
+	    </dependency>
+	    <dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-web</artifactId>
+		    <version>2.11.1</version>
+		</dependency>
+		<dependency>
+         <groupId>org.apache.commons</groupId>
+         <artifactId>commons-dbcp2</artifactId>
+      </dependency>	
     	<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf-spring4</artifactId>
@@ -162,6 +171,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			              <sourceFile>${basedir}/log4j2.xml</sourceFile>
 			              <destinationFile>${basedir}/target/Release/log4j2.xml</destinationFile>
 					  </fileSet>
+					  <fileSet>
+			              <sourceFile>${basedir}/web.xml</sourceFile>
+			              <destinationFile>${basedir}/target/Release/web.xml</destinationFile>
+					  </fileSet>					  
 					  <fileSet>
 		              	<sourceFile>${basedir}/application.properties</sourceFile>
 		              	<destinationFile>${basedir}/target/Release/application.properties</destinationFile>

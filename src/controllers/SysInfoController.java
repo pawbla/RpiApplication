@@ -13,12 +13,12 @@ import sysInfo.ErrorMessage;
 @RequestMapping({"sysinfo"})
 public class SysInfoController {
 	
-	@Autowired
-	private ErrorMessage errors;
+	/*@Autowired
+	private ErrorMessage errors;*/
 
 	@RequestMapping(method=GET)
 	public String home(Model model) {
-		model.addAttribute("errorsList", errors.getWarnigs(40));
+		//model.addAttribute("errorsList", errors.getWarnigs(40));
 		return "sysinfo";
 	}	
 }

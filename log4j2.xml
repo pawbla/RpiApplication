@@ -23,7 +23,17 @@
 	        <SizeBasedTriggeringPolicy size="5 MB"/>
 	    </Policies>
 	    <DefaultRolloverStrategy max="1"/>
-	</RollingFile>	 -->
+	</RollingFile>	
+	<JDBC name="MySQLDatabase" tableName="APP_LOGS">
+         <ConnectionFactory
+            class="com.boraji.tutorial.log4j2.ConnectionFactory" method="getConnection" />
+         <Column name="LOG_ID" pattern="%u" />
+         <Column name="ENTRY_DATE" isEventTimestamp="true" />
+         <Column name="LOGGER" pattern="%logger" />
+         <Column name="LOG_LEVEL" pattern="%level" />
+         <Column name="MESSAGE" pattern="%m" />
+         <Column name="EXCEPTION" pattern="%throwable " />
+      </JDBC> -->
  
   </Appenders>
 

@@ -7,6 +7,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,16 +27,17 @@ import sysInfo.ErrorMessage;
 @ActiveProfiles("dev")
 public class ErrorMessageTest {
 	
-	/**
-	 * For proper working of below junit test log4j2 configuration should be copy
-	 * into /target/test-classes/
-	 */
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	@Autowired
 	private ErrorMessage errMsg;
 
 	@Before
 	public void setUp() throws Exception {
+		/* Create traces for test */
+		for (int i = 0; i < 20; i++) {
+			logger.warn("Error no: " + i);
+		}
 	}
 
 	@After
@@ -43,9 +46,7 @@ public class ErrorMessageTest {
 
 	@Test
 	public void getWarningListTest() {
-		List<String> errors = new ArrayList<String>();
-		int size = 5;
-		errors.addAll(errMsg.getWarnigs(size));
-		assertEquals(errors.size(), size);
+
+		assertNull(errMsg.getWarnigs(10));
 	}
 }

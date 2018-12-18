@@ -16,3 +16,11 @@ CREATE TABLE roles (
  	FOREIGN KEY (userID) REFERENCES users(id),
 	UNIQUE (username)
 );
+
+CREATE TABLE logs (
+    date TIMESTAMP,
+    logger VARCHAR(100),
+    level VARCHAR(100),
+    message TEXT,
+    exception TEXT
+);

@@ -1,16 +1,12 @@
 package sysInfo;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.Appender;
-import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,14 +15,24 @@ public class ErrorMessage {
 	
 	private String path;
 	
+	@Autowired
+    private JdbcTemplate jdbcTemplate;
+	
 	public ErrorMessage () {
-	    org.apache.logging.log4j.core.Logger loggerImpl = (org.apache.logging.log4j.core.Logger) logger;
+		//List<Map<String, Object>> rows = jdbcTemplate.queryForList("SELECT * FROM logs");
+	    /*org.apache.logging.log4j.core.Logger loggerImpl = (org.apache.logging.log4j.core.Logger) logger;
 	    Appender appender = loggerImpl.getAppenders().get("WarningRollingFile");
-        path = ((RollingFileAppender) appender).getFileName();
+        path = ((RollingFileAppender) appender).getFileName();*/
 	}
 	
 	public List<String> getWarnigs(int threshold) {
-		List<String> errors = new ArrayList<String>();
+		System.out.println("=== GET ==");
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList("SELECT * FROM logs");
+		System.out.println("=== GET SOZE ==" + rows.size());
+		for (Map<String, Object> row : rows) {
+			System.out.println("===" + row.get("date") + row.get("message"));
+		}
+		/*List<String> errors = new ArrayList<String>();
 		try(BufferedReader br = new BufferedReader(new FileReader(path))) {
 		    br.lines().sorted(Collections.reverseOrder()).limit(threshold).forEach(err -> errors.add(err));
 		} catch (IOException e) {
@@ -34,6 +40,7 @@ public class ErrorMessage {
 			errors.add(eMsg);
 			logger.warn(eMsg);
 		}
-		return errors;
+		return errors;*/
+		return null;
 	}
 }
