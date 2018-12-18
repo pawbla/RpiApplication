@@ -193,7 +193,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 					  <fileSet>
 		              	<sourceFile>${basedir}/WebContent/WEB-INF/views/templates/weather.html</sourceFile>
 		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/views/templates/weather.html</destinationFile>
-					  </fileSet>  					             
+					  </fileSet> 
+					  <fileSet>
+		              	<sourceFile>${basedir}/WebContent/WEB-INF/views/templates/sysinfo.html</sourceFile>
+		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/views/templates/sysinfo.html</destinationFile>
+					  </fileSet>					   					             
 					</fileSets>
 		            </configuration>
 		          </execution>

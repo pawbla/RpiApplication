@@ -1,17 +1,11 @@
 package sysInfo;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,11 +25,14 @@ public class ErrorMessage {
         path = ((RollingFileAppender) appender).getFileName();
 	}
 	
-	public List<String> getWarnigs(int threshold) throws FileNotFoundException, IOException {
-		List<String> errors;
+	public List<String> getWarnigs(int threshold) {
+		List<String> errors = new ArrayList<String>();
 		try(BufferedReader br = new BufferedReader(new FileReader(path))) {
-		    errors = new ArrayList<String>();
 		    br.lines().sorted(Collections.reverseOrder()).limit(threshold).forEach(err -> errors.add(err));
+		} catch (IOException e) {
+			String eMsg = "Exception has occured during opening warning log file: " + e;
+			errors.add(eMsg);
+			logger.warn(eMsg);
 		}
 		return errors;
 	}

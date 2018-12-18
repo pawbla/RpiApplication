@@ -15,7 +15,7 @@
 		        <li class="left"><a th:href="@{/home}">Home</a></li>
 		        <li class="left"><a th:href="@{/weather}">Pogoda</a></li>
 		        <li class="left"><a th:href="@{/settings}">Opcje</a></li>
-		        <li class="left" sec:authorize="hasRole('ROLE_ADMIN')"><a>Admin</a></li>
+		        <li class="left" sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/sysinfo}">SysInfo</a></li>
 		        <li class="right"><a th:href="@{/logout}">Wyloguj</a></li>
 		      </ul>
 	      </nav>

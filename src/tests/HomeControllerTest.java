@@ -11,6 +11,5 @@ public class HomeControllerTest {
 	public void testHomePage() throws Exception {
 		HomeController controller = new HomeController();
 		//assertEquals("home", controller.home());
-		System.out.println(System.getProperty("java.class.path"));
 	}
 }

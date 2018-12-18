@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,19 +42,10 @@ public class ErrorMessageTest {
 	}
 
 	@Test
-	public void getWarningListTest() throws IOException {
+	public void getWarningListTest() {
 		List<String> errors = new ArrayList<String>();
 		int size = 5;
 		errors.addAll(errMsg.getWarnigs(size));
 		assertEquals(errors.size(), size);
 	}
-	
-	@Test
-	public void incorrectPathTest() throws IOException {
-		List<String> errors = new ArrayList<String>();
-		int size = 5;
-		errors.addAll(errMsg.getWarnigs(size));
-		assertEquals(errors.size(), size);
-	}
-
 }

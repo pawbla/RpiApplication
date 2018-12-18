@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.authorizeRequests()
 			.antMatchers("/registration", "/registrationRest", "/registrationCheck/*").permitAll()
+			.antMatchers("/sysinfo").access("hasRole('ROLE_ADMIN')")
 			.antMatchers("/*").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 		.and()
 			.exceptionHandling().authenticationEntryPoint(unauthenticatedRequestHandler());

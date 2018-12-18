@@ -166,9 +166,11 @@ section {
 }
 
 /* settings page */
-
 section div {
   padding: 10px 10px 10px 10px;
+}
+/** below parameter for applicable only for settings and weather page */
+section.main div {
   height: 230px;
 }
 
@@ -314,4 +316,16 @@ p.actT {
 
 p.press {
   font-size: 42px;
+}
+
+/* sys info page */
+div.sysInErrors {
+	border: 1px solid white;
+}
+
+table.errorList {
+	border: 1px solid white;
+	width: 85%;
+	height:60px;
+	overflow: auto;
 }
