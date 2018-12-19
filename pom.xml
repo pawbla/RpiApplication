@@ -168,17 +168,17 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		            <configuration>
 		            <fileSets>
 					  <fileSet>
-			              <sourceFile>${basedir}/log4j2.xml</sourceFile>
+			              <sourceFile>E:/Projects/HomeSystem/06_ConfigFiles/RaspberryPi/log4j2.xml</sourceFile>
 			              <destinationFile>${basedir}/target/Release/log4j2.xml</destinationFile>
 					  </fileSet>
 					  <fileSet>
-			              <sourceFile>${basedir}/web.xml</sourceFile>
-			              <destinationFile>${basedir}/target/Release/web.xml</destinationFile>
+			              <sourceFile>E:/Projects/HomeSystem/06_ConfigFiles/RaspberryPi/application.properties</sourceFile>
+			              <destinationFile>${basedir}/target/Release/application.properties</destinationFile>
 					  </fileSet>					  
 					  <fileSet>
-		              	<sourceFile>${basedir}/application.properties</sourceFile>
-		              	<destinationFile>${basedir}/target/Release/application.properties</destinationFile>
-					  </fileSet>  
+			              <sourceFile>${basedir}/web.xml</sourceFile>
+			              <destinationFile>${basedir}/target/Release/web.xml</destinationFile>
+					  </fileSet>					   
 					  <fileSet>
 		              	<sourceFile>${basedir}/WebContent/WEB-INF/lib/css/style.css</sourceFile>
 		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/lib/css/style.css</destinationFile>

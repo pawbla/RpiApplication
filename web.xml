@@ -20,6 +20,5 @@ id="WebApp_ID" version="2.5">
     <dispatcher>ERROR</dispatcher>
 </filter-mapping>
 <!-- /Logg -->
-
 <!-- ... -->
 </web-app>

@@ -1,4 +1,4 @@
-	package configurations;
+package configurations;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	
 	@Autowired
 	DataSource userDatabase;
@@ -35,20 +35,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login")
 				.usernameParameter("username").passwordParameter("password")
 				.failureUrl("/login-error.html")
-				.permitAll()
-			
-		.and()
-			.logout()
-			.logoutSuccessUrl("/")
-		.and()			
-			.httpBasic()
-		.and()
-			.authorizeRequests()
-			.antMatchers("/registration", "/registrationRest", "/registrationCheck/*").permitAll()
-			.antMatchers("/sysinfo").access("hasRole('ROLE_ADMIN')")
-			.antMatchers("/*").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-		.and()
-			.exceptionHandling().authenticationEntryPoint(unauthenticatedRequestHandler());
+				.permitAll()			
+			.and()
+				.logout()
+				.logoutSuccessUrl("/")
+			.and()			
+				.httpBasic()
+			.and()
+				.authorizeRequests()
+				.antMatchers("/registration", "/registrationRest", "/registrationCheck/*").permitAll()
+				.antMatchers("/sysinfo").access("hasRole('ROLE_ADMIN')")
+				.antMatchers("/*").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+			.and()
+				.exceptionHandling().authenticationEntryPoint(unauthenticatedRequestHandler());
 	}
 	
 	@Bean

@@ -59,7 +59,7 @@ public class LogUtils{
 
 	@PostConstruct
 	private void init(){
-		logger.debug("Initialize LogUtils");    
+		logger.debug("Initialize LogUtils with dataSource: " + dataSource);    
 		final LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 		final Configuration config = ctx.getConfiguration();
 		ColumnConfig[] cc = {

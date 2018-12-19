@@ -23,5 +23,6 @@ CREATE TABLE logs (
     logger VARCHAR(100),
     level VARCHAR(100),
     message TEXT,
-    exception TEXT
+    exception TEXT,
+    PRIMARY KEY (id)
 );
