@@ -28,9 +28,9 @@ public class SensorIterator implements SensorIteratorInterface {
 	 * Constructor constructs object contains sensor interfaces' list
 	 */
 	
-	public SensorIterator (List<SensorInterface<?>> sensorList) {
+	public SensorIterator () {
 		logger.debug("Create SensorInterface object");
-		this.sensorList = sensorList;
+		
 	}
 	
 
@@ -50,9 +50,19 @@ public class SensorIterator implements SensorIteratorInterface {
 	 */
 	@Override
 	public boolean isLastSensorInterface() {
-		logger.debug("Check iterator contion");
+		boolean resp = true;
+		logger.debug("Check iterator contion. Position: " + position + " list size: " + sensorList.size());
 		/* Return true if condition is true, else return false */
-		return (position < sensorList.size()) ? true : false  ;
+		//return (position < sensorList.size()) ? true : false  ;
+		if (position >= sensorList.size()) {
+			position = 0;
+			resp = false;
+		}
+		return resp;
 	}
 
+	@Override
+	public void setSensorList(List<SensorInterface<?>> sensorList) {
+		this.sensorList = sensorList;
+	}
 }

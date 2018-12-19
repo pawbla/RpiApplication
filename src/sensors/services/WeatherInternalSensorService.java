@@ -37,13 +37,13 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	 * Constructor
 	 * @param ip of service
 	 */
-	public WeatherInternalSensorService(String ip, SensorsHandlerInterface sensorHandler) {
+	public WeatherInternalSensorService(String ip, SensorsHandlerInterface sensorHandler, String password) {
 		super(ip, sensorHandler);
 		logger.info("Create " + WeatherInternalSensorService.SENSOR_NAME + " object with IP: " + ip);
 		inSensor = new WeatherSensor();
 	    headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    headers.add("Authentication", "04122018pass");
+	    headers.add("Authentication", password);
 	}
 	
 	/**

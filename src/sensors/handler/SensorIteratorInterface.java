@@ -1,6 +1,8 @@
 package sensors.handler;
 
 
+import java.util.List;
+
 import sensors.services.SensorInterface;
 
 /**
@@ -21,4 +23,6 @@ public interface SensorIteratorInterface {
 	 * @return
 	 */
 	boolean isLastSensorInterface();
+	
+	public void setSensorList(List<SensorInterface<?>> sensorList);
 }

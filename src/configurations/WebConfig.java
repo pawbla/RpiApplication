@@ -39,6 +39,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	private String ipInternalSensor; 
 	@Value("${custom.ipExternalSensor}")
 	private String ipExternalSensor; 
+	@Value("${custom.intSensorPassword}")
+	private String intSensorPassword;	
 	
 	/**
 	 * Thymeleaf resources path configuration
@@ -110,7 +112,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     @Qualifier("internal")
     public SensorInterface<WeatherSensor> internal() {
-    	return new WeatherInternalSensorService(ipInternalSensor, sensorHandler);
+    	return new WeatherInternalSensorService(ipInternalSensor, sensorHandler, intSensorPassword);
     }   
     
     @Bean

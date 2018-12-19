@@ -53,6 +53,7 @@ public class RESTService {
 	 */
 	@Scheduled(fixedRate = timeout)
 	private void fetchDatas() {		
+		logger.debug("Fetch datas start");
 		sensorIterator = sensorHandler.getSensorInterfaceIterator();
 		SensorInterface<?> sensorInterface;
 		while(sensorIterator.isLastSensorInterface()) {
@@ -64,7 +65,7 @@ public class RESTService {
 				logger.debug("Received response code " + resp.getStatusCodeValue() + " for sensor: " + sensorInterface.getSensorName());	
 			} catch (Exception e) {
 				resp = null;
-				logger.warn("Unable to fetch datas from ip " + ip + " caused by exception: " + e);		
+				logger.warn("Unable to fetch datas from ip " + sensorInterface.getIP() + " caused by exception: " + e);		
 			} finally {
 				sensorInterface.setResponse(resp);
 			}

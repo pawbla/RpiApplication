@@ -32,7 +32,7 @@ public class LogUtils{
 	private static final String EXCEPTION_COLUMN = "exception";
 	private static final String APPENDER_NAME = "databaseAppender";
 	private static final String TABLE_NAME = "logs";
-	private static final Level LOG_LEVEL = Level.INFO;
+	private static final Level LOG_LEVEL = Level.WARN;
 	
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 

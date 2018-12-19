@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sensors.services.SensorInterface;
@@ -21,6 +22,9 @@ public class SensorHandler implements SensorsHandlerInterface {
 	 * Logger
 	 */
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
+	
+	@Autowired
+	private SensorIteratorInterface sensorIterator;
 
 	private List<SensorInterface<?>> sensorList;
 	
@@ -47,6 +51,7 @@ public class SensorHandler implements SensorsHandlerInterface {
 	@Override
 	public SensorIteratorInterface getSensorInterfaceIterator() {	
 		logger.debug("Get SensorInterfaceIterator for sensors list with length: " + sensorList.size());
-		return new SensorIterator(sensorList);
+		sensorIterator.setSensorList(sensorList);
+		return sensorIterator;
 	}
 }
