@@ -50,6 +50,7 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	 * Method to get and parse data into WeatherSensor object
 	 */
 	public WeatherSensor getSensor() {
+		logger.debug("Prepare sensor data for " + this.getSensorName());
 		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
 			inSensor.setHumidity(mapper.getJSONObject().getString(HUMIDITY_SENSOR_KEY));
@@ -58,6 +59,7 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 			inSensor.setDate(mapper.getDateAsString());
 		}
 		inSensor.setStatusCode(mapper.getResponseCode());
+		logger.debug("Fetched: " + mapper.getResponseCode());
 		return inSensor;
 	}
 	

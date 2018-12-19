@@ -20,14 +20,12 @@ public class JSONMapper {
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	private ResponseEntity<String> resp;
 	private JSONObject jsonObject;
-	private Date date;
 	private DateFormat dateFormat;
 	private int statusCode;
 	private String dataAsString;
 	
 	public JSONMapper() {
 		logger.debug("Create MeasuredValuesMapper.");
-		date = new Date();
 		dateFormat = new SimpleDateFormat("MM.dd HH:mm");
 	}
 	
@@ -35,12 +33,14 @@ public class JSONMapper {
 		this.resp = resp;
 	}
 	
-	public void prepareDatas() {
+	public void prepareDatas() {	
+		logger.info("Convert response to object as a JSON.");
 		try {
+			logger.debug("Status code: " + resp.getStatusCodeValue());
 			if (resp.getStatusCodeValue() == 200) {
 				try { 
 					jsonObject = new JSONObject(resp.getBody());
-					dataAsString = dateFormat.format(date);
+					dataAsString = dateFormat.format(new Date());
 				} catch (JSONException e) {
 					logger.warn("Unable to create jsonObject from datas: " + resp.getBody());
 				}	

@@ -18,7 +18,7 @@ public class ErrorMessage {
 	 */
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
-	private static final String SELECT_LOGS_QUERY = "SELECT * FROM logs";
+	private static final String SELECT_LOGS_QUERY = "SELECT * FROM logs ORDER BY id DESC";
 	private static final int LIMIT_REMOVE_SQL = 100;
 	private static final int THRESHOLD = 60;
 	private static final String REMOVE_QUERY = "DELETE FROM logs WHERE id IN(SELECT id FROM logs ORDER BY id LIMIT "+ LIMIT_REMOVE_SQL + ")";

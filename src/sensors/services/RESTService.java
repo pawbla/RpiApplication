@@ -61,10 +61,12 @@ public class RESTService {
 			logger.info("Sensor fetched: " + sensorInterface.getSensorName() + " from IP: " + sensorInterface.getIP());
 			try {
 				resp = rest.exchange("http://" + sensorInterface.getIP(), HttpMethod.GET, entity, String.class);
-				logger.debug("Received response code " + resp.getStatusCodeValue() + " for sensor: " + sensorInterface.getSensorName());
-				sensorInterface.setResponse(resp);
+				logger.debug("Received response code " + resp.getStatusCodeValue() + " for sensor: " + sensorInterface.getSensorName());	
 			} catch (Exception e) {
+				resp = null;
 				logger.warn("Unable to fetch datas from ip " + ip + " caused by exception: " + e);		
+			} finally {
+				sensorInterface.setResponse(resp);
 			}
 		}
 	}

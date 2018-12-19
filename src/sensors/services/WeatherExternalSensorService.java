@@ -40,6 +40,7 @@ public class WeatherExternalSensorService extends AbstractSensorInterface<Weathe
 	}
 	
 	public WeatherSensor getSensor() {
+		logger.debug("Prepare sensor data for " + this.getSensorName());
 		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
 			extSensor.setHumidity(String.format("%d", mapper.getJSONObject().getJSONObject(OBJECT_SENSOR_KEY).getInt(HUMIDITY_SENSOR_KEY)));
