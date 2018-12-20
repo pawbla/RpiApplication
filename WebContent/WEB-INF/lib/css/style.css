@@ -171,6 +171,13 @@ section div {
   padding: 10px 10px 10px 10px;
 }
 
+/* home page */
+.logoHome {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /** below parameter for applicable only for settings and weather page */
 section.main div {
   height: 230px;
