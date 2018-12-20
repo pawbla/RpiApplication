@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class ManageUserDB implements ManageUsersInterface {
 	private static final String SQL_UPDATE_EMAIL = "UPDATE users SET email = ? WHERE username = ? ";
 	private static final String SQL_DELETE_USER = "DELETE FROM users WHERE username = ?";
 	private static final String SQL_DELETE_ROLE = "DELETE FROM roles WHERE username = ?";
+	private static final String SQL_SEARCH_USER = "SELECT COUNT(id) FROM users WHERE username LIKE ?";
+	
+	private static final String ANDROID_REGISTRATION_MAIL = "android@android.device";
 	
 	@Autowired
     private JdbcTemplate jdbcTemplate;
@@ -53,6 +57,13 @@ public class ManageUserDB implements ManageUsersInterface {
 	public boolean addUser (User u) {
 		// if false - user has existing
 		logger.info("Add user " + u.getUsername());
+		if (u.getEmail().equals(ANDROID_REGISTRATION_MAIL)) {
+			logger.debug("Verify Android user " + StringUtils.substringBefore(u.getUsername(), "_"));			
+			int vUser = jdbcTemplate.queryForObject(SQL_SEARCH_USER, new Object[] {StringUtils.substringBefore(u.getUsername(), "_") + "%"}, Integer.class);
+			if (vUser > 0) {
+				return false;
+			}
+		}	
 		try {
 			jdbcTemplate.update(INSERT_USER, u.getUsername(), passwordEncoder.encode(u.getPassword()),u.getEmail());
 			u.setPassword(" ");

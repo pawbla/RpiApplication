@@ -47,8 +47,8 @@
 	            </tr>
 	            <tr th:each="u, i : ${userDatas.users}">
 	              <td class="usrID" th:text="${u.id}"></td>
-	              <td th:text="${u.username}"></td>
-	              <td th:text="${u.email}"></td>
+	              <td th:text="${u.email}=='android@android.device' ? ${#strings.substringAfter(u.username,'_')} : ${u.username}"></td>
+	              <td th:text="${u.email}=='android@android.device' ? 'ANDROID DEVICE' : ${u.email}"></td>
 	              <td class="usrRole">
 	                <select class="roleSelect" th:field="*{users[__${i.index}__].role}">
 	                  <option th:each="r : ${userDatas.roles}"
