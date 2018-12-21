@@ -134,6 +134,10 @@ nav li a:visited {
   color: #00bb00;
 }
 
+nav li a:link {
+  color: #00bb00;
+}
+
 /* footer */
 footer {
   width: 85%;

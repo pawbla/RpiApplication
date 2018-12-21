@@ -69,7 +69,7 @@
 	            <option th:each="r : ${userDatas.users}" 
 	              th:if="${r.enabled}== false"
 	              th:value="${r.username}"
-	              th:text="${r.username}">
+	              th:text="${r.email}=='android@android.device' ? ${#strings.substringAfter(r.username,'_')} : ${r.username}">
 	            </option>
 	          </select><br />
 	        </form>

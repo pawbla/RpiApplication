@@ -60,6 +60,7 @@ public class ManageUserDB implements ManageUsersInterface {
 		if (u.getEmail().equals(ANDROID_REGISTRATION_MAIL)) {
 			logger.debug("Verify Android user " + StringUtils.substringBefore(u.getUsername(), "_"));			
 			int vUser = jdbcTemplate.queryForObject(SQL_SEARCH_USER, new Object[] {StringUtils.substringBefore(u.getUsername(), "_") + "%"}, Integer.class);
+			logger.debug("Found users: " + vUser);
 			if (vUser > 0) {
 				return false;
 			}
@@ -69,7 +70,7 @@ public class ManageUserDB implements ManageUsersInterface {
 			u.setPassword(" ");
 			jdbcTemplate.update(INSERT_USER_INROLE,u.getUsername());
 		} catch (DataAccessException e) {
-			logger.warn("Exception during addUser has occured: " + e);
+			logger.warn("Exception during addUser has occured (This execption could occurs when user try to register registered user): " + e);
 			return false;			
 		}
 		return true;
@@ -196,8 +197,8 @@ public class ManageUserDB implements ManageUsersInterface {
 	public HttpStatus checkUserStatus (String userName) {
 		System.out.println("checkUserStatus: " + userName);
 		HttpStatus status;
-		//get enabled from sql database
-		try {
+		//get enabled from sql database	
+		try {		
 			Boolean ifEnabled = (Boolean) jdbcTemplate.queryForObject(SQL_SELECT_ENABLED, new Object[] { userName }, Boolean.class);
 			System.out.println("checkUserStatus: " + ifEnabled);
 			if (!ifEnabled) {
