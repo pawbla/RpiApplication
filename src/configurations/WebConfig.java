@@ -24,8 +24,8 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
 import sensors.services.SensorInterface;
-import sensors.services.WeatherExternalSensorService;
-import sensors.services.WeatherInternalSensorService;
+import sensors.services.implementations.OpenWeatherMapSensorService;
+import sensors.services.implementations.WeatherInternalSensorService;
 
 @Configuration
 @EnableWebMvc
@@ -117,9 +117,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }   
     
     @Bean
-    @Qualifier("external")
+    @Qualifier("openWeather")
     public SensorInterface<WeatherSensor> external() {
-    	return new WeatherExternalSensorService(ipExternalSensor, sensorHandler);
+    	return new OpenWeatherMapSensorService(ipExternalSensor, sensorHandler);
     } 
     
 	@Override

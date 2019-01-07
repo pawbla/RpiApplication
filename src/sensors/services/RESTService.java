@@ -54,9 +54,12 @@ public class RESTService {
 	@Scheduled(fixedRate = timeout)
 	private void fetchDatas() {		
 		logger.debug("Fetch datas start");
+		/* get sensor iterator */
 		sensorIterator = sensorHandler.getSensorInterfaceIterator();
 		SensorInterface<?> sensorInterface;
+		/* iterate over sensors using iterator */
 		while(sensorIterator.isLastSensorInterface()) {
+			/* get sensor object */
 			sensorInterface = sensorIterator.getSensorInterface();
 			entity = new HttpEntity<Object>(sensorInterface.getHeader());
 			logger.info("Sensor fetched: " + sensorInterface.getSensorName() + " from IP: " + sensorInterface.getIP());

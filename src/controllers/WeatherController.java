@@ -24,7 +24,7 @@ public class WeatherController {
 	private SensorInterface<WeatherSensor> inWeatherSensor;
 	
 	@Autowired
-	@Qualifier("external")
+	@Qualifier("openWeather")
 	private SensorInterface<WeatherSensor> extWeatherSensor;
 	
 	private Map<String,Object> sensors;

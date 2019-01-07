@@ -14,17 +14,22 @@ import sensors.handler.SensorsHandlerInterface;
 public abstract class AbstractSensorInterface<T> implements SensorInterface<T> {
 	
 	private String ip;
+	private String sensorName;
 	
 	protected JSONMapper mapper;
 	
-	public AbstractSensorInterface(String ip, SensorsHandlerInterface sensorHandler) {
+	public AbstractSensorInterface(String ip, SensorsHandlerInterface sensorHandler, String sensorName) {
 		this.ip = ip;
 		mapper = new JSONMapper();
+		this.sensorName = sensorName;
 		sensorHandler.addSensorService(this);
 	}
 	
 	public abstract T getSensor();
-	public abstract String getSensorName();
+	
+	public String getSensorName() {
+		return sensorName;
+	}
 	
 	public String getIP() {
 		return ip;

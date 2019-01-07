@@ -1,4 +1,4 @@
-package sensors.services;
+package sensors.services.implementations;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,8 +7,9 @@ import org.springframework.http.MediaType;
 
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
+import sensors.services.AbstractSensorInterface;
 
-public class WeatherExternalSensorService extends AbstractSensorInterface<WeatherSensor> {
+public class OpenWeatherMapSensorService extends AbstractSensorInterface<WeatherSensor> {
 	
 	/**
 	 * Logger
@@ -18,7 +19,7 @@ public class WeatherExternalSensorService extends AbstractSensorInterface<Weathe
 	/**
 	 * Constants
 	 */
-	private static final String SENSOR_NAME = "External Weather Sensor";
+	private static final String SENSOR_NAME = "OpenWeatherMap Service sensor";
 	private static final String OBJECT_SENSOR_KEY = "main";
 	private static final String TEMPERATURE_SENSOR_KEY = "temp";
 	private static final String HUMIDITY_SENSOR_KEY = "humidity";
@@ -31,9 +32,9 @@ public class WeatherExternalSensorService extends AbstractSensorInterface<Weathe
 	/**
 	 * Constructor
 	 */
-	public WeatherExternalSensorService(String ip, SensorsHandlerInterface sensorHandler) {
-		super(ip, sensorHandler);
-		logger.info("Create " + WeatherExternalSensorService.SENSOR_NAME + " object with IP: " + ip);
+	public OpenWeatherMapSensorService(String ip, SensorsHandlerInterface sensorHandler) {
+		super(ip, sensorHandler, SENSOR_NAME);
+		logger.info("Create " + OpenWeatherMapSensorService.SENSOR_NAME + " object with IP: " + ip);
 		extSensor = new WeatherSensor();
 	    headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
@@ -54,7 +55,7 @@ public class WeatherExternalSensorService extends AbstractSensorInterface<Weathe
 	}
 	
 	public String getSensorName() {
-		return WeatherExternalSensorService.SENSOR_NAME;
+		return OpenWeatherMapSensorService.SENSOR_NAME;
 	}
 	
 	@Override

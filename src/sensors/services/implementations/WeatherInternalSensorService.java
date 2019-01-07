@@ -1,4 +1,4 @@
-package sensors.services;
+package sensors.services.implementations;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
+import sensors.services.AbstractSensorInterface;
 
 public class WeatherInternalSensorService extends AbstractSensorInterface<WeatherSensor>  {
 	
@@ -38,7 +39,7 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	 * @param ip of service
 	 */
 	public WeatherInternalSensorService(String ip, SensorsHandlerInterface sensorHandler, String password) {
-		super(ip, sensorHandler);
+		super(ip, sensorHandler, SENSOR_NAME);
 		logger.info("Create " + WeatherInternalSensorService.SENSOR_NAME + " object with IP: " + ip);
 		inSensor = new WeatherSensor();
 	    headers = new HttpHeaders();
