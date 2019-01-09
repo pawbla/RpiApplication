@@ -26,13 +26,13 @@ public class SensorHandler implements SensorsHandlerInterface {
 	@Autowired
 	private SensorIteratorInterface sensorIterator;
 
-	private List<SensorInterface<?>> sensorList;
+	private List<SensorInterface> sensorList;
 	
 	/**
 	 * Constructor constructs sensor interfaces' list
 	 */
 	public SensorHandler() {
-		sensorList = new ArrayList<SensorInterface<?>>();
+		sensorList = new ArrayList<SensorInterface>();
 		logger.debug("Sensor handler constructor has created.");
 	}
 	
@@ -40,7 +40,7 @@ public class SensorHandler implements SensorsHandlerInterface {
 	 * Mehtod to register sensor service
 	 */
 	@Override
-	public void addSensorService(SensorInterface<?> sensorService) {
+	public void addSensorService(SensorInterface sensorService) {
 		logger.debug("Register SensorInterface " + sensorService.getSensorName());
 		sensorList.add(sensorService);
 	}

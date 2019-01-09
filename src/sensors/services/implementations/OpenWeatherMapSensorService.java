@@ -9,7 +9,7 @@ import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
 import sensors.services.AbstractSensorInterface;
 
-public class OpenWeatherMapSensorService extends AbstractSensorInterface<WeatherSensor> {
+public class OpenWeatherMapSensorService extends AbstractSensorInterface {
 	
 	/**
 	 * Logger
@@ -41,6 +41,7 @@ public class OpenWeatherMapSensorService extends AbstractSensorInterface<Weather
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public WeatherSensor getSensor() {
 		logger.debug("Prepare sensor data for " + this.getSensorName());
 		mapper.prepareDatas();

@@ -11,11 +11,12 @@ import sensors.handler.SensorsHandlerInterface;
  *
  * @param <T>
  */
-public abstract class AbstractSensorInterface<T> implements SensorInterface<T> {
+public abstract class AbstractSensorInterface implements SensorInterface {
 	
 	private String ip;
 	private String sensorName;
 	private int timeout;
+	private int lastRespCode;
 	
 	protected JSONMapper mapper;
 	
@@ -24,10 +25,11 @@ public abstract class AbstractSensorInterface<T> implements SensorInterface<T> {
 		mapper = new JSONMapper();
 		this.sensorName = sensorName;
 		this.timeout = timeout;
+		lastRespCode = 0;
 		sensorHandler.addSensorService(this);
 	}
 	
-	public abstract T getSensor();
+	public abstract <T> T getSensor();
 	
 	public String getSensorName() {
 		return sensorName;
@@ -43,5 +45,12 @@ public abstract class AbstractSensorInterface<T> implements SensorInterface<T> {
 	
 	public int getTimeout() {
 		return timeout;
+	}
+	
+	public void setLastResponseCode(int respCode) {
+		this.lastRespCode = respCode;
+	}
+	public int getLastResponseCode() {
+		return this.lastRespCode;
 	}
 }

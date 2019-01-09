@@ -16,7 +16,7 @@ public interface SensorIteratorInterface {
 	 * abstract methods returns sensor interface
 	 * @return sensor interface
 	 */
-	SensorInterface<?> getSensorInterface();
+	SensorInterface getSensorInterface();
 	
 	/**
 	 * Abstract method return true if list contains more elements
@@ -24,5 +24,5 @@ public interface SensorIteratorInterface {
 	 */
 	boolean isLastSensorInterface();
 	
-	public void setSensorList(List<SensorInterface<?>> sensorList);
+	public void setSensorList(List<SensorInterface> sensorList);
 }

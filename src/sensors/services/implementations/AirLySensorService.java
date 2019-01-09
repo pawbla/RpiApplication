@@ -9,7 +9,7 @@ import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
 import sensors.services.AbstractSensorInterface;
 
-public class AirLySensorService extends AbstractSensorInterface<WeatherSensor> {
+public class AirLySensorService extends AbstractSensorInterface {
 	/**
 	 * Logger
 	 */
@@ -31,13 +31,13 @@ public class AirLySensorService extends AbstractSensorInterface<WeatherSensor> {
 	 * @param ip
 	 * @param sensorHandler
 	 */
-	public AirLySensorService(String ip, SensorsHandlerInterface sensorHandler) {
+	public AirLySensorService(String ip, SensorsHandlerInterface sensorHandler, String apiKey) {
 		super(ip, sensorHandler, SENSOR_NAME, TIMEOUT);
 		logger.info("Create " + AirLySensorService.SENSOR_NAME + " object with IP: " + ip);
 		sensor = new WeatherSensor();
 	    headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    headers.add(API_KEY_NAME, "FcqXU0gaJvfZM5g7x93j3GzWWGgYTp76");
+	    headers.add(API_KEY_NAME, apiKey);
 	}
 
 	@Override
@@ -45,6 +45,7 @@ public class AirLySensorService extends AbstractSensorInterface<WeatherSensor> {
 		return headers;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public WeatherSensor getSensor() {
 		logger.debug("Prepare sensor data for " + this.getSensorName());

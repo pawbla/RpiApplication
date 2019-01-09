@@ -20,8 +20,8 @@ public class SensorIterator implements SensorIteratorInterface {
 	 */
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
-	private SensorInterface<?> sensorInterface;
-	private List<SensorInterface<?>> sensorList;
+	private SensorInterface sensorInterface;
+	private List<SensorInterface> sensorList;
 	int position;
 	
 	/**
@@ -38,9 +38,9 @@ public class SensorIterator implements SensorIteratorInterface {
 	 * Method allows to get Sensor Interface over iterable list
 	 */
 	@Override
-	public SensorInterface<?> getSensorInterface() {
+	public SensorInterface getSensorInterface() {
 		logger.debug("Get SensorInterface from position: " + position);
-		sensorInterface = (SensorInterface<?>) sensorList.get(position);
+		sensorInterface = (SensorInterface) sensorList.get(position);
 		position++;
 		return  sensorInterface ;
 	}
@@ -62,7 +62,7 @@ public class SensorIterator implements SensorIteratorInterface {
 	}
 
 	@Override
-	public void setSensorList(List<SensorInterface<?>> sensorList) {
+	public void setSensorList(List<SensorInterface> sensorList) {
 		this.sensorList = sensorList;
 	}
 }

@@ -9,6 +9,8 @@ public class CustomProperties {
 	private String ipInternalSensor;
 	private String ipExternalSensor;
 	private String intSensorPassword;
+	private String ipAirLy;
+	private String apiKeyAirLy;
 	
 	public String getIpInternalSensor() {
 		return ipInternalSensor;
@@ -27,5 +29,17 @@ public class CustomProperties {
 	}
 	public void setIntSensorPassword(String intSensorPassword) {
 		this.intSensorPassword = intSensorPassword;
+	}
+	public String getIpAirLy() {
+		return ipAirLy;
+	}
+	public void setIpAirLy(String ipAirLy) {
+		this.ipAirLy = ipAirLy;
+	}
+	public String getApiKeyAirLy() {
+		return apiKeyAirLy;
+	}
+	public void setApiKeyAirLy(String apiKeyAirLy) {
+		this.apiKeyAirLy = apiKeyAirLy;
 	}
 }

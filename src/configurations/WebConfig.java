@@ -24,6 +24,7 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
 import sensors.services.SensorInterface;
+import sensors.services.implementations.AirLySensorService;
 import sensors.services.implementations.OpenWeatherMapSensorService;
 import sensors.services.implementations.WeatherInternalSensorService;
 
@@ -41,6 +42,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	private String ipExternalSensor; 
 	@Value("${custom.intSensorPassword}")
 	private String intSensorPassword;	
+	@Value("${custom.ipAirLy}")
+	private String ipAirLy; 
+	@Value("${custom.apiKeyAirLy}")
+	private String apiKeyAirLy;	
 	
 	/**
 	 * Thymeleaf resources path configuration
@@ -112,15 +117,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     
     @Bean
     @Qualifier("internal")
-    public SensorInterface<WeatherSensor> internal() {
+    public SensorInterface internal() {
     	return new WeatherInternalSensorService(ipInternalSensor, sensorHandler, intSensorPassword);
     }   
     
     @Bean
     @Qualifier("openWeather")
-    public SensorInterface<WeatherSensor> external() {
+    public SensorInterface openWeather() {
     	return new OpenWeatherMapSensorService(ipExternalSensor, sensorHandler);
     } 
+    
+    @Bean
+    @Qualifier("airLy")
+    public SensorInterface airLy() {
+    	return new AirLySensorService(ipAirLy, sensorHandler, apiKeyAirLy);
+    }
     
 	@Override
 	public void configureDefaultServletHandling (DefaultServletHandlerConfigurer configurer) {

@@ -10,7 +10,7 @@ import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
 import sensors.services.AbstractSensorInterface;
 
-public class WeatherInternalSensorService extends AbstractSensorInterface<WeatherSensor>  {
+public class WeatherInternalSensorService extends AbstractSensorInterface {
 	
 	/**
 	 * Logger
@@ -51,6 +51,7 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	/**
 	 * Method to get and parse data into WeatherSensor object
 	 */
+	@SuppressWarnings("unchecked")
 	public WeatherSensor getSensor() {
 		logger.debug("Prepare sensor data for " + this.getSensorName());
 		mapper.prepareDatas();
