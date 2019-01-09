@@ -14,4 +14,5 @@ public interface SensorInterface<T> {
 	public String getSensorName();
 	public void setResponse(ResponseEntity<String> resp);
 	public HttpHeaders getHeader();
+	public int getTimeout();
 }

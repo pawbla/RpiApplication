@@ -17,6 +17,7 @@ public class AirLySensorService extends AbstractSensorInterface<WeatherSensor> {
 	/**
 	 * Constants
 	 */
+	private static final int TIMEOUT = 120;
 	private static final String SENSOR_NAME = "AirLy Service sensor";
 	private static final String API_KEY_NAME = "apikey";
 	/**
@@ -31,7 +32,7 @@ public class AirLySensorService extends AbstractSensorInterface<WeatherSensor> {
 	 * @param sensorHandler
 	 */
 	public AirLySensorService(String ip, SensorsHandlerInterface sensorHandler) {
-		super(ip, sensorHandler, SENSOR_NAME);
+		super(ip, sensorHandler, SENSOR_NAME, TIMEOUT);
 		logger.info("Create " + AirLySensorService.SENSOR_NAME + " object with IP: " + ip);
 		sensor = new WeatherSensor();
 	    headers = new HttpHeaders();

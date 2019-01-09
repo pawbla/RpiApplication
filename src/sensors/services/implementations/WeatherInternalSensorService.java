@@ -20,6 +20,7 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	/**
 	 * Constants
 	 */
+	private static final int TIMEOUT = 20;
 	private static final String SENSOR_NAME = "Internal Weather Sensor";
 	private static final String TEMPERATURE_SENSOR_KEY = "Temperature";
 	private static final String HUMIDITY_SENSOR_KEY = "Humidity";
@@ -39,7 +40,7 @@ public class WeatherInternalSensorService extends AbstractSensorInterface<Weathe
 	 * @param ip of service
 	 */
 	public WeatherInternalSensorService(String ip, SensorsHandlerInterface sensorHandler, String password) {
-		super(ip, sensorHandler, SENSOR_NAME);
+		super(ip, sensorHandler, SENSOR_NAME, TIMEOUT);
 		logger.info("Create " + WeatherInternalSensorService.SENSOR_NAME + " object with IP: " + ip);
 		inSensor = new WeatherSensor();
 	    headers = new HttpHeaders();

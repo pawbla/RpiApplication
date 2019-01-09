@@ -15,13 +15,15 @@ public abstract class AbstractSensorInterface<T> implements SensorInterface<T> {
 	
 	private String ip;
 	private String sensorName;
+	private int timeout;
 	
 	protected JSONMapper mapper;
 	
-	public AbstractSensorInterface(String ip, SensorsHandlerInterface sensorHandler, String sensorName) {
+	public AbstractSensorInterface(String ip, SensorsHandlerInterface sensorHandler, String sensorName, int timeout) {
 		this.ip = ip;
 		mapper = new JSONMapper();
 		this.sensorName = sensorName;
+		this.timeout = timeout;
 		sensorHandler.addSensorService(this);
 	}
 	
@@ -37,5 +39,9 @@ public abstract class AbstractSensorInterface<T> implements SensorInterface<T> {
 	
 	public void setResponse(ResponseEntity<String> resp) {
 		this.mapper.setResponse(resp);
+	}
+	
+	public int getTimeout() {
+		return timeout;
 	}
 }

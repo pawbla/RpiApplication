@@ -19,6 +19,7 @@ public class OpenWeatherMapSensorService extends AbstractSensorInterface<Weather
 	/**
 	 * Constants
 	 */
+	private static final int TIMEOUT = 60;
 	private static final String SENSOR_NAME = "OpenWeatherMap Service sensor";
 	private static final String OBJECT_SENSOR_KEY = "main";
 	private static final String TEMPERATURE_SENSOR_KEY = "temp";
@@ -33,7 +34,7 @@ public class OpenWeatherMapSensorService extends AbstractSensorInterface<Weather
 	 * Constructor
 	 */
 	public OpenWeatherMapSensorService(String ip, SensorsHandlerInterface sensorHandler) {
-		super(ip, sensorHandler, SENSOR_NAME);
+		super(ip, sensorHandler, SENSOR_NAME, TIMEOUT);
 		logger.info("Create " + OpenWeatherMapSensorService.SENSOR_NAME + " object with IP: " + ip);
 		extSensor = new WeatherSensor();
 	    headers = new HttpHeaders();
