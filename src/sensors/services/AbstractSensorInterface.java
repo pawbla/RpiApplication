@@ -53,4 +53,8 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 	public int getLastResponseCode() {
 		return this.lastRespCode;
 	}
+	
+	void setHeader() {
+		
+	}
 }

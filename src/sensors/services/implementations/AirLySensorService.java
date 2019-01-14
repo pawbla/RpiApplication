@@ -2,6 +2,7 @@ package sensors.services.implementations;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -25,6 +26,7 @@ public class AirLySensorService extends AbstractSensorInterface {
 	 */
 	private WeatherSensor sensor;
 	private HttpHeaders headers;
+	private HttpEntity<Object> entity;
 	
 	/**
 	 * Constructor
@@ -38,6 +40,7 @@ public class AirLySensorService extends AbstractSensorInterface {
 	    headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    headers.add(API_KEY_NAME, apiKey);
+	    this.entity = new HttpEntity<Object>(headers);
 	}
 
 	@Override
@@ -55,4 +58,10 @@ public class AirLySensorService extends AbstractSensorInterface {
 		}
 		return null;
 	}
+
+	@Override
+	public HttpEntity<Object> getEntity() {
+		return this.entity;
+	}
+
 }

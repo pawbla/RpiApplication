@@ -2,6 +2,7 @@ package sensors.services.implementations;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -29,6 +30,7 @@ public class OpenWeatherMapSensorService extends AbstractSensorInterface {
 	 */
 	private WeatherSensor extSensor;
 	private HttpHeaders headers;
+	private HttpEntity<Object> entity;
 	
 	/**
 	 * Constructor
@@ -39,6 +41,7 @@ public class OpenWeatherMapSensorService extends AbstractSensorInterface {
 		extSensor = new WeatherSensor();
 	    headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    this.entity = new HttpEntity<Object>(headers);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -63,5 +66,10 @@ public class OpenWeatherMapSensorService extends AbstractSensorInterface {
 	@Override
 	public HttpHeaders getHeader() {
 		return headers;
+	}
+	
+	@Override
+	public HttpEntity<Object> getEntity() {
+		return this.entity;
 	}
 }

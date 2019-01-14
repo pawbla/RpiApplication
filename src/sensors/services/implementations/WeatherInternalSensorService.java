@@ -3,6 +3,7 @@ package sensors.services.implementations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -31,6 +32,7 @@ public class WeatherInternalSensorService extends AbstractSensorInterface {
 	 */
 	private WeatherSensor inSensor;
 	private HttpHeaders headers;
+	private HttpEntity<Object> entity;
 	
 	@Value("${custom.intSensorPassword}")
 	private String pass;
@@ -46,11 +48,13 @@ public class WeatherInternalSensorService extends AbstractSensorInterface {
 	    headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    headers.add("Authentication", password);
+	    this.entity = new HttpEntity<Object>(headers);
 	}
 	
 	/**
 	 * Method to get and parse data into WeatherSensor object
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public WeatherSensor getSensor() {
 		logger.debug("Prepare sensor data for " + this.getSensorName());
@@ -73,5 +77,10 @@ public class WeatherInternalSensorService extends AbstractSensorInterface {
 	@Override
 	public HttpHeaders getHeader() {
 		return headers;
+	}
+
+	@Override
+	public HttpEntity<Object> getEntity() {
+		return this.entity;
 	}
 }

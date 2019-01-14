@@ -1,5 +1,6 @@
 package sensors.services;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -14,6 +15,7 @@ public interface SensorInterface {
 	public String getSensorName();
 	public void setResponse(ResponseEntity<String> resp);
 	public HttpHeaders getHeader();
+	public HttpEntity<Object> getEntity();
 	public int getTimeout();
 	public void setLastResponseCode(int respCode);
 	public int getLastResponseCode();
