@@ -50,6 +50,7 @@ public class RESTService extends Thread {
 			logger.warn("Unable to fetch datas from ip " + sensorInterface.getIP() + " caused by exception: " + e);		
 		} finally {
 			sensorInterface.setResponse(resp);	
+			logger.debug("Stop thread for sensor " + sensorInterface.getSensorName() + ", thread name: "+ Thread.currentThread().getName());
 		}
 	}
 	

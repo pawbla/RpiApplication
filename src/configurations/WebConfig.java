@@ -22,7 +22,6 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 import sensors.handler.SensorsHandlerInterface;
-import sensors.objects.WeatherSensor;
 import sensors.services.SensorInterface;
 import sensors.services.implementations.AirLySensorService;
 import sensors.services.implementations.OpenWeatherMapSensorService;
