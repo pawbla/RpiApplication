@@ -40,11 +40,16 @@ public class SettingsController {
 	public String changePassword (User user, Model model, RedirectAttributes redirectAttributes) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    user.setUsername(auth.getName());
-	    if ((user.getNewPass1().equals(user.getNewPass2())) && (passwordEncoder.matches(user.getOldPass(), db.getPassword(user)))) {
-			db.setPassword(passwordEncoder.encode(user.getNewPass1()), auth.getName());
-			redirectAttributes.addFlashAttribute("confirmPassChange", true);
+		if (user.getNewPass1().length() < 8 || user.getNewPass1().length() > 40) {
+			logger.debug("Incorrect password length");
+			redirectAttributes.addFlashAttribute("passLengthError", true);			
 		} else {
-			redirectAttributes.addFlashAttribute("passError", true);
+		    if ((user.getNewPass1().equals(user.getNewPass2())) && (passwordEncoder.matches(user.getOldPass(), db.getPassword(user)))) {
+				db.setPassword(passwordEncoder.encode(user.getNewPass1()), auth.getName());
+				redirectAttributes.addFlashAttribute("confirmPassChange", true);
+			} else {
+				redirectAttributes.addFlashAttribute("passError", true);
+			}
 		}
 	    user.setOldPass(null);
 	    user.setNewPass1(null);
