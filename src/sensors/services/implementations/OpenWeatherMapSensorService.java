@@ -10,6 +10,9 @@ import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
 import sensors.services.AbstractSensorInterface;
 
+/*
+ * Implemented but not used due to using of AirLy
+ */
 public class OpenWeatherMapSensorService extends AbstractSensorInterface {
 	
 	/**
@@ -22,6 +25,7 @@ public class OpenWeatherMapSensorService extends AbstractSensorInterface {
 	 */
 	private static final int TIMEOUT = 60;
 	private static final String SENSOR_NAME = "OpenWeatherMap Service sensor";
+	private static final String POWERED_BY = "Powered by openweathermap.org";
 	private static final String OBJECT_SENSOR_KEY = "main";
 	private static final String TEMPERATURE_SENSOR_KEY = "temp";
 	private static final String HUMIDITY_SENSOR_KEY = "humidity";

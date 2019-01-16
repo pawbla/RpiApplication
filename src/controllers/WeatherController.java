@@ -23,12 +23,8 @@ public class WeatherController {
 	private SensorInterface inWeatherSensor;
 	
 	@Autowired
-	@Qualifier("openWeather")
-	private SensorInterface openWeatherSensor;
-	
-	@Autowired
 	@Qualifier("airLy")
-	private SensorInterface airLySensor;
+	private SensorInterface extWeatherSensor;
 	
 	private Map<String,Object> sensors;
 	
@@ -38,8 +34,7 @@ public class WeatherController {
 	
 	private Map<String,Object> setSensors() {
 		sensors.put("inSensor", inWeatherSensor.getSensor());
-		sensors.put("outSensor", openWeatherSensor.getSensor());
-		airLySensor.getSensor();
+		sensors.put("outSensor", extWeatherSensor.getSensor());
 		return sensors;
 	}
 	

@@ -6,6 +6,7 @@ public class WeatherSensor {
 	private String temperature;
 	private String humidity;
 	private String pressure;
+	private String poweredBy;
 	private int statusCode;
 	private String date;
 	
@@ -14,6 +15,7 @@ public class WeatherSensor {
 	 */
 	public WeatherSensor() { 
 		statusCode = 0;
+		poweredBy = "";
 		temperature = "-";
 		humidity = "-";
 		pressure = "-";
@@ -58,6 +60,14 @@ public class WeatherSensor {
 
 	public void setStatusCode(int statusCode) {
 		this.statusCode = statusCode;
+	}
+
+	public String getPoweredBy() {
+		return poweredBy;
+	}
+
+	public void setPoweredBy(String poweredBy) {
+		this.poweredBy = poweredBy;
 	}
 	
 	
