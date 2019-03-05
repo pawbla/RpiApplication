@@ -36,8 +36,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	 */
 	@Value("${custom.ipInternalSensor}")
 	private String ipInternalSensor; 
-	@Value("${custom.ipExternalSensor}")
-	private String ipExternalSensor; 
 	@Value("${custom.intSensorPassword}")
 	private String intSensorPassword;	
 	@Value("${custom.ipAirLy}")
