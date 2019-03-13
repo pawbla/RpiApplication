@@ -2,31 +2,37 @@ package hardware;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
+
 /**
  * Execute shell command class
  *
  */
+@Component
 public class ExecuteCommand {
+	/**
+	 * Logger
+	 */
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
 	private Process process;
 	private Runtime runtime;
 	
 	public ExecuteCommand() {
-		System.out.println("RUNTIME");
 		runtime = Runtime.getRuntime();
 	}
 	
 	public void runShellCommand(String cmd) {
+		logger.debug("Execute shell command: " + cmd);
 		int exitCode = -9;
 		try {
 			process = runtime.exec(cmd);
 			exitCode = process.waitFor();
 		} catch (IOException | InterruptedException e) {
-			System.out.println("Ex " + e);
+			logger.warn("Exception has occured: " + e);
 		}
-		if (exitCode < 0) {
-			System.out.println("ExitCode " + exitCode);
-		}
-		System.out.println("ExitCodeOK " + exitCode);
+		logger.debug("Exit code: " + exitCode);
 	}
 }
