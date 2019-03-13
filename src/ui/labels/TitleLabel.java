@@ -19,7 +19,7 @@ public class TitleLabel extends AbstractLabel {
 
 	public TitleLabel(String title) {
 		super(title, WIDTH, HEIGHT);
-		this.setFont(new Font(Font.DIALOG, Font.PLAIN, HEIGHT - 2));
+		this.setFont(new Font(Font.DIALOG, Font.PLAIN, HEIGHT - 10));
 		this.setForeground(FONT_COLOR);
 		
 	}
