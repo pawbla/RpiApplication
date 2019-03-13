@@ -10,6 +10,7 @@ public class CustomProperties {
 	private String ipExternalSensor;
 	private String intSensorPassword;
 	private String ipAirLy;
+	private String ipAirLyInstallation;
 	private String apiKeyAirLy;
 	
 	public String getIpInternalSensor() {
@@ -41,5 +42,11 @@ public class CustomProperties {
 	}
 	public void setApiKeyAirLy(String apiKeyAirLy) {
 		this.apiKeyAirLy = apiKeyAirLy;
+	}
+	public String getIpAirLyInstallation() {
+		return ipAirLyInstallation;
+	}
+	public void setIpAirLyInstallation(String ipAirLyInstallation) {
+		this.ipAirLyInstallation = ipAirLyInstallation;
 	}
 }

@@ -26,6 +26,10 @@ public class WeatherController {
 	@Qualifier("airLy")
 	private SensorInterface extWeatherSensor;
 	
+	@Autowired
+	@Qualifier("airLyInfo")
+	private SensorInterface info;
+	
 	private Map<String,Object> sensors;
 	
 	public WeatherController() {
@@ -39,7 +43,8 @@ public class WeatherController {
 	}
 	
 	@RequestMapping(value = "/weather", method=GET)
-	public String settings(Model model) {
+	public String settings(Model model) {	
+		info.getSensor();
 		model.addAllAttributes(setSensors());
 		return "weather";
 	}

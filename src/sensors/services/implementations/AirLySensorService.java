@@ -9,9 +9,9 @@ import org.springframework.http.MediaType;
 
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
-import sensors.services.AbstractSensorInterface;
+import sensors.services.AbstractHandledSensorInterface;
 
-public class AirLySensorService extends AbstractSensorInterface {
+public class AirLySensorService extends AbstractHandledSensorInterface {
 	/**
 	 * Logger
 	 */
@@ -81,15 +81,4 @@ public class AirLySensorService extends AbstractSensorInterface {
 	public HttpEntity<Object> getEntity() {
 		return this.entity;
 	}
-	
-	/* CjsonArray response example
-	 * {"name":"PM1","value":10.75}
-	 * {"name":"PM25","value":14.42}
-	 * {"name":"PM10","value":26.64}
-	 * {"name":"PRESSURE","value":1004.85}
-	 * {"name":"HUMIDITY","value":96.2}
-	 * {"name":"TEMPERATURE","value":-0.31}
-	 */
-	 
-
 }

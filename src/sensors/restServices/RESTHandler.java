@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import sensors.handler.SensorIteratorInterface;
 import sensors.handler.SensorsHandlerInterface;
+import sensors.requestHandler.RequestHandler;
 import sensors.services.SensorInterface;
 
 /**
@@ -55,7 +56,11 @@ public class RESTHandler {
 		logger.debug("Initialize sensor iterator");
 		/* get sensor iterator */
 		sensorIterator = sensorHandler.getSensorInterfaceIterator();
-		//Create object to read data 
+	}
+	
+	public void requestRestDatas(SensorInterface sensorInterface) {
+		logger.debug("Request REST Datas for service: " + sensorInterface.getSensorName());
+		getRestResponse(sensorInterface);
 	}
 	
 	/**
@@ -67,9 +72,7 @@ public class RESTHandler {
 		while(sensorIterator.isLastSensorInterface()) {
 			SensorInterface sensorInterface = sensorIterator.getSensorInterface();
 			if ((checkMeasurement(sensorInterface.getTimeout())) || (sensorInterface.getLastResponseCode() != 200)) {
-				RESTService rest = appCtx.getBean(RESTService.class);
-				rest.init(sensorInterface);
-				rest.start();
+				this.getRestResponse(sensorInterface);
 			}
 		}
 
@@ -86,5 +89,11 @@ public class RESTHandler {
 		}
 		logger.debug("Check measurement active. TimeoutIter: " + timeoutIter + " sensorTimeout: " + sensorTimeout + " returned value:" + ret);
 		return ret;
+	}
+	
+	private void getRestResponse(SensorInterface sensorInterface) {
+		RESTService rest = appCtx.getBean(RESTService.class);
+		rest.init(sensorInterface);
+		rest.start();
 	}
 }

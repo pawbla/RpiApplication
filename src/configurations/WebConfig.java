@@ -22,7 +22,9 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 import sensors.handler.SensorsHandlerInterface;
+import sensors.restServices.RESTHandler;
 import sensors.services.SensorInterface;
+import sensors.services.implementations.AirLySensorInformationService;
 import sensors.services.implementations.AirLySensorService;
 import sensors.services.implementations.WeatherInternalSensorService;
 
@@ -40,6 +42,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	private String intSensorPassword;	
 	@Value("${custom.ipAirLy}")
 	private String ipAirLy; 
+	@Value("${custom.ipAirLyInstallation}")
+	private String ipAirLyInstallation; 
 	@Value("${custom.apiKeyAirLy}")
 	private String apiKeyAirLy;	
 	
@@ -109,7 +113,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * @return
      */
     @Autowired
-    SensorsHandlerInterface sensorHandler;
+    private SensorsHandlerInterface sensorHandler;
+    
+	
+	@Autowired
+	private RESTHandler restHandler;
     
     @Bean
     @Qualifier("internal")
@@ -122,6 +130,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public SensorInterface airLy() {
     	return new AirLySensorService(ipAirLy, sensorHandler, apiKeyAirLy);
     }
+    
+    @Bean
+    @Qualifier("airLyInfo")
+    public SensorInterface airLyInfo() {
+    	return new AirLySensorInformationService(ipAirLyInstallation, restHandler, apiKeyAirLy);
+    }
+    
     
 	@Override
 	public void configureDefaultServletHandling (DefaultServletHandlerConfigurer configurer) {

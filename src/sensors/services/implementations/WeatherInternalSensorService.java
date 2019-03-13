@@ -9,9 +9,10 @@ import org.springframework.http.MediaType;
 
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
+import sensors.services.AbstractHandledSensorInterface;
 import sensors.services.AbstractSensorInterface;
 
-public class WeatherInternalSensorService extends AbstractSensorInterface {
+public class WeatherInternalSensorService extends AbstractHandledSensorInterface {
 	
 	/**
 	 * Logger

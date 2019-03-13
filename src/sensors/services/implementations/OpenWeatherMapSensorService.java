@@ -8,12 +8,13 @@ import org.springframework.http.MediaType;
 
 import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.WeatherSensor;
+import sensors.services.AbstractHandledSensorInterface;
 import sensors.services.AbstractSensorInterface;
 
 /*
  * Implemented but not used due to using of AirLy
  */
-public class OpenWeatherMapSensorService extends AbstractSensorInterface {
+public class OpenWeatherMapSensorService extends AbstractHandledSensorInterface {
 	
 	/**
 	 * Logger
