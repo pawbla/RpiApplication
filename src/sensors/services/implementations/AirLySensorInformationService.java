@@ -38,11 +38,13 @@ public class AirLySensorInformationService extends AbstractSensorInterface {
 	public AirLySensorInformationService(String ip, RESTHandler restHandler, String apiKey) {
 		super(ip, SENSOR_NAME);
 		logger.info("Create " + AirLySensorInformationService.SENSOR_NAME + " object with IP: " + ip);
+		serviceInformation = new ServiceInformation();
 		this.restHandler = restHandler;
 	    headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    headers.add(API_KEY_NAME, apiKey);
 	    this.entity = new HttpEntity<Object>(headers);
+	    serviceInformation.setName(SENSOR_NAME);
 	}
 
 	@Override
@@ -62,9 +64,10 @@ public class AirLySensorInformationService extends AbstractSensorInterface {
 		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
 			JSONObject jsonArray = mapper.getJSONObject().getJSONObject(ADDRESS_KEY);
+			logger.debug("JSON Object:" + jsonArray.toString());
 			serviceInformation.setCountry(jsonArray.getString(COUNTRY_KEY));
 			serviceInformation.setCity(jsonArray.getString(CITY_KEY));
-			serviceInformation.setStreet(STREET_KEY);
+			serviceInformation.setStreet(jsonArray.getString(STREET_KEY));
 		}
 		return serviceInformation;
 	}

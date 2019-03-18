@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head>
+	  <link rel="stylesheet" type="text/css" href="css/style.css" th:href="@{css/style.css}"/>
+		<title>RPI Home System</title>
+	</head>
+	<body>
+      <header th:replace="fragments :: header">
+      </header>
+      <nav th:replace="fragments :: nav">     
+      </nav>
+      <section>
+      	<div class="sysInErrors" sec:authorize="hasRole('ROLE_ADMIN')">
+      		<h3>Informacja o czujnikach</h3>
+      		<table class="usersTable">
+      			<tr>
+	      			<th>Nazwa czujnika</th>
+	      			<th class="sensInfo">Kraj</th>
+	      			<th class="sensInfo">Miasto</th>
+	      			<th class="sensInfo">Ulica (opcjonalnie)</th>
+      			</tr>
+      			<tr th:each="sensor : ${sensorMap}">
+      				<td th:text="${sensor.value.name}"></td>
+      				<td th:text="${sensor.value.country}"></td>
+      				<td th:text="${sensor.value.city}"></td>
+      				<td th:text="${sensor.value.street}"></td>
+      			</tr>
+      		</table>
+      	</div>			
+      </section>     
+       <footer th:replace="fragments :: footer">...</footer>
+	</body>
+</html>

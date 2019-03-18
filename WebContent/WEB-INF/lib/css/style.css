@@ -369,3 +369,9 @@ table.errorList td.lvl {
 table.errorList td.msg {
 	width: 50%;
 }
+
+/* sensor info page */
+
+table th.sensinfo {
+	width: 25%;
+}	

@@ -25,7 +25,7 @@ public class OpenWeatherMapSensorService extends AbstractHandledSensorInterface 
 	 * Constants
 	 */
 	private static final int TIMEOUT = 60;
-	private static final String SENSOR_NAME = "OpenWeatherMap Service sensor";
+	private static final String SENSOR_NAME = "OpenWeatherMap";
 	private static final String POWERED_BY = "Powered by openweathermap.org";
 	private static final String OBJECT_SENSOR_KEY = "main";
 	private static final String TEMPERATURE_SENSOR_KEY = "temp";

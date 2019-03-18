@@ -20,7 +20,7 @@ public class AirLySensorService extends AbstractHandledSensorInterface {
 	 * Constants
 	 */
 	private static final int TIMEOUT = 120;
-	private static final String SENSOR_NAME = "AirLy Service sensor";
+	private static final String SENSOR_NAME = "AirLy";
 	private static final String API_KEY_NAME = "apikey";
 	private static final String POWERED_BY = "Powered by airly.eu";
 	private static final String CURRENT_KEY = "current";

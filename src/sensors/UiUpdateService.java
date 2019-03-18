@@ -61,9 +61,9 @@ public class UiUpdateService {
 		/** Internal sensors*/
 		InTemperatureIndicator.getInstance().setText(this.inSensor.getTemperature());
 		InHumidityIndicator.getInstance().setText(this.inSensor.getHumidity());
-		PressureIndicator.getInstance().setText(this.inSensor.getPressure());
 		
 		/** External sensors */
+		PressureIndicator.getInstance().setText(this.outSensor.getPressure());
 		OutTemperatureIndicator.getInstance().setText(this.outSensor.getTemperature());
 		OutHumidityIndicator.getInstance().setText(this.outSensor.getHumidity());
 	}

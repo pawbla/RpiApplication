@@ -16,11 +16,13 @@ public class ServiceInformation {
 	private String country;
 	private String city;
 	private String street;
+	private String name;
 	
 	public ServiceInformation() {
 		this.country = "";
 		this.street = "";
 		this.city = "";
+		this.name = name;
 	}
 	
 	public String getCountry() {
@@ -45,6 +47,14 @@ public class ServiceInformation {
 
 	public void setStreet(String street) {
 		this.street = street;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }
