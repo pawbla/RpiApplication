@@ -1,7 +1,7 @@
 package sensors.objects;
 
 //POJO
-public class WeatherSensor {
+public class WeatherSensor implements Sensor {
 	
 	private String temperature;
 	private String humidity;

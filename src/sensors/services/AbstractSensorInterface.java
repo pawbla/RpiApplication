@@ -26,8 +26,6 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 		lastRespCode = 0;
 	}
 	
-	public abstract <T> T getSensor();
-	
 	public String getSensorName() {
 		return sensorName;
 	}

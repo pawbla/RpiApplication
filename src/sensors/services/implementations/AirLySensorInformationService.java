@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import sensors.objects.Sensor;
 import sensors.objects.ServiceInformation;
 import sensors.restServices.RESTHandler;
 import sensors.services.AbstractSensorInterface;
@@ -58,16 +59,16 @@ public class AirLySensorInformationService extends AbstractSensorInterface {
 	}
 
 	@Override
-	public ServiceInformation getSensor() {
+	public <T extends Sensor> T getSensor(T serviceInformation) {
 		logger.debug("Prepare sensor information data for " + this.getSensorName());
 		this.restHandler.requestRestDatas(this);
 		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
 			JSONObject jsonArray = mapper.getJSONObject().getJSONObject(ADDRESS_KEY);
 			logger.debug("JSON Object:" + jsonArray.toString());
-			serviceInformation.setCountry(jsonArray.getString(COUNTRY_KEY));
-			serviceInformation.setCity(jsonArray.getString(CITY_KEY));
-			serviceInformation.setStreet(jsonArray.getString(STREET_KEY));
+			((ServiceInformation)serviceInformation).setCountry(jsonArray.getString(COUNTRY_KEY));
+			((ServiceInformation)serviceInformation).setCity(jsonArray.getString(CITY_KEY));
+			((ServiceInformation)serviceInformation).setStreet(jsonArray.getString(STREET_KEY));
 		}
 		return serviceInformation;
 	}

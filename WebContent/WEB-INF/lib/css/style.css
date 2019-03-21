@@ -309,6 +309,27 @@ div.press {
   width: 32%;
 }
 
+table.airpolution {
+  width: 100%;
+  text-align: center;
+}
+
+table.airpolution th {
+	font-size: 23px;
+}
+
+table.airpolution tr.value {
+	font-size: 40px;
+}
+
+td.caqi {
+	font-weight: bold;
+}
+
+table.airpolution tr.percent {
+	font-size: 25px;
+}
+
 div.weather p {
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;

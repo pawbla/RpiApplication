@@ -4,13 +4,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
+import sensors.objects.Sensor;
+
 /**
  * Sensor interface
  * @author blach
  *
  */
 public interface SensorInterface {
-	public <T> T getSensor();
+	public <T extends Sensor> T getSensor(T t);
 	public String getIP();
 	public String getSensorName();
 	public void setResponse(ResponseEntity<String> resp);

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class ServiceInformation {
+public class ServiceInformation implements Sensor {
 
 	/**
 	 * Variables
@@ -17,14 +17,34 @@ public class ServiceInformation {
 	private String city;
 	private String street;
 	private String name;
+	private int statusCode;
+	private String date;
 	
 	public ServiceInformation() {
 		this.country = "";
 		this.street = "";
 		this.city = "";
 		this.name = name;
+		this.statusCode = 0;
+		this.date = "";
 	}
 	
+	public int getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(int statusCode) {
+		this.statusCode = statusCode;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	public String getCountry() {
 		return country;
 	}

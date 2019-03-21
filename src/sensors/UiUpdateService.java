@@ -46,12 +46,6 @@ public class UiUpdateService {
 	@Qualifier("airLy")
 	private SensorInterface extWeatherSensor;
 	
-	@PostConstruct
-	public void init() {
-		this.inSensor = inWeatherSensor.getSensor();
-		this.outSensor = extWeatherSensor.getSensor();
-	}
-	
 	/**
 	 * Method executed with set period of time
 	 */
@@ -59,12 +53,12 @@ public class UiUpdateService {
 	private void refreshUI() {		
 		logger.debug("Refresh UI");
 		/** Internal sensors*/
-		InTemperatureIndicator.getInstance().setText(this.inSensor.getTemperature());
-		InHumidityIndicator.getInstance().setText(this.inSensor.getHumidity());
+		InTemperatureIndicator.getInstance().setText(inWeatherSensor.getSensor(new WeatherSensor()).getTemperature());
+		InHumidityIndicator.getInstance().setText(inWeatherSensor.getSensor(new WeatherSensor()).getHumidity());
 		
 		/** External sensors */
-		PressureIndicator.getInstance().setText(this.outSensor.getPressure());
-		OutTemperatureIndicator.getInstance().setText(this.outSensor.getTemperature());
-		OutHumidityIndicator.getInstance().setText(this.outSensor.getHumidity());
+		PressureIndicator.getInstance().setText(extWeatherSensor.getSensor(new WeatherSensor()).getPressure());
+		OutTemperatureIndicator.getInstance().setText(extWeatherSensor.getSensor(new WeatherSensor()).getTemperature());
+		OutHumidityIndicator.getInstance().setText(extWeatherSensor.getSensor(new WeatherSensor()).getHumidity());
 	}
 }

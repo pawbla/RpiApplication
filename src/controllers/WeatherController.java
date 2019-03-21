@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import sensors.objects.AirPolutionSensor;
+import sensors.objects.WeatherSensor;
 import sensors.services.SensorInterface;
 
 @Controller
@@ -33,8 +35,9 @@ public class WeatherController {
 	}
 	
 	private Map<String,Object> setSensors() {
-		sensors.put("inSensor", inWeatherSensor.getSensor());
-		sensors.put("outSensor", extWeatherSensor.getSensor());
+		sensors.put("inSensor", inWeatherSensor.getSensor(new WeatherSensor()));
+		sensors.put("outSensor", extWeatherSensor.getSensor(new WeatherSensor()));
+		sensors.put("airPolution", extWeatherSensor.getSensor(new AirPolutionSensor()));
 		return sensors;
 	}
 	

@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import sensors.handler.SensorsHandlerInterface;
+import sensors.objects.Sensor;
 import sensors.objects.WeatherSensor;
 import sensors.services.AbstractHandledSensorInterface;
 import sensors.services.AbstractSensorInterface;
@@ -31,7 +32,6 @@ public class WeatherInternalSensorService extends AbstractHandledSensorInterface
 	/**
 	 * Variables' declarations
 	 */
-	private WeatherSensor inSensor;
 	private HttpHeaders headers;
 	private HttpEntity<Object> entity;
 	
@@ -45,7 +45,6 @@ public class WeatherInternalSensorService extends AbstractHandledSensorInterface
 	public WeatherInternalSensorService(String ip, SensorsHandlerInterface sensorHandler, String password) {
 		super(ip, sensorHandler, SENSOR_NAME, TIMEOUT);
 		logger.info("Create " + WeatherInternalSensorService.SENSOR_NAME + " object with IP: " + ip);
-		inSensor = new WeatherSensor();
 	    headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    headers.add("Authentication", password);
@@ -57,13 +56,13 @@ public class WeatherInternalSensorService extends AbstractHandledSensorInterface
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public WeatherSensor getSensor() {
+	public <T extends Sensor> T getSensor(T inSensor) {
 		logger.debug("Prepare sensor data for " + this.getSensorName());
 		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
-			inSensor.setHumidity(mapper.getJSONObject().getString(HUMIDITY_SENSOR_KEY));
-			inSensor.setTemperature(mapper.getJSONObject().getString(TEMPERATURE_SENSOR_KEY));
-			inSensor.setPressure(mapper.getJSONObject().getString(PRESSURE_SENSOR_KEY));
+			((WeatherSensor)inSensor).setHumidity(mapper.getJSONObject().getString(HUMIDITY_SENSOR_KEY));
+			((WeatherSensor)inSensor).setTemperature(mapper.getJSONObject().getString(TEMPERATURE_SENSOR_KEY));
+			((WeatherSensor)inSensor).setPressure(mapper.getJSONObject().getString(PRESSURE_SENSOR_KEY));
 			inSensor.setDate(mapper.getDateAsString());
 		}
 		inSensor.setStatusCode(mapper.getResponseCode());

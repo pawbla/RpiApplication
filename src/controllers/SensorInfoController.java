@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import sensors.objects.ServiceInformation;
 import sensors.services.SensorInterface;
 
 @Controller
@@ -28,7 +29,7 @@ public class SensorInfoController {
 	}
 	
 	private Map<String,Object> getInformations() {
-		sensorInfoMap.put("airLy", info.getSensor());
+		sensorInfoMap.put("airLy", info.getSensor(new ServiceInformation()));
 		return sensorInfoMap;
 	}
 	

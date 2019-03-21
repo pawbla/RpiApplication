@@ -32,6 +32,30 @@
 	          <p class="actT" th:text="'Akt.: ' + ${outSensor.date}"></p>
 	        </div>
 	      </div>
+	      <div class="weather">
+	        <div>
+	          <h3>Zanieczyszczenie powietrza</h3>
+			  <table class="airpolution">
+			  	<tr>
+			  		<th>PM1</th>
+			  		<th>PM10</th>
+			  		<th>PM25</th>
+			  		<th>CAQI</th>
+			  	</tr>
+			  	<tr class="value">
+			  		<td rowspan="2" th:text="${airPolution.pm1}"></td>
+			  		<td th:text="${airPolution.pm10}"></td>
+			  		<td th:text="${airPolution.pm25}"></td>
+			  		<td rowspan="2" class="caqi" th:text="${airPolution.caqi}" th:style="'color:' + ${airPolution.caqiColor}"></td>
+			  	</tr>
+			  	<tr class="percent">
+			  		<td th:text="${airPolution.pm10percent} + '%'"></td>
+			  		<td th:text="${airPolution.pm25percent} + '%'"></td>
+			  	</tr>
+			  </table>
+	          <p class="actT" th:text="'Akt.: ' + ${airPolution.date}"></p>
+	        </div>
+	      </div>
 	      
 	    </section>   
 		<footer th:replace="fragments :: footer">...</footer>
