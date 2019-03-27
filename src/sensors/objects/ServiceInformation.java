@@ -24,7 +24,7 @@ public class ServiceInformation implements Sensor {
 		this.country = "";
 		this.street = "";
 		this.city = "";
-		this.name = name;
+		this.name = "";
 		this.statusCode = 0;
 		this.date = "";
 	}

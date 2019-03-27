@@ -19,15 +19,15 @@ public class AirPolutionSensor implements Sensor {
 	private String date;
 	
 	public AirPolutionSensor() {
-		this.caqi = "";
+		this.caqi = "-";
 		this.caqiColor = "";
-		this.pm1 = "";
-		this.pm10 = "";
-		this.pm10percent = "";
-		this.pm25 = "";
-		this.pm25percent = "";
+		this.pm1 = "-";
+		this.pm10 = "-";
+		this.pm10percent = "-";
+		this.pm25 = "-";
+		this.pm25percent = "-";
 		this.statusCode = 0;
-		this.date = "";
+		this.date = "-";
 	}
 
 	public String getCaqi() {

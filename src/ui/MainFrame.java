@@ -5,8 +5,6 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import ui.panels.mainPanels.CentrePanel;
@@ -36,7 +34,7 @@ public class MainFrame extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBackground(BACK_COLOR);
 		this.add(new CentrePanel(), BorderLayout.CENTER);
-		this.add(new LeftPanel(), BorderLayout.WEST);
+		this.add(new LeftPanel(), BorderLayout.WEST);		
 		this.add(new RightPanel(), BorderLayout.EAST);
 		this.add(new NorthPanel(), BorderLayout.NORTH);
 		this.add(new SouthPanel(), BorderLayout.SOUTH);

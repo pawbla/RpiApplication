@@ -16,7 +16,7 @@ public class HumidityIndicator extends Indicator {
 	 * Constants
 	 */
 	private final static int WIDTH = 80;
-	private final static int HEIGHT = 70;
+	private final static int HEIGHT = 50;
 	private final static Color TEXT_COLOR = Color.BLUE;
 
 	public HumidityIndicator() {

@@ -1,7 +1,5 @@
 package ui.panels.mainPanels;
 
-import org.springframework.stereotype.Component;
-
 public class SouthPanel extends  MainPanels {
 	
 	/**
@@ -12,7 +10,7 @@ public class SouthPanel extends  MainPanels {
 	 * Constants
 	 */
 	private static final int WIDTH = 480;
-	private static final int HEIGHT = 40;
+	private static final int HEIGHT = 60;
 	
 	public SouthPanel() {
 		super(WIDTH, HEIGHT);

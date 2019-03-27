@@ -4,9 +4,6 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
-import org.springframework.stereotype.Component;
-
-import ui.indicators.weather.InTemperatureIndicator;
 import ui.indicators.weather.OutHumidityIndicator;
 import ui.indicators.weather.OutTemperatureIndicator;
 import ui.labels.TitleLabel;
@@ -23,7 +20,7 @@ public class RightPanel extends  MainPanels  {
 	 * Constants
 	 */
 	private static final int WIDTH = 140;
-	private static final int HEIGHT = 210;
+	private static final int HEIGHT = 180;
 	private static final String OUT_LABEL_TITLE = "OUT";
 	private final static String COLOR_HEX = "#FFFF00";
 

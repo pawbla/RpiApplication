@@ -27,7 +27,7 @@ public class SidePanelLayout {
 		this.panel.add(indicator, new GridBagHandler(0, 1)
 				.setAnchor(GridBagConstraints.FIRST_LINE_END)
 				.setFill(GridBagConstraints.BOTH)
-				.setIpad(10, 30));
+				.setIpad(10, 25));
 		return this;
 	}
 	

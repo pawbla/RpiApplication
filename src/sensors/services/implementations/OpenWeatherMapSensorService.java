@@ -10,7 +10,6 @@ import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.Sensor;
 import sensors.objects.WeatherSensor;
 import sensors.services.AbstractHandledSensorInterface;
-import sensors.services.AbstractSensorInterface;
 
 /*
  * Implemented but not used due to using of AirLy
@@ -47,7 +46,6 @@ public class OpenWeatherMapSensorService extends AbstractHandledSensorInterface 
 	    this.entity = new HttpEntity<Object>(headers);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public <T extends Sensor> T getSensor(T extSensor) {
 		logger.debug("Prepare sensor data for " + this.getSensorName());
 		mapper.prepareDatas();

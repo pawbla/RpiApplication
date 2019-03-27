@@ -3,7 +3,6 @@ package sensors.services;
 import org.springframework.http.ResponseEntity;
 
 import sensors.JSONMapper;
-import sensors.handler.SensorsHandlerInterface;
 
 /**
  * Abstract sensor interface

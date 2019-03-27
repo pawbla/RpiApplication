@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import sensors.handler.SensorIteratorInterface;
 import sensors.handler.SensorsHandlerInterface;
-import sensors.requestHandler.RequestHandler;
 import sensors.services.SensorInterface;
 
 /**
