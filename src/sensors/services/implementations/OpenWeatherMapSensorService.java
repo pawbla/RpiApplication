@@ -5,16 +5,16 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 
-import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.Sensor;
 import sensors.objects.WeatherSensor;
-import sensors.services.AbstractHandledSensorInterface;
+import sensors.services.AbstractSensorInterface;
 
 /*
  * Implemented but not used due to using of AirLy
  */
-public class OpenWeatherMapSensorService extends AbstractHandledSensorInterface {
+public class OpenWeatherMapSensorService extends AbstractSensorInterface {
 	
 	/**
 	 * Logger
@@ -24,26 +24,22 @@ public class OpenWeatherMapSensorService extends AbstractHandledSensorInterface 
 	/**
 	 * Constants
 	 */
-	private static final int TIMEOUT = 60;
 	private static final String SENSOR_NAME = "OpenWeatherMap";
 	private static final String OBJECT_SENSOR_KEY = "main";
 	private static final String TEMPERATURE_SENSOR_KEY = "temp";
 	private static final String HUMIDITY_SENSOR_KEY = "humidity";
-	/**
-	 * Variables' declarations
-	 */
-	private HttpHeaders headers;
-	private HttpEntity<Object> entity;
+	private final int TIMEOUT = 120000;
+	private final int DELAY_TIMEOUT = 20000;
 	
 	/**
 	 * Constructor
 	 */
-	public OpenWeatherMapSensorService(String ip, SensorsHandlerInterface sensorHandler) {
-		super(ip, sensorHandler, SENSOR_NAME, TIMEOUT);
+	public OpenWeatherMapSensorService(String ip) {
+		super(ip, SENSOR_NAME);
 		logger.info("Create " + OpenWeatherMapSensorService.SENSOR_NAME + " object with IP: " + ip);
-	    headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    this.entity = new HttpEntity<Object>(headers);
+	    this.setHeader(headers);
 	}
 	
 	public <T extends Sensor> T getSensor(T extSensor) {
@@ -60,17 +56,11 @@ public class OpenWeatherMapSensorService extends AbstractHandledSensorInterface 
 		return extSensor;
 	}
 	
-	public String getSensorName() {
-		return OpenWeatherMapSensorService.SENSOR_NAME;
-	}
-	
-	@Override
-	public HttpHeaders getHeader() {
-		return headers;
-	}
-	
-	@Override
-	public HttpEntity<Object> getEntity() {
-		return this.entity;
+	/**
+	 * Method executed with set period of time
+	 */
+	@Scheduled(fixedRate = TIMEOUT, initialDelay = DELAY_TIMEOUT)
+	private void fetchDatas() {		
+		this.getRestData();
 	}
 }

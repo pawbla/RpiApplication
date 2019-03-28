@@ -7,14 +7,14 @@ import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 
-import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.AirPolutionSensor;
 import sensors.objects.Sensor;
 import sensors.objects.WeatherSensor;
-import sensors.services.AbstractHandledSensorInterface;
+import sensors.services.AbstractSensorInterface;
 
-public class AirLySensorService extends AbstractHandledSensorInterface {
+public class AirLySensorService extends AbstractSensorInterface {
 	/**
 	 * Logger
 	 */
@@ -22,7 +22,6 @@ public class AirLySensorService extends AbstractHandledSensorInterface {
 	/**
 	 * Constants
 	 */
-	private static final int TIMEOUT = 120;
 	private static final String SENSOR_NAME = "AirLy";
 	private static final String API_KEY_NAME = "apikey";
 	private static final String CURRENT_KEY = "current";
@@ -41,30 +40,22 @@ public class AirLySensorService extends AbstractHandledSensorInterface {
 	private static final int PRESSURE_POS = 3;
 	private static final int HUMIDITY_POS = 4;
 	private static final int TEMPERATURE_POS = 5;
-	
-	/**
-	 * Variables' declarations
-	 */
-	private HttpHeaders headers;
-	private HttpEntity<Object> entity;
+
+	private final int TIMEOUT = 120000;
+	private final int DELAY_TIMEOUT = 20000;
 	
 	/**
 	 * Constructor
 	 * @param ip
 	 * @param sensorHandler
 	 */
-	public AirLySensorService(String ip, SensorsHandlerInterface sensorHandler, String apiKey) {
-		super(ip, sensorHandler, SENSOR_NAME, TIMEOUT);
+	public AirLySensorService(String ip, String apiKey) {
+		super(ip, SENSOR_NAME);
 		logger.info("Create " + AirLySensorService.SENSOR_NAME + " object with IP: " + ip);
-	    headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    headers.add(API_KEY_NAME, apiKey);
-	    this.entity = new HttpEntity<Object>(headers);
-	}
-
-	@Override
-	public HttpHeaders getHeader() {
-		return headers;
+	    this.setHeader(headers);
 	}
 
 	@Override
@@ -96,10 +87,13 @@ public class AirLySensorService extends AbstractHandledSensorInterface {
 		sensor.setStatusCode(mapper.getResponseCode());
 		return sensor;
 	}
-
-
-	@Override
-	public HttpEntity<Object> getEntity() {
-		return this.entity;
+	
+	/**
+	 * Method executed with set period of time
+	 */
+	@Scheduled(fixedRate = TIMEOUT, initialDelay = DELAY_TIMEOUT)
+	private void fetchDatas() {		
+		this.getRestData();
 	}
+
 }

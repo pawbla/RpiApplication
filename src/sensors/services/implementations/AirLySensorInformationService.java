@@ -3,13 +3,12 @@ package sensors.services.implementations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import sensors.objects.Sensor;
 import sensors.objects.ServiceInformation;
-import sensors.restServices.RESTHandler;
 import sensors.services.AbstractSensorInterface;
 
 public class AirLySensorInformationService extends AbstractSensorInterface {
@@ -27,41 +26,22 @@ public class AirLySensorInformationService extends AbstractSensorInterface {
 	private static final String COUNTRY_KEY = "country";
 	private static final String CITY_KEY = "city"; 
 	private static final String STREET_KEY = "street";
+	private final int TIMEOUT = 120000;
+	private final int DELAY_TIMEOUT = 20000;
 	
-	/**
-	 * Variables' declarations
-	 */
-	private ServiceInformation serviceInformation;
-	private HttpHeaders headers;
-	private HttpEntity<Object> entity;
-	private RESTHandler restHandler;
-	
-	public AirLySensorInformationService(String ip, RESTHandler restHandler, String apiKey) {
+	public AirLySensorInformationService(String ip, String apiKey) {
 		super(ip, SENSOR_NAME);
 		logger.info("Create " + AirLySensorInformationService.SENSOR_NAME + " object with IP: " + ip);
-		serviceInformation = new ServiceInformation();
-		this.restHandler = restHandler;
-	    headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    headers.add(API_KEY_NAME, apiKey);
-	    this.entity = new HttpEntity<Object>(headers);
-	    serviceInformation.setName(SENSOR_NAME);
-	}
-
-	@Override
-	public HttpHeaders getHeader() {
-		return headers;
-	}
-
-	@Override
-	public HttpEntity<Object> getEntity() {
-		return this.entity;
+	    this.setHeader(headers);
+	    
 	}
 
 	@Override
 	public <T extends Sensor> T getSensor(T serviceInformation) {
 		logger.debug("Prepare sensor information data for " + this.getSensorName());
-		this.restHandler.requestRestDatas(this);
 		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
 			JSONObject jsonArray = mapper.getJSONObject().getJSONObject(ADDRESS_KEY);
@@ -71,5 +51,13 @@ public class AirLySensorInformationService extends AbstractSensorInterface {
 			((ServiceInformation)serviceInformation).setStreet(jsonArray.getString(STREET_KEY));
 		}
 		return serviceInformation;
+	}
+	
+	/**
+	 * Method executed with set period of time
+	 */
+	@Scheduled(fixedRate = TIMEOUT, initialDelay = DELAY_TIMEOUT)
+	private void fetchDatas() {		
+		this.getRestData();
 	}
 }

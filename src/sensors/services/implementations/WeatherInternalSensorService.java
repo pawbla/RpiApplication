@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 
-import sensors.handler.SensorsHandlerInterface;
 import sensors.objects.Sensor;
 import sensors.objects.WeatherSensor;
-import sensors.services.AbstractHandledSensorInterface;
+import sensors.services.AbstractSensorInterface;
 
-public class WeatherInternalSensorService extends AbstractHandledSensorInterface {
+public class WeatherInternalSensorService extends AbstractSensorInterface {
 	
 	/**
 	 * Logger
@@ -22,17 +22,16 @@ public class WeatherInternalSensorService extends AbstractHandledSensorInterface
 	/**
 	 * Constants
 	 */
-	private static final int TIMEOUT = 20;
 	private static final String SENSOR_NAME = "Internal Weather Sensor";
 	private static final String TEMPERATURE_SENSOR_KEY = "Temperature";
 	private static final String HUMIDITY_SENSOR_KEY = "Humidity";
 	private static final String PRESSURE_SENSOR_KEY = "Pressure";
+	private final int TIMEOUT = 10000;
+	private final int DELAY_TIMEOUT = 20000;
 	
 	/**
 	 * Variables' declarations
 	 */
-	private HttpHeaders headers;
-	private HttpEntity<Object> entity;
 	
 	@Value("${custom.intSensorPassword}")
 	private String pass;
@@ -41,13 +40,13 @@ public class WeatherInternalSensorService extends AbstractHandledSensorInterface
 	 * Constructor
 	 * @param ip of service
 	 */
-	public WeatherInternalSensorService(String ip, SensorsHandlerInterface sensorHandler, String password) {
-		super(ip, sensorHandler, SENSOR_NAME, TIMEOUT);
+	public WeatherInternalSensorService(String ip, String password) {
+		super(ip, SENSOR_NAME);
 		logger.info("Create " + WeatherInternalSensorService.SENSOR_NAME + " object with IP: " + ip);
-	    headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    headers.add("Authentication", password);
-	    this.entity = new HttpEntity<Object>(headers);
+	    this.setHeader(headers);
 	}
 	
 	/**
@@ -68,17 +67,12 @@ public class WeatherInternalSensorService extends AbstractHandledSensorInterface
 		return inSensor;
 	}
 	
-	public String getSensorName() {
-		return WeatherInternalSensorService.SENSOR_NAME;
+	/**
+	 * Method executed with set period of time
+	 */
+	@Scheduled(fixedRate = TIMEOUT, initialDelay = DELAY_TIMEOUT)
+	private void fetchDatas() {		
+		this.getRestData();
 	}
 
-	@Override
-	public HttpHeaders getHeader() {
-		return headers;
-	}
-
-	@Override
-	public HttpEntity<Object> getEntity() {
-		return this.entity;
-	}
 }

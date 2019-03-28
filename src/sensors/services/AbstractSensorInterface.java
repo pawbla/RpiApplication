@@ -1,8 +1,19 @@
 package sensors.services;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import sensors.JSONMapper;
+import sensors.restServices.RESTService;
 
 /**
  * Abstract sensor interface
@@ -12,9 +23,22 @@ import sensors.JSONMapper;
  */
 public abstract class AbstractSensorInterface implements SensorInterface {
 	
+	/**
+	 * Logger
+	 */
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
+	
+    @Autowired
+    private ApplicationContext appCtx;
+	
+	/**
+	 * Definitions of variables
+	 */
+	
 	private String ip;
 	private String sensorName;
 	private int lastRespCode;
+	private HttpEntity<Object> entity;
 	
 	protected JSONMapper mapper;
 	
@@ -29,28 +53,17 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 		return sensorName;
 	}
 	
-	public String getIP() {
-		return ip;
+	protected void setHeader(final HttpHeaders header) {
+		this.entity = new HttpEntity<Object>(header);
 	}
 	
-	public void setResponse(ResponseEntity<String> resp) {
-		this.mapper.setResponse(resp);
-	}
-
-	
-	public void setLastResponseCode(int respCode) {
-		this.lastRespCode = respCode;
-	}
-	public int getLastResponseCode() {
-		return this.lastRespCode;
+	@PostConstruct
+	private void initMeasurement() {
+		getRestData();
 	}
 	
-	void setHeader() {
-		
-	}
-	
-	@Override
-	public int getTimeout() {
-		return 0;
+	protected void getRestData() {
+		RESTService rest = appCtx.getBean(RESTService.class);
+		mapper.setResponse(rest.getRest(this.ip, this.entity, this.sensorName));
 	}
 }

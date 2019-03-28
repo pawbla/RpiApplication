@@ -1,6 +1,5 @@
 package configurations;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -21,8 +20,6 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
-import sensors.handler.SensorsHandlerInterface;
-import sensors.restServices.RESTHandler;
 import sensors.services.SensorInterface;
 import sensors.services.implementations.AirLySensorInformationService;
 import sensors.services.implementations.AirLySensorService;
@@ -112,29 +109,23 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * Sensors IP configuration
      * @return
      */
-    @Autowired
-    private SensorsHandlerInterface sensorHandler;
-    
-	
-	@Autowired
-	private RESTHandler restHandler;
     
     @Bean
     @Qualifier("internal")
     public SensorInterface internal() {
-    	return new WeatherInternalSensorService(ipInternalSensor, sensorHandler, intSensorPassword);
+    	return new WeatherInternalSensorService(ipInternalSensor, intSensorPassword);
     }   
     
     @Bean
     @Qualifier("airLy")
     public SensorInterface airLy() {
-    	return new AirLySensorService(ipAirLy, sensorHandler, apiKeyAirLy);
+    	return new AirLySensorService(ipAirLy, apiKeyAirLy);
     }
     
     @Bean
     @Qualifier("airLyInfo")
     public SensorInterface airLyInfo() {
-    	return new AirLySensorInformationService(ipAirLyInstallation, restHandler, apiKeyAirLy);
+    	return new AirLySensorInformationService(ipAirLyInstallation, apiKeyAirLy);
     }
     
     
