@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 import sensors.JSONMapper;
 import sensors.restServices.RESTService;
@@ -37,7 +34,6 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 	
 	private String ip;
 	private String sensorName;
-	private int lastRespCode;
 	private HttpEntity<Object> entity;
 	
 	protected JSONMapper mapper;
@@ -46,7 +42,6 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 		this.ip = ip;
 		mapper = new JSONMapper();
 		this.sensorName = sensorName;
-		lastRespCode = 0;
 	}
 	
 	public String getSensorName() {
@@ -64,6 +59,7 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 	
 	protected void getRestData() {
 		RESTService rest = appCtx.getBean(RESTService.class);
+		//rest.init(this.ip, this.entity, this.sensorName);
 		mapper.setResponse(rest.getRest(this.ip, this.entity, this.sensorName));
 	}
 }

@@ -23,7 +23,9 @@ public class RESTService {
 	 */
 	private ResponseEntity<String> resp;
 	private RestTemplate rest;
-	private SensorInterface sensorInterface;
+	private String ip;
+	private HttpEntity<Object> entity;
+	private String sensorName;
 	
 	/**
 	 * Constructor
@@ -33,14 +35,19 @@ public class RESTService {
 		rest = new RestTemplate();
 		resp = null;
 	}
+	
+	public void init(String ip, HttpEntity<Object> entity, String sensorName) {
+		this.ip = ip;
+		this.entity = entity;
+		this.sensorName = sensorName;
+	}
 
 	public ResponseEntity<String> getRest(String ip, HttpEntity<Object> entity, String sensorName) {
 		int iter = 0;
 		while (iter < 3) {
-			logger.debug("Get REST data for " + sensorName + " with ip " + ip + " iteration " + iter + " entity " + entity.getHeaders().toString());
+			logger.debug("Get REST data for " + sensorName + " with ip " + ip + " iteration " + iter);
 			try {
 				resp = rest.exchange(ip, HttpMethod.GET, entity, String.class);
-				logger.debug("Received response code " + resp.getStatusCodeValue() + " for sensor: " + sensorInterface.getSensorName());
 				if (resp.getStatusCodeValue() == 200) {
 					break;
 				}
