@@ -27,7 +27,7 @@ public class CentrePanelLayout {
 		this.panel.add(indicator, new GridBagHandler(0, 1, 4, 1)
 				.setAnchor(GridBagConstraints.CENTER)
 				.setFill(GridBagConstraints.BOTH)
-				.setWeight(100, 0));
+				.setWeight(20, 100));
 		return this;
 	}
 	

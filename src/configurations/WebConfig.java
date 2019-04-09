@@ -23,7 +23,6 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 import sensors.services.SensorInterface;
 import sensors.services.implementations.AirLySensorInformationService;
 import sensors.services.implementations.AirLySensorService;
-import sensors.services.implementations.OpenWeatherMapSensorService;
 import sensors.services.implementations.WeatherInternalSensorService;
 
 @Configuration

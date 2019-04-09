@@ -20,7 +20,7 @@ public class AirPolutionSensor implements Sensor {
 	
 	public AirPolutionSensor() {
 		this.caqi = "-";
-		this.caqiColor = "";
+		this.caqiColor = "#FFFFFF";
 		this.pm1 = "-";
 		this.pm10 = "-";
 		this.pm10percent = "-";

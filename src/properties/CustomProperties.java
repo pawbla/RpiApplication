@@ -12,6 +12,7 @@ public class CustomProperties {
 	private String ipAirLy;
 	private String ipAirLyInstallation;
 	private String apiKeyAirLy;
+	private String ipSunSetRise;
 	
 	public String getIpInternalSensor() {
 		return ipInternalSensor;
@@ -48,5 +49,11 @@ public class CustomProperties {
 	}
 	public void setIpAirLyInstallation(String ipAirLyInstallation) {
 		this.ipAirLyInstallation = ipAirLyInstallation;
+	}
+	public String getIpSunSetRise() {
+		return ipSunSetRise;
+	}
+	public void setIpSunSetRise(String ipSunSetRise) {
+		this.ipSunSetRise = ipSunSetRise;
 	}
 }

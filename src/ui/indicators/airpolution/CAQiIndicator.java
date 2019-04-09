@@ -17,14 +17,14 @@ public class CAQiIndicator extends Indicator {
 	/**
 	 * Constants
 	 */
-	private final static int WIDTH = 80;
-	private final static int HEIGHT = 45;
+	private final static int WIDTH = 70;
+	private final static int HEIGHT = 48;
 	private final static String COLOR_HEX = "#FFFF00";
 	private final static Color TEXT_COLOR = Color.decode(COLOR_HEX);
 	
 	public CAQiIndicator() {
 		super(WIDTH, HEIGHT, TEXT_COLOR);
-		this.setVerticalAlignment(SwingConstants.TOP);
+		this.setVerticalAlignment(SwingConstants.CENTER);
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 	

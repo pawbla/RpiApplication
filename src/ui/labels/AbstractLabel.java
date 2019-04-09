@@ -21,6 +21,7 @@ public abstract class AbstractLabel extends JLabel {
 		this.setText(title);
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 		this.setPreferredSize(new Dimension(width, height));
+		//this.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
 	}
 	
 	/*

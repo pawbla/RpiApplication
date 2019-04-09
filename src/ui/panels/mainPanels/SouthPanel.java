@@ -10,7 +10,7 @@ public class SouthPanel extends  MainPanels {
 	 * Constants
 	 */
 	private static final int WIDTH = 480;
-	private static final int HEIGHT = 60;
+	private static final int HEIGHT = 35;
 	
 	public SouthPanel() {
 		super(WIDTH, HEIGHT);

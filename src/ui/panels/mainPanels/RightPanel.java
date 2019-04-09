@@ -20,7 +20,7 @@ public class RightPanel extends  MainPanels  {
 	 * Constants
 	 */
 	private static final int WIDTH = 140;
-	private static final int HEIGHT = 180;
+	private static final int HEIGHT = 200;
 	private static final String OUT_LABEL_TITLE = "OUT";
 	private final static String COLOR_HEX = "#FFFF00";
 

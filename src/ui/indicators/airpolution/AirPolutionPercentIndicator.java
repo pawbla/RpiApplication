@@ -16,13 +16,13 @@ public class AirPolutionPercentIndicator extends Indicator {
 	 * Constants
 	 */
 	private final static int WIDTH = 30;
-	private final static int HEIGHT = 28;
+	private final static int HEIGHT = 30;
 	private final static String COLOR_HEX = "#FFFF00";
 	private final static Color TEXT_COLOR = Color.decode(COLOR_HEX);
 	
 	public AirPolutionPercentIndicator() {
 		super(WIDTH, HEIGHT, TEXT_COLOR);
-		this.setVerticalAlignment(SwingConstants.CENTER);
+		this.setVerticalAlignment(SwingConstants.TOP);
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 }

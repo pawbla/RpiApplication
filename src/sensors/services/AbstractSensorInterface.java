@@ -1,7 +1,5 @@
 package sensors.services;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +50,14 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 		this.entity = new HttpEntity<Object>(header);
 	}
 	
-	@PostConstruct
+	//@PostConstruct
 	private void initMeasurement() {
 		getRestData();
 	}
 	
 	protected void getRestData() {
+		logger.debug("Get REST data");
 		RESTService rest = appCtx.getBean(RESTService.class);
-		//rest.init(this.ip, this.entity, this.sensorName);
 		mapper.setResponse(rest.getRest(this.ip, this.entity, this.sensorName));
 	}
 }
