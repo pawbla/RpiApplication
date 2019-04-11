@@ -8,6 +8,7 @@ import ui.indicators.airpolution.PM10_Indicator;
 import ui.indicators.airpolution.PM1_Indicator;
 import ui.indicators.airpolution.PM25Percent_Indicator;
 import ui.indicators.airpolution.PM25_Indicator;
+import ui.indicators.sun.DayLengthIndicator;
 import ui.indicators.sun.SunRiseIndicator;
 import ui.indicators.sun.SunSetIndicator;
 import ui.labels.TitleLabel;
@@ -63,12 +64,10 @@ public class NorthPanel extends  MainPanels  {
 			.addPMIndicator(PM25Percent_Indicator.getInstance(), 3, 2)
 			.addSunTitle(new TitleLabel(SUN_LABEL_TITLE), 4, 0)
 			.addSunIndicator(SunRiseIndicator.getInstance(), 4, 1)
-			.addSunIndicator(SunSetIndicator.getInstance(), 4, 2)
+			.addSunIndicator(SunSetIndicator.getInstance(), 6, 1)
 			.addUnit(new UnitLabel(sunRise, SUN_WIDTH, SUN_HEIGHT, Color.GREEN), 5, 1)
-			.addUnit(new UnitLabel(sunSet, SUN_WIDTH, SUN_HEIGHT, Color.GREEN), 5, 2)
-			.addEmpty(new UnitLabel("", UNIT_LABEL_WIDTH, UNIT_LABEL_HEIGHT, Color.YELLOW), 6, 1);
-		
-		SunRiseIndicator.getInstance().setText("10:32");
-		SunSetIndicator.getInstance().setText("10:32");
+			.addUnit(new UnitLabel(sunSet, SUN_WIDTH, SUN_HEIGHT, Color.GREEN), 7, 1)
+			.addDayLengthIndicator(DayLengthIndicator.getInstance(), 4, 2);
+			
 	}
 }

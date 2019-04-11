@@ -58,15 +58,23 @@ public class NorthPanelLayout {
 		this.panel.add(indicator, new GridBagHandler(posx, posy)
 				.setAnchor(GridBagConstraints.CENTER)
 				.setFill(GridBagConstraints.BOTH)
-				.setWeight(20, 20));
+				.setWeight(10, 20));
+		return this;	
+	}
+	
+	public NorthPanelLayout addDayLengthIndicator(JLabel indicator, int posx, int posy) {
+		this.panel.add(indicator, new GridBagHandler(posx, posy, 4, 1)
+				.setAnchor(GridBagConstraints.CENTER)
+				.setFill(GridBagConstraints.BOTH)
+				.setWeight(10, 50));
 		return this;	
 	}
 	
 	public NorthPanelLayout addSunTitle(JLabel label, int posx, int posy) {
-		this.panel.add(label, new GridBagHandler(posx, posy, 3, 1)
+		this.panel.add(label, new GridBagHandler(posx, posy, 4, 1)
 				.setAnchor(GridBagConstraints.CENTER)
 				.setFill(GridBagConstraints.BOTH)
-				.setWeight(10, 0));
+				.setWeight(7, 0));
 		return this;	
 	}
 	

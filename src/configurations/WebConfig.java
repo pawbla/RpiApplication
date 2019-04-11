@@ -23,6 +23,7 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 import sensors.services.SensorInterface;
 import sensors.services.implementations.AirLySensorInformationService;
 import sensors.services.implementations.AirLySensorService;
+import sensors.services.implementations.SunRiseSetService;
 import sensors.services.implementations.WeatherInternalSensorService;
 
 @Configuration
@@ -43,6 +44,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	private String ipAirLyInstallation; 
 	@Value("${custom.apiKeyAirLy}")
 	private String apiKeyAirLy;	
+	@Value("${custom.ipSunSetRise}")
+	private String ipSunSetRise;
 	
 	/**
 	 * Thymeleaf resources path configuration
@@ -126,6 +129,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Qualifier("airLyInfo")
     public SensorInterface airLyInfo() {
     	return new AirLySensorInformationService(ipAirLyInstallation, apiKeyAirLy);
+    }
+    
+    @Bean
+    @Qualifier("sunRiseSet")
+    public SensorInterface sunRiseSet() {
+    	return new SunRiseSetService(ipSunSetRise);
     }
     
     

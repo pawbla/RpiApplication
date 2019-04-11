@@ -119,6 +119,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		    <artifactId>pi4j-core</artifactId>
 		    <version>1.1</version>
 		</dependency>
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		    <version>2.10.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

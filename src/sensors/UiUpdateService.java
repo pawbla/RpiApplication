@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import sensors.objects.AirPolutionSensor;
+import sensors.objects.SunRiseSetSensor;
 import sensors.objects.WeatherSensor;
 import sensors.services.SensorInterface;
 import ui.indicators.airpolution.CAQiIndicator;
@@ -18,6 +19,9 @@ import ui.indicators.airpolution.PM10_Indicator;
 import ui.indicators.airpolution.PM1_Indicator;
 import ui.indicators.airpolution.PM25Percent_Indicator;
 import ui.indicators.airpolution.PM25_Indicator;
+import ui.indicators.sun.DayLengthIndicator;
+import ui.indicators.sun.SunRiseIndicator;
+import ui.indicators.sun.SunSetIndicator;
 import ui.indicators.weather.InHumidityIndicator;
 import ui.indicators.weather.InTemperatureIndicator;
 import ui.indicators.weather.OutHumidityIndicator;
@@ -47,6 +51,10 @@ public class UiUpdateService {
 	@Qualifier("airLy")
 	private SensorInterface airLySensor;
 	
+	@Autowired
+	@Qualifier("sunRiseSet")
+	private SensorInterface sunRiseSet;
+	
 	/**
 	 * Method executed with set period of time
 	 */
@@ -70,5 +78,10 @@ public class UiUpdateService {
 		PM25_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm25());
 		PM10Percent_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm10percent());
 		PM25Percent_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm25percent());
+		
+		/** Sun rise and sun set */
+		SunRiseIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunRiseTime());
+		SunSetIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunSetTime());
+		DayLengthIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getDayLengthTime());
 	}
 }

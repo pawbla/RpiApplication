@@ -25,7 +25,7 @@ public class JSONMapper {
 	private String dataAsString;
 	
 	public JSONMapper() {
-		logger.debug("Create MeasuredValuesMapper.");
+		logger.debug("Create MeasuredValuesMapper");
 		dateFormat = new SimpleDateFormat("MM.dd HH:mm");
 	}
 	
