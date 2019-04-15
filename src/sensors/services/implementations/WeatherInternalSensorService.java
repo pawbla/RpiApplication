@@ -2,15 +2,19 @@ package sensors.services.implementations;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import sensors.objects.Sensor;
 import sensors.objects.WeatherSensor;
 import sensors.services.AbstractSensorInterface;
 
+@Component
+@Qualifier("internal")
 public class WeatherInternalSensorService extends AbstractSensorInterface {
 	
 	/**
@@ -29,17 +33,10 @@ public class WeatherInternalSensorService extends AbstractSensorInterface {
 	private final int DELAY_TIMEOUT = 20000;
 	
 	/**
-	 * Variables' declarations
-	 */
-	
-	@Value("${custom.intSensorPassword}")
-	private String pass;
-	
-	/**
 	 * Constructor
 	 * @param ip of service
 	 */
-	public WeatherInternalSensorService(String ip, String password) {
+	public WeatherInternalSensorService(@Value("${custom.ipInternalSensor}") String ip, @Value("${custom.intSensorPassword}") String password) {
 		super(ip, SENSOR_NAME);
 		logger.info("Create " + WeatherInternalSensorService.SENSOR_NAME + " object with IP: " + ip);
 		HttpHeaders headers = new HttpHeaders();

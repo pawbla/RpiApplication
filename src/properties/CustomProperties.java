@@ -13,6 +13,7 @@ public class CustomProperties {
 	private String ipAirLyInstallation;
 	private String apiKeyAirLy;
 	private String ipSunSetRise;
+	private String urlAccuWeather;
 	
 	public String getIpInternalSensor() {
 		return ipInternalSensor;
@@ -55,5 +56,11 @@ public class CustomProperties {
 	}
 	public void setIpSunSetRise(String ipSunSetRise) {
 		this.ipSunSetRise = ipSunSetRise;
+	}
+	public String getUrlAccuWeather() {
+		return urlAccuWeather;
+	}
+	public void setUrlAccuWeather(String urlAccuWeather) {
+		this.urlAccuWeather = urlAccuWeather;
 	}
 }

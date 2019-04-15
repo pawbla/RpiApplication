@@ -10,4 +10,5 @@ import sensors.objects.Sensor;
 public interface SensorInterface {
 	public <T extends Sensor> T getSensor(T t);
 	public String getSensorName();
+	public boolean getModifyFlag();
 }

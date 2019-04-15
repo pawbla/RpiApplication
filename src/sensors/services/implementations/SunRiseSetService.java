@@ -1,8 +1,6 @@
 package sensors.services.implementations;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
@@ -13,13 +11,18 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import sensors.objects.Sensor;
 import sensors.objects.SunRiseSetSensor;
 import sensors.services.AbstractSensorInterface;
 
+@Component
+@Qualifier("sunRiseSet")
 public class SunRiseSetService extends AbstractSensorInterface {
 	/**
 	 * Logger
@@ -45,7 +48,7 @@ public class SunRiseSetService extends AbstractSensorInterface {
 	private SimpleDateFormat outFormatter2;
 	private DateTimeZone zone;
 	
-	public SunRiseSetService(String ip) {
+	public SunRiseSetService(@Value("${custom.ipSunSetRise}") String ip) {
 		super(ip, SENSOR_NAME);
 		logger.info("Create " + SunRiseSetService.SENSOR_NAME + " object with IP: " + ip);
 		HttpHeaders headers = new HttpHeaders();

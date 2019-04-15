@@ -33,6 +33,7 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 	private String ip;
 	private String sensorName;
 	private HttpEntity<Object> entity;
+	private boolean modifyFlag = false;
 	
 	protected JSONMapper mapper;
 	
@@ -50,14 +51,25 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 		this.entity = new HttpEntity<Object>(header);
 	}
 	
-	//@PostConstruct
-	private void initMeasurement() {
-		getRestData();
-	}
-	
 	protected void getRestData() {
-		logger.debug("Get REST data");
+		logger.debug("Get REST data and set modify flag");
+		modifyFlag = true;
 		RESTService rest = appCtx.getBean(RESTService.class);
 		mapper.setResponse(rest.getRest(this.ip, this.entity, this.sensorName));
+	}
+	
+	/**
+	 * Method for UI refreshing. Allows to check if value on UI should be refreshed
+	 * just after has read. In case when current value is displayed flag should be set 
+	 * to false;
+	 */
+	public boolean getModifyFlag() {
+		logger.debug("Modify flag is set to: " + modifyFlag + " for service: " + this.sensorName);
+		boolean retVal = false;
+		if (modifyFlag) {
+			retVal = true;
+			modifyFlag = false;
+		}
+		return retVal;
 	}
 }

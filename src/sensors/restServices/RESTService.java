@@ -38,6 +38,7 @@ public class RESTService {
 			try {
 				resp = rest.exchange(ip, HttpMethod.GET, entity, String.class);
 				if (resp.getStatusCodeValue() == 200) {
+					logger.debug("Received message with response code 200 for service: " + sensorName);
 					break;
 				}
 			} catch (Exception e) {

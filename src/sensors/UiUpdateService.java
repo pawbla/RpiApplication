@@ -62,26 +62,33 @@ public class UiUpdateService {
 	private void refreshUI() {		
 		logger.debug("Refresh UI");
 		/** Internal sensors*/
-		InTemperatureIndicator.getInstance().setText(inWeatherSensor.getSensor(new WeatherSensor()).getTemperature());
-		InHumidityIndicator.getInstance().setText(inWeatherSensor.getSensor(new WeatherSensor()).getHumidity());
+		if (inWeatherSensor.getModifyFlag()) {
+			InTemperatureIndicator.getInstance().setText(inWeatherSensor.getSensor(new WeatherSensor()).getTemperature());
+			InHumidityIndicator.getInstance().setText(inWeatherSensor.getSensor(new WeatherSensor()).getHumidity());
+		}
 		
 		/** External sensors */
-		PressureIndicator.getInstance().setText(airLySensor.getSensor(new WeatherSensor()).getPressure());
-		OutTemperatureIndicator.getInstance().setText(airLySensor.getSensor(new WeatherSensor()).getTemperature());
-		OutHumidityIndicator.getInstance().setText(airLySensor.getSensor(new WeatherSensor()).getHumidity());
+		if (airLySensor.getModifyFlag()) {
+			PressureIndicator.getInstance().setText(airLySensor.getSensor(new WeatherSensor()).getPressure());
+			OutTemperatureIndicator.getInstance().setText(airLySensor.getSensor(new WeatherSensor()).getTemperature());
+			OutHumidityIndicator.getInstance().setText(airLySensor.getSensor(new WeatherSensor()).getHumidity());			
+		
 		
 		/** AirPolution sensors*/
-		CAQiIndicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getCaqi());
-		CAQiIndicator.getInstance().setForeground(Color.decode(airLySensor.getSensor(new AirPolutionSensor()).getCaqiColor()));
-		PM1_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm1());
-		PM10_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm10());
-		PM25_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm25());
-		PM10Percent_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm10percent());
-		PM25Percent_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm25percent());
+			CAQiIndicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getCaqi());
+			CAQiIndicator.getInstance().setForeground(Color.decode(airLySensor.getSensor(new AirPolutionSensor()).getCaqiColor()));
+			PM1_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm1());
+			PM10_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm10());
+			PM25_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm25());
+			PM10Percent_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm10percent());
+			PM25Percent_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm25percent());
+		}
 		
 		/** Sun rise and sun set */
-		SunRiseIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunRiseTime());
-		SunSetIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunSetTime());
-		DayLengthIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getDayLengthTime());
+		if (sunRiseSet.getModifyFlag()) {
+			SunRiseIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunRiseTime());
+			SunSetIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunSetTime());
+			DayLengthIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getDayLengthTime());
+		}
 	}
 }

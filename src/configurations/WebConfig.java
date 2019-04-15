@@ -1,7 +1,5 @@
 package configurations;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,33 +18,11 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
-import sensors.services.SensorInterface;
-import sensors.services.implementations.AirLySensorInformationService;
-import sensors.services.implementations.AirLySensorService;
-import sensors.services.implementations.SunRiseSetService;
-import sensors.services.implementations.WeatherInternalSensorService;
-
 @Configuration
 @EnableWebMvc
 @ComponentScan({"controllers", "properties", "sensors", "sysInfo", "hardware"})
 public class WebConfig extends WebMvcConfigurerAdapter {
-	
-	/**
-	 * Custom values declaration
-	 */
-	@Value("${custom.ipInternalSensor}")
-	private String ipInternalSensor; 
-	@Value("${custom.intSensorPassword}")
-	private String intSensorPassword;	
-	@Value("${custom.ipAirLy}")
-	private String ipAirLy; 
-	@Value("${custom.ipAirLyInstallation}")
-	private String ipAirLyInstallation; 
-	@Value("${custom.apiKeyAirLy}")
-	private String apiKeyAirLy;	
-	@Value("${custom.ipSunSetRise}")
-	private String ipSunSetRise;
-	
+		
 	/**
 	 * Thymeleaf resources path configuration
 	 */
@@ -106,37 +82,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
            .setConnectTimeout(2000)
            .setReadTimeout(2000)
            .build();
-    } 
-    
-    /**
-     * Sensors IP configuration
-     * @return
-     */
-    
-    @Bean
-    @Qualifier("internal")
-    public SensorInterface internal() {
-    	return new WeatherInternalSensorService(ipInternalSensor, intSensorPassword);
-    }   
-    
-    @Bean
-    @Qualifier("airLy")
-    public SensorInterface airLy() {
-    	return new AirLySensorService(ipAirLy, apiKeyAirLy);
-    }
-    
-    @Bean
-    @Qualifier("airLyInfo")
-    public SensorInterface airLyInfo() {
-    	return new AirLySensorInformationService(ipAirLyInstallation, apiKeyAirLy);
-    }
-    
-    @Bean
-    @Qualifier("sunRiseSet")
-    public SensorInterface sunRiseSet() {
-    	return new SunRiseSetService(ipSunSetRise);
-    }
-    
+    }     
     
 	@Override
 	public void configureDefaultServletHandling (DefaultServletHandlerConfigurer configurer) {

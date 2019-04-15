@@ -4,15 +4,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import sensors.objects.AirPolutionSensor;
 import sensors.objects.Sensor;
 import sensors.objects.WeatherSensor;
 import sensors.services.AbstractSensorInterface;
 
+@Component
+@Qualifier("airLy")
 public class AirLySensorService extends AbstractSensorInterface {
 	/**
 	 * Logger
@@ -48,7 +53,7 @@ public class AirLySensorService extends AbstractSensorInterface {
 	 * @param ip
 	 * @param sensorHandler
 	 */
-	public AirLySensorService(String ip, String apiKey) {
+	public AirLySensorService(@Value("${custom.ipAirLy}") String ip, @Value("${custom.apiKeyAirLy}") String apiKey) {
 		super(ip, SENSOR_NAME);
 		logger.info("Create " + AirLySensorService.SENSOR_NAME + " object with IP: " + ip);
 		HttpHeaders headers = new HttpHeaders();

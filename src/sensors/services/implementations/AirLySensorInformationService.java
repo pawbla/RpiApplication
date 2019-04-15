@@ -3,14 +3,19 @@ package sensors.services.implementations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import sensors.objects.Sensor;
 import sensors.objects.ServiceInformation;
 import sensors.services.AbstractSensorInterface;
 
+@Component
+@Qualifier("airLyInfo")
 public class AirLySensorInformationService extends AbstractSensorInterface {
 	/**
 	 * Logger
@@ -29,7 +34,7 @@ public class AirLySensorInformationService extends AbstractSensorInterface {
 	private final int TIMEOUT = 120000;
 	private final int DELAY_TIMEOUT = 20000;
 	
-	public AirLySensorInformationService(String ip, String apiKey) {
+	public AirLySensorInformationService(@Value("${custom.ipAirLyInstallation}") String ip, @Value("${custom.apiKeyAirLy}") String apiKey) {
 		super(ip, SENSOR_NAME);
 		logger.info("Create " + AirLySensorInformationService.SENSOR_NAME + " object with IP: " + ip);
 		HttpHeaders headers = new HttpHeaders();
