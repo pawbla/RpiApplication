@@ -65,7 +65,6 @@ public class AirLySensorService extends AbstractSensorInterface {
 	@Override
 	public <T extends Sensor> T getSensor(T sensor) {
 		logger.debug("Prepare service data for " + this.getSensorName());
-		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
 			JSONObject jsonObject = mapper.getJSONObject().getJSONObject(CURRENT_KEY);
 			JSONArray jsonArrayValues = jsonObject.getJSONArray(VALUES_KEY);

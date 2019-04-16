@@ -63,7 +63,6 @@ public class SunRiseSetService extends AbstractSensorInterface {
 	@Override
 	public <T extends Sensor> T getSensor(T sensor)  {
 		logger.debug("Prepare sensor information data for " + this.getSensorName());
-		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
 			logger.debug("JSON Object:" + mapper.getJSONObject().toString());
 			String sunRiseStr = mapper.getJSONObject().getJSONObject(RESULTS_KEY).getString(SUN_RISE_KEY);

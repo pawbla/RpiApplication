@@ -43,7 +43,6 @@ public class OpenWeatherMapSensorService extends AbstractSensorInterface {
 	
 	public <T extends Sensor> T getSensor(T extSensor) {
 		logger.debug("Prepare sensor data for " + this.getSensorName());
-		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
 			((WeatherSensor)extSensor).setHumidity(String.format("%d", mapper.getJSONObject().getJSONObject(OBJECT_SENSOR_KEY).getInt(HUMIDITY_SENSOR_KEY)));
 			/* Get double value in Kelvin and convert to Celcius*/

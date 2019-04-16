@@ -51,7 +51,6 @@ public class WeatherInternalSensorService extends AbstractSensorInterface {
 	@Override
 	public <T extends Sensor> T getSensor(T inSensor) {
 		logger.debug("Prepare sensor data for " + this.getSensorName());
-		mapper.prepareDatas();
 		if (mapper.getResponseCode() == 200) {
 			((WeatherSensor)inSensor).setHumidity(mapper.getJSONObject().getString(HUMIDITY_SENSOR_KEY));
 			((WeatherSensor)inSensor).setTemperature(mapper.getJSONObject().getString(TEMPERATURE_SENSOR_KEY));

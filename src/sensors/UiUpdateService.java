@@ -38,7 +38,7 @@ public class UiUpdateService {
 	 * Constants
 	 */
 	private final int TIMEOUT = 10000;
-	private final int DELAY_TIMEOUT = 20000;
+	private final int DELAY_TIMEOUT = 10000;
 	
 	/**
 	 * Sensors

@@ -52,10 +52,10 @@ public abstract class AbstractSensorInterface implements SensorInterface {
 	}
 	
 	protected void getRestData() {
-		logger.debug("Get REST data and set modify flag");
-		modifyFlag = true;
+		logger.debug("Get REST data and set modify flag for service: " + this.sensorName);
 		RESTService rest = appCtx.getBean(RESTService.class);
 		mapper.setResponse(rest.getRest(this.ip, this.entity, this.sensorName));
+		modifyFlag = true;
 	}
 	
 	/**
