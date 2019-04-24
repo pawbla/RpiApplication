@@ -15,47 +15,51 @@ public class CentrePanelLayout {
 		this.panel.setLayout(new GridBagLayout());
 	}
 	
-	public  CentrePanelLayout addCaqiTitle(JLabel label) {
-		this.panel.add(label, new GridBagHandler(0, 0, 4, 1)
+	public CentrePanelLayout addTitle(JLabel label, int posx, int posy, int cellx, int celly) {
+		this.panel.add(label, new GridBagHandler(posx, posy, cellx, celly)
 				.setAnchor(GridBagConstraints.CENTER)
 				.setFill(GridBagConstraints.BOTH)
-				.setIpad(50, 2));
+				.setWeight(100, 0));
 		return this;
 	}
 	
-	public CentrePanelLayout addCaqiIndicator(JLabel indicator) {
-		this.panel.add(indicator, new GridBagHandler(0, 1, 4, 1)
+	public CentrePanelLayout addWeatherIcon(JLabel label, int posx, int posy) {
+		this.panel.add(label, new GridBagHandler(posx, posy, 4, 1)
 				.setAnchor(GridBagConstraints.CENTER)
 				.setFill(GridBagConstraints.BOTH)
-				.setWeight(20, 100));
+				.setWeight(100, 0));
 		return this;
-	}
+	}	
 	
-	public  CentrePanelLayout addPmTitle(JLabel label, int posx, int posy) {
+	public CentrePanelLayout addWeatherDescription(JLabel label, int posx, int posy) {
+		this.panel.add(label, new GridBagHandler(posx, posy, 4, 1)
+				.setAnchor(GridBagConstraints.PAGE_START)
+				.setFill(GridBagConstraints.BOTH)
+				.setWeight(20, 7));
+		return this;
+	}	
+	
+	public CentrePanelLayout addIndicator(JLabel label, int posx, int posy) {
 		this.panel.add(label, new GridBagHandler(posx, posy)
 				.setAnchor(GridBagConstraints.CENTER)
 				.setFill(GridBagConstraints.BOTH)
-				.setIpad(0,  2)
-				.setWeight(34, 0));
+				.setWeight(70, 5));
 		return this;
-	}
+	}	
 	
-	public CentrePanelLayout addPMIndicator(JLabel indicator, int posx, int posy) {
-		this.panel.add(indicator, new GridBagHandler(posx, posy)
+	public CentrePanelLayout addIndicator(JLabel label, int posx, int posy, int cellx, int celly) {
+		this.panel.add(label, new GridBagHandler(posx, posy, cellx, celly)
 				.setAnchor(GridBagConstraints.CENTER)
 				.setFill(GridBagConstraints.BOTH)
-				.setIpad(0, 2)
-				.setWeight(34, 100));
+				.setWeight(70, 5));
 		return this;
 	}
 	
 	public CentrePanelLayout addUnit(JLabel label, int posx, int posy) {
 		this.panel.add(label, new GridBagHandler(posx, posy)
-				.setAnchor(GridBagConstraints.CENTER)
-				.setFill(GridBagConstraints.BOTH)
-				.setIpad(2,  4));
+				.setAnchor(GridBagConstraints.LAST_LINE_START)
+				.setFill(GridBagConstraints.BOTH));
 		return this;
 	}
-	
 	
 }

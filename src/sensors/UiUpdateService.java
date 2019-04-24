@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import sensors.objects.AccuWeatherSensor;
 import sensors.objects.AirPolutionSensor;
 import sensors.objects.SunRiseSetSensor;
 import sensors.objects.WeatherSensor;
 import sensors.services.SensorInterface;
+import ui.indicators.WeatherIconIndicator;
+import ui.indicators.accuWeather.WeatherTextIndicator;
+import ui.indicators.accuWeather.WindDirectionIndicator;
+import ui.indicators.accuWeather.WindSpeedIndicator;
 import ui.indicators.airpolution.CAQiIndicator;
 import ui.indicators.airpolution.PM10Percent_Indicator;
 import ui.indicators.airpolution.PM10_Indicator;
@@ -55,6 +60,10 @@ public class UiUpdateService {
 	@Qualifier("sunRiseSet")
 	private SensorInterface sunRiseSet;
 	
+	@Autowired
+	@Qualifier("AccuWeatherService")
+	private SensorInterface accuWeather;
+	
 	/**
 	 * Method executed with set period of time
 	 */
@@ -89,6 +98,14 @@ public class UiUpdateService {
 			SunRiseIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunRiseTime());
 			SunSetIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunSetTime());
 			DayLengthIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getDayLengthTime());
+		}
+		
+		/** Accu weather sensor */
+		if (accuWeather.getModifyFlag()) {
+			WeatherTextIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getWeatherText());
+			WindSpeedIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getSpeed());
+			WindDirectionIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getDirection());
+			WeatherIconIndicator.getInstance().setIconByNumber(accuWeather.getSensor(new AccuWeatherSensor()).getWeatherIcon());
 		}
 	}
 }

@@ -14,7 +14,7 @@ public class TitleLabel extends AbstractLabel {
 	 * Constants
 	 */
 	private static final int WIDTH = 80;
-	private static final int HEIGHT = 30;
+	private static final int HEIGHT = 27;
 	private static final Color FONT_COLOR = Color.GREEN;
 
 	public TitleLabel(String title) {

@@ -20,7 +20,7 @@ public class LeftPanel extends  MainPanels  {
 	 * Constants
 	 */
 	private static final int WIDTH = 140;
-	private static final int HEIGHT = 200;
+	private static final int HEIGHT = 165;
 	private static final String IN_LABEL_TITLE = "IN";
 	private final static String COLOR_HEX = "#FFFF00"; 
 

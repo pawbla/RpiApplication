@@ -20,7 +20,7 @@ public class MainPanels extends AbstractPanel {
 	 * Constants
 	 */
 	private final static Color BORDER_COLOR = Color.GREEN;
-	private final static int TICKNES = 2;
+	private final static int TICKNES = 1;
 	private final static boolean IS_ROUNDED = true;
 	private final static int MARGIN = 3;
 	
