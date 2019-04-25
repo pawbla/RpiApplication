@@ -16,7 +16,7 @@ public class WindDirectionIndicator extends Indicator {
 	 * Constants
 	 */
 	private final static int WIDTH = 20;
-	private final static int HEIGHT = 23;
+	private final static int HEIGHT = 25;
 	private final static Color COLOR = Color.YELLOW;
 	
 	private static WindDirectionIndicator instance = null;

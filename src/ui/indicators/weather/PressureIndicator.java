@@ -16,7 +16,7 @@ public class PressureIndicator extends Indicator {
 	 * Constants
 	 */
 	private final static int WIDTH = 80;
-	private final static int HEIGHT = 23;
+	private final static int HEIGHT = 25;
 	private final static String COLOR_HEX = "#FFFF00";
 	private final static Color TEXT_COLOR = Color.decode(COLOR_HEX);
 	

@@ -43,7 +43,7 @@ public class CentrePanelLayout {
 		this.panel.add(label, new GridBagHandler(posx, posy)
 				.setAnchor(GridBagConstraints.CENTER)
 				.setFill(GridBagConstraints.BOTH)
-				.setWeight(70, 5));
+				.setWeight(20, 5));
 		return this;
 	}	
 	
@@ -51,14 +51,15 @@ public class CentrePanelLayout {
 		this.panel.add(label, new GridBagHandler(posx, posy, cellx, celly)
 				.setAnchor(GridBagConstraints.CENTER)
 				.setFill(GridBagConstraints.BOTH)
-				.setWeight(70, 5));
+				.setWeight(20, 5));
 		return this;
 	}
 	
 	public CentrePanelLayout addUnit(JLabel label, int posx, int posy) {
 		this.panel.add(label, new GridBagHandler(posx, posy)
 				.setAnchor(GridBagConstraints.LAST_LINE_START)
-				.setFill(GridBagConstraints.BOTH));
+				.setFill(GridBagConstraints.BOTH)
+				.setWeight(10, 5));
 		return this;
 	}
 	

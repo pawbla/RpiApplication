@@ -16,7 +16,7 @@ public class WindSpeedIndicator extends Indicator {
 	 * Constants
 	 */
 	private final static int WIDTH = 20;
-	private final static int HEIGHT = 23;
+	private final static int HEIGHT = 25;
 	private final static Color COLOR = Color.YELLOW;
 	
 	private static WindSpeedIndicator instance = null;
@@ -24,7 +24,7 @@ public class WindSpeedIndicator extends Indicator {
 	private WindSpeedIndicator() {
 		super(WIDTH, HEIGHT, COLOR);
 		this.setVerticalAlignment(SwingConstants.CENTER);
-		this.setHorizontalAlignment(SwingConstants.RIGHT);
+		this.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 	
 	public static WindSpeedIndicator getInstance() {

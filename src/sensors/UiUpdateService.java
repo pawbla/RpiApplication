@@ -15,6 +15,10 @@ import sensors.objects.SunRiseSetSensor;
 import sensors.objects.WeatherSensor;
 import sensors.services.SensorInterface;
 import ui.indicators.WeatherIconIndicator;
+import ui.indicators.accuWeather.CeilingIndicator;
+import ui.indicators.accuWeather.CloudCoverIndicator;
+import ui.indicators.accuWeather.UVIndexIndicator;
+import ui.indicators.accuWeather.UVTextIndicator;
 import ui.indicators.accuWeather.WeatherTextIndicator;
 import ui.indicators.accuWeather.WindDirectionIndicator;
 import ui.indicators.accuWeather.WindSpeedIndicator;
@@ -106,6 +110,11 @@ public class UiUpdateService {
 			WindSpeedIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getSpeed());
 			WindDirectionIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getDirection());
 			WeatherIconIndicator.getInstance().setIconByNumber(accuWeather.getSensor(new AccuWeatherSensor()).getWeatherIcon());
+			CloudCoverIndicator.getInstance().setText(Integer.toString(accuWeather.getSensor(new AccuWeatherSensor()).getCloudCover()));
+			CeilingIndicator.getInstance().setText(Integer.toString(accuWeather.getSensor(new AccuWeatherSensor()).getCeiling()));
+			UVIndexIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getUvIndex());
+			UVTextIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getUvIndexText());
+			
 		}
 	}
 }

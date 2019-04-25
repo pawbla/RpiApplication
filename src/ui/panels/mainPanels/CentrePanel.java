@@ -30,14 +30,14 @@ public class CentrePanel extends MainPanels  {
 	private static final String PRESSURE_TITLE = "CIŚNIENIE";
 	private static final String WIND_SPEED_UNIT = "km/h";
 	private static final String PRESSURE_UNIT = "hPa";
-	private static final int UNIT_WIDTH = 10;
+	private static final int UNIT_WIDTH = 25;
 	private static final int UNIT_HEIGHT = 15;
 
 	public CentrePanel() {
 		super(WIDTH, HEIGHT);
 		new CentrePanelLayout(this)
 			.addTitle(new TitleLabel(WEATHER_TITLE), 0, 0, 4 ,1)
-			.addWeatherIcon(WeatherIconIndicator.getInstance().setIconByNumber(0), 0, 1)
+			.addWeatherIcon(WeatherIconIndicator.getInstance().setIconByNumber(00), 0, 1)
 			.addWeatherDescription(WeatherTextIndicator.getInstance(), 0, 2)
 			.addTitle(new TitleLabel(WIND_TITLE), 0, 3, 1 ,1)
 			.addIndicator(WindSpeedIndicator.getInstance(), 1, 3)
