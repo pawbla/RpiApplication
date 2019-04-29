@@ -42,5 +42,6 @@ public class SouthPanel extends  MainPanels {
 		.addElementUnit(new UnitLabel(CEILING_UNIT, UNIT_WIDTH, UNIT_HEIGHT, Color.YELLOW), 3, 1)
 		.addElement(UVIndexIndicator.getInstance(), 4, 1)
 		.addElement(UVTextIndicator.getInstance(), 5, 1);
+		
 	}
 }

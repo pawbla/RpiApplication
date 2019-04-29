@@ -15,9 +15,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ui.indicators.sun.SunRiseIndicator;
 
 public class WeatherIconIndicator extends JLabel {
+	
+	/**
+	 * Logger
+	 */
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
 	/**
 	 * Generated Serial UID
@@ -47,7 +55,8 @@ public class WeatherIconIndicator extends JLabel {
 	
 	public WeatherIconIndicator setIconByNumber(int fileName) {
 		//file exist for path when used on eclipse env
-		File file = new File(RESOURCE_PATH + String.valueOf(fileName) + GIF_NAME);
+		logger.debug("Open weather icon located in:" + String.format("%s%02d%s", RESOURCE_PATH, fileName, GIF_NAME) + " No " + fileName);
+		File file = new File(String.format("%s%02d%s", RESOURCE_PATH, fileName, GIF_NAME));
 		Icon icon = new ImageIcon(file.getPath());
 		this.setIcon(icon);
 		return this;
