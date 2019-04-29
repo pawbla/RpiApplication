@@ -2,16 +2,18 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Insets;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
 
 import org.springframework.stereotype.Component;
 
-import ui.panels.mainPanels.CentrePanel;
-import ui.panels.mainPanels.LeftPanel;
-import ui.panels.mainPanels.NorthPanel;
-import ui.panels.mainPanels.RightPanel;
-import ui.panels.mainPanels.SouthPanel;
+import ui.panels.mainPanels.MainPanel;
 
 @Component
 public class MainFrame extends JFrame {
@@ -33,10 +35,11 @@ public class MainFrame extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setBackground(BACK_COLOR);
-		this.add(new CentrePanel(), BorderLayout.CENTER);
-		this.add(new LeftPanel(), BorderLayout.WEST);		
-		this.add(new RightPanel(), BorderLayout.EAST);
-		this.add(new NorthPanel(), BorderLayout.NORTH);
-		this.add(new SouthPanel(), BorderLayout.SOUTH);
+		
+		MainTabbedPanel.getInstance().addTab("Pogoda", new MainPanel());
+		
+		MainTabbedPanel.getInstance().addTab("Testowy", new JPanel()
+				.add(new JButton("Przycisk Tstowy")));
+		this.add(MainTabbedPanel.getInstance());
 	}
 }

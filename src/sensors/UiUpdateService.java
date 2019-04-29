@@ -14,6 +14,7 @@ import sensors.objects.AirPolutionSensor;
 import sensors.objects.SunRiseSetSensor;
 import sensors.objects.WeatherSensor;
 import sensors.services.SensorInterface;
+import ui.MainTabbedPanel;
 import ui.indicators.WeatherIconIndicator;
 import ui.indicators.accuWeather.CeilingIndicator;
 import ui.indicators.accuWeather.CloudCoverIndicator;

@@ -2,6 +2,8 @@ package ui.panels.mainPanels;
 
 import java.awt.Color;
 
+import javax.swing.SwingConstants;
+
 import org.springframework.stereotype.Component;
 
 import ui.indicators.WeatherIconIndicator;
@@ -35,15 +37,19 @@ public class CentrePanel extends MainPanels  {
 
 	public CentrePanel() {
 		super(WIDTH, HEIGHT);
+		TitleLabel wind = new TitleLabel(WIND_TITLE);
+		wind.setHorizontalAlignment(SwingConstants.LEFT);
+		TitleLabel pressure = new TitleLabel(PRESSURE_TITLE);
+		pressure.setHorizontalAlignment(SwingConstants.LEFT);
 		new CentrePanelLayout(this)
 			.addTitle(new TitleLabel(WEATHER_TITLE), 0, 0, 4 ,1)
 			.addWeatherIcon(WeatherIconIndicator.getInstance().setIconByNumber(00), 0, 1)
 			.addWeatherDescription(WeatherTextIndicator.getInstance(), 0, 2)
-			.addTitle(new TitleLabel(WIND_TITLE), 0, 3, 1 ,1)
+			.addTitle(wind, 0, 3, 1 ,1)
 			.addIndicator(WindSpeedIndicator.getInstance(), 1, 3)
 			.addUnit(new UnitLabel(WIND_SPEED_UNIT, UNIT_WIDTH, UNIT_HEIGHT, Color.YELLOW), 2, 3)
 			.addIndicator(WindDirectionIndicator.getInstance(),3, 3)
-			.addTitle(new TitleLabel(PRESSURE_TITLE), 0, 4, 1 ,1)
+			.addTitle(pressure, 0, 4, 1 ,1)
 			.addIndicator(PressureIndicator.getInstance(), 1, 4, 2, 1)
 			.addUnit(new UnitLabel(PRESSURE_UNIT, UNIT_WIDTH, UNIT_HEIGHT, Color.YELLOW), 3, 4);
 	}

@@ -20,7 +20,7 @@ public class SouthPanel extends  MainPanels {
 	 * Constants
 	 */
 	private static final int WIDTH = 480;
-	private static final int HEIGHT = 70;
+	private static final int HEIGHT = 40;
 	
 	private static final int UNIT_WIDTH = 1;
 	private static final int UNIT_HEIGHT = 20;
@@ -32,7 +32,7 @@ public class SouthPanel extends  MainPanels {
 	
 	public SouthPanel() {
 		super(WIDTH, HEIGHT);
-		new SouthPanelLayout(this)
+		/*new SouthPanelLayout(this)
 		.addTitle(new TitleLabel(CLOUD_TITLE), 0, 0, 4, 1)
 		.addTitle(new TitleLabel(UV_TITLE), 4, 0, 2, 1)
 		.addFillEmpty(new TitleLabel(" "), 6, 0)
@@ -41,7 +41,7 @@ public class SouthPanel extends  MainPanels {
 		.addElement(CeilingIndicator.getInstance(), 2, 1)
 		.addElementUnit(new UnitLabel(CEILING_UNIT, UNIT_WIDTH, UNIT_HEIGHT, Color.YELLOW), 3, 1)
 		.addElement(UVIndexIndicator.getInstance(), 4, 1)
-		.addElement(UVTextIndicator.getInstance(), 5, 1);
+		.addElement(UVTextIndicator.getInstance(), 5, 1);*/
 		
 	}
 }

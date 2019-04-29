@@ -2,6 +2,8 @@ package homeSystem;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +23,8 @@ public class EmbeddedApp {
 	 */
 	private static final Logger logger = LogManager.getLogger("EmbeddedApp");
 	
-	public static void main(String[] args) {		
+	public static void main(String[] args) {	
+
         SpringApplication.run(EmbeddedApp.class, args);
         
         System.setProperty("java.awt.headless", "false");
