@@ -37,9 +37,7 @@ public class MainFrame extends JFrame {
 		this.setBackground(BACK_COLOR);
 		
 		MainTabbedPanel.getInstance().addTab("Pogoda", new MainPanel());
-		
-		MainTabbedPanel.getInstance().addTab("Testowy", new JPanel()
-				.add(new JButton("Przycisk Tstowy")));
+	
 		this.add(MainTabbedPanel.getInstance());
 	}
 }

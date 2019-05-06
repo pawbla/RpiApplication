@@ -2,6 +2,8 @@ package ui.indicators.accuWeather;
 
 import java.awt.Color;
 
+import javax.swing.SwingConstants;
+
 public class UVIndexIndicator extends SouthPanelIndicator {
 
 	/**
@@ -15,6 +17,7 @@ public class UVIndexIndicator extends SouthPanelIndicator {
 	
 	private UVIndexIndicator() {
 		super();
+		this.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 	
 	public static UVIndexIndicator getInstance() {

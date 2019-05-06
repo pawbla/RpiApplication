@@ -26,7 +26,7 @@ public class UVTextIndicator extends Indicator {
 	private UVTextIndicator() {
 		super(WIDTH, HEIGHT, COLOR);
 		this.setVerticalAlignment(SwingConstants.TOP);
-		this.setHorizontalAlignment(SwingConstants.RIGHT);
+		this.setHorizontalAlignment(SwingConstants.CENTER);
 		this.setFont(new Font(Font.DIALOG, Font.TRUETYPE_FONT, HEIGHT - 5));
 	}
 	
