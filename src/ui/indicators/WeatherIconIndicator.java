@@ -1,9 +1,12 @@
 package ui.indicators;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,6 +20,7 @@ import javax.swing.SwingConstants;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.util.ResourceUtils;
 
 import ui.indicators.sun.SunRiseIndicator;
 
@@ -36,7 +40,8 @@ public class WeatherIconIndicator extends JLabel {
 	 * Constants
 	 */
 	private static final String RESOURCE_PATH = "src/resources/weather_icons/";
-	private static final String GIF_NAME = ".gif";
+	private static final String ALTERNATIVE_PATH = "/resources/weather_icons/";
+	private static final String GIF_NAME = ".GIF";
 	
 	private static WeatherIconIndicator instance = null;
 
@@ -55,9 +60,20 @@ public class WeatherIconIndicator extends JLabel {
 	
 	public WeatherIconIndicator setIconByNumber(int fileName) {
 		//file exist for path when used on eclipse env
-		logger.debug("Open weather icon located in:" + String.format("%s%02d%s", RESOURCE_PATH, fileName, GIF_NAME) + " No " + fileName);
 		File file = new File(String.format("%s%02d%s", RESOURCE_PATH, fileName, GIF_NAME));
-		Icon icon = new ImageIcon(file.getPath());
+		String path;
+		Icon icon;
+		if(file.exists()) {
+			path = file.getPath();
+			icon = new ImageIcon(path);
+		} else {
+			path = String.format("%s%02d%s", ALTERNATIVE_PATH, fileName, GIF_NAME);
+			URL url = getClass().getResource(String.format("%s%02d%s", ALTERNATIVE_PATH, fileName, GIF_NAME));
+			icon = new ImageIcon(url);
+		}
+		
+		logger.debug("Open weather icon located in:" + path);
+		
 		this.setIcon(icon);
 		return this;
 	}

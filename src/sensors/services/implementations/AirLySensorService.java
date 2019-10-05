@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -99,4 +101,8 @@ public class AirLySensorService extends AbstractSensorInterface {
 		this.getRestData();
 	}
 
+	@EventListener(ApplicationReadyEvent.class)
+	private void initialMeasurement() {
+		this.getRestData();
+	}
 }

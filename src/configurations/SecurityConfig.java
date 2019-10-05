@@ -19,11 +19,11 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	
+	/*
 	@Autowired
 	DataSource userDatabase;
 	
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.httpBasic()
 			.and()
 				.authorizeRequests()
-				.antMatchers("/registration", "/registrationRest", "/registrationCheck/*").permitAll()
+				.antMatchers("/registration", "/registrationRest", "/*", "/registrationCheck/*").permitAll()
 				.antMatchers("/sysinfo").access("hasRole('ROLE_ADMIN')")
 				.antMatchers("/sensorinfo").access("hasRole('ROLE_ADMIN')")
 				.antMatchers("/*").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -55,12 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	UnauthenticatedRequestHandler unauthenticatedRequestHandler() {
 	    return new UnauthenticatedRequestHandler();
 	}
-	
+	*/
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 	    return new StandardPasswordEncoder("a2z3tg");
 	}
-	
+	/*
 	@Override 
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
@@ -81,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	            response.sendRedirect("/login");
 	        }
 	    }
-	}
+	}*/
 	
 
 }

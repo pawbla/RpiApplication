@@ -2,6 +2,8 @@ package sensors.services.implementations;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -59,6 +61,11 @@ public class OpenWeatherMapSensorService extends AbstractSensorInterface {
 	 */
 	@Scheduled(fixedRate = TIMEOUT, initialDelay = DELAY_TIMEOUT)
 	private void fetchDatas() {		
+		this.getRestData();
+	}
+	
+	@EventListener(ApplicationReadyEvent.class)
+	private void initialMeasurement() {
 		this.getRestData();
 	}
 }

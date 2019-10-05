@@ -22,6 +22,6 @@ public class LoginController {
 	  public String loginError(Model model, HttpServletRequest req) {
 		logger.warn("Failed login procedure. Local Address: " + req.getLocalAddr() + " Remote Address: " + req.getRemoteAddr() + " Remote Host: " + req.getRemoteHost());
 	    model.addAttribute("loginError", true);
-	    return "login";
+	    return "index";
 	  }
 }
