@@ -15,40 +15,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import sensors.objects.AirPolutionSensor;
 import sensors.objects.WeatherSensor;
+import sensors.restJsonRenderer.RestRespRenderer;
 import sensors.services.SensorInterface;
 
 @Controller
 public class WeatherController {
 	
 	@Autowired
-	@Qualifier("internal")
-	private SensorInterface inWeatherSensor;
+	private RestRespRenderer response;
 	
-	@Autowired
-	@Qualifier("airLy")
-	private SensorInterface extWeatherSensor;
-	
-	private Map<String,Object> sensors;
-	
-	public WeatherController() {
-		sensors = new HashMap<String,Object>();
+	@RequestMapping(value = "/weather", method=GET, produces="application/json")
+	@ResponseBody
+	public String settings() {	
+		return response.getJSON();
 	}
-	
-	private Map<String,Object> setSensors() {
-		sensors.put("inSensor", inWeatherSensor.getSensor(new WeatherSensor()));
-		sensors.put("outSensor", extWeatherSensor.getSensor(new WeatherSensor()));
-		sensors.put("airPolution", extWeatherSensor.getSensor(new AirPolutionSensor()));
-		return sensors;
-	}
-	
-	@RequestMapping(value = "/weather", method=GET)
-	public String settings(Model model) {	
-		model.addAllAttributes(setSensors());
-		return "weather";
-	}
-	
-	@RequestMapping(value = "/weatherRest",method=GET, produces="application/json")
-	public @ResponseBody Map<String,Object> l (Principal user) {
-		return setSensors();
-	}	
 }
