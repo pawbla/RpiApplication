@@ -1,4 +1,4 @@
-package sensors.restJsonRenderer;
+package controllers.renderers;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import sensors.objects.AccuWeatherSensor;
-import sensors.objects.AirPolutionSensor;
-import sensors.objects.SunRiseSetSensor;
-import sensors.objects.WeatherSensor;
-import sensors.services.SensorInterface;
+import connectors.accuWeatherConnector.AccuWeatherHandler;
+import connectors.airLyConnector.AirLyHandler;
+import connectors.internalConnector.InternalHandler;
+import connectors.sunRiseSetConnector.SunRiseSetHandler;
 
 @Component
 @Qualifier("WeatherRenderer")
@@ -25,41 +24,34 @@ public class WeatherRestRenderer implements RestRespRenderer {
 	private JSONObject response;
 	
 	@Autowired
-	@Qualifier("internal")
-	private SensorInterface internalSensor;
+	private InternalHandler internal;
 	
 	@Autowired
-	@Qualifier("airLy")
-	private SensorInterface airlySensor;
+	public AirLyHandler airLy;
 	
 	@Autowired
-	@Qualifier("sunRiseSet")
-	private SensorInterface sunRiseSetSensor;
+	private SunRiseSetHandler sunRiseSet;
 	
 	@Autowired
-	@Qualifier("AccuWeatherService")
-	private SensorInterface accuWeatherSensor;
+	private AccuWeatherHandler accuWeather;
 	
 	private JSONArray getInternal() {
-		WeatherSensor internal = internalSensor.getSensor(new WeatherSensor());
 		JSONArray arrInternal = new JSONArray();
 		JSONObject sensor = new JSONObject()
 				.put("temperature", internal.getTemperature())
 				.put("humidity", internal.getHumidity())
 				.put("isError", false)
-				.put("date", internal.getDate());
+				.put("date", internal.getResponse().getDate());
 		return arrInternal.put(sensor);
 	}
 	
 	private JSONObject getExternal() {
-		AccuWeatherSensor accuWeather = accuWeatherSensor.getSensor(new AccuWeatherSensor());
-		WeatherSensor airLy = airlySensor.getSensor(new WeatherSensor());
 		JSONObject airLyJSON = new JSONObject()
 				.put("temperature", airLy.getTemperature())
 				.put("humidity", airLy.getHumidity())
 				.put("pressure", airLy.getPressure())
 				.put("isError", false)
-				.put("date", airLy.getDate());
+				.put("date", airLy.getResponse().getDate());
 		
 		JSONObject conditions = new JSONObject()
 				.put("icon", accuWeather.getWeatherIcon())
@@ -69,15 +61,15 @@ public class WeatherRestRenderer implements RestRespRenderer {
 				.put("visibility", accuWeather.getVisibility());
 		
 		JSONObject wind = new JSONObject()
-				.put("direction", accuWeather.getDirection())
-				.put("degrees", accuWeather.getDegrees())
-				.put("speed", accuWeather.getSpeed());
+				.put("direction", accuWeather.getWindDirection())
+				.put("degrees", accuWeather.getWindDirectionDeg())
+				.put("speed", accuWeather.getWindSpeed());
 		
 		JSONObject accuJSON = new JSONObject()
 				.put("conditions", conditions)
 				.put("wind", wind)
 				.put("isError", false)
-				.put("date", accuWeather.getDate());
+				.put("date", accuWeather.getResponse().getDate());
 		
 		JSONObject external = new JSONObject()
 				.put("airly", airLyJSON)
@@ -86,38 +78,35 @@ public class WeatherRestRenderer implements RestRespRenderer {
 	}
 	
 	private JSONObject getAirPolution() {
-		AirPolutionSensor airPolution = airlySensor.getSensor(new AirPolutionSensor());
 		JSONObject air = new JSONObject()
-				.put("caqi", airPolution.getCaqi())
-				.put("caqiColor", airPolution.getCaqiColor())
-				.put("pm1", airPolution.getPm1())
-				.put("pm10", airPolution.getPm10())
-				.put("pm10per", airPolution.getPm10percent())
-				.put("pm25", airPolution.getPm25())
-				.put("pm25per", airPolution.getPm25percent())
+				.put("caqi", airLy.getCaqi())
+				.put("caqiColor", airLy.getCaqiColor())
+				.put("pm1", airLy.getPm1())
+				.put("pm10", airLy.getPm10())
+				.put("pm10per", airLy.getPm10percent())
+				.put("pm25", airLy.getPm25())
+				.put("pm25per", airLy.getPm25percent())
 				.put("isError", false)
-				.put("date", airPolution.getDate());
+				.put("date", airLy.getResponse().getDate());
 		return air;
 	}
 
 	private JSONObject getSunRiseSet() {
-		SunRiseSetSensor sunRiseSet = sunRiseSetSensor.getSensor(new SunRiseSetSensor());
 		JSONObject sun = new JSONObject()
 				.put("rise", sunRiseSet.getSunRiseTime())
 				.put("set", sunRiseSet.getSunSetTime())
 				.put("dayLength", sunRiseSet.getDayLengthTime())
 				.put("isError", false)
-				.put("date", sunRiseSet.getDate());
+				.put("date", sunRiseSet.getResponse().getDate());
 		return sun;
 	}
 	
 	private JSONObject getUV() {
-		AccuWeatherSensor accuWeather = accuWeatherSensor.getSensor(new AccuWeatherSensor());
 		JSONObject uv = new JSONObject()
-				.put("value", accuWeather.getUvIndex())
-				.put("text", accuWeather.getUvIndexText())
+				.put("value", accuWeather.getUvIndexValue())
+				.put("text", accuWeather.getUvIndexDescription())
 				.put("isError", false)
-				.put("date", accuWeather.getDate());
+				.put("date", accuWeather.getResponse().getDate());
 		return uv;
 	}
 

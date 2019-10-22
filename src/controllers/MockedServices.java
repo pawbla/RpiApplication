@@ -31,8 +31,8 @@ public class MockedServices {
 			+ ",\"country\":\"PL\",\"sunrise\":1570250737,\"sunset\":1570291914},\"timezone\":7200,\"id\":3094802,"
 			+ "\"name\":\"Poznan\",\"cod\":200}";
 	
-	private static final String AIRLY_JSON = "{" + 
-			"  \"current\": {" + 
+	private static final String AIRLY_JSON = "{"+ 
+			" \"current\": {" + 
 			"    \"fromDateTime\": \"2019-10-05T14:41:06.644Z\"," + 
 			"    \"tillDateTime\": \"2019-10-05T15:41:06.644Z\"," + 
 			"    \"values\": [" + 
@@ -2338,7 +2338,7 @@ public class MockedServices {
 			+ "\",\"UnitType\":18}},\"Wind\":{\"Direction\":{\"Degrees\":45,\"Localized\":\"NE\",\"English\":\"NE\"},\"Speed\":{\"Metric"
 			+ "\":{\"Value\":18.5,\"Unit\":\"km/h\",\"UnitType\":7},\"Imperial\":{\"Value\":11.5,\"Unit\":\"mi/h\",\"UnitType\":9}}},\""
 			+ "WindGust\":{\"Speed\":{\"Metric\":{\"Value\":18.5,\"Unit\":\"km/h\",\"UnitType\":7},\"Imperial\":{\"Value\":11.5,\"Unit\""
-			+ ":\"mi/h\",\"UnitType\":9}}},\"UVIndex\":0,\"UVIndexText\":\"Niska\",\"Visibility\":{\"Metric\":{\"Value\":9.7,\"Unit\":\""
+			+ ":\"mi/h\",\"UnitType\":9}}},\"UVIndex\":2,\"UVIndexText\":\"Niska\",\"Visibility\":{\"Metric\":{\"Value\":9.7,\"Unit\":\""
 			+ "km\",\"UnitType\":6},\"Imperial\":{\"Value\":6.0,\"Unit\":\"mi\",\"UnitType\":2}},\"ObstructionsToVisibility\":\"R-\",\""
 			+ "CloudCover\":100,\"Ceiling\":{\"Metric\":{\"Value\":457.0,\"Unit\":\"m\",\"UnitType\":5},\"Imperial\":{\"Value\":1500.0,"
 			+ "\"Unit\":\"ft\",\"UnitType\":0}},\"Pressure\":{\"Metric\":{\"Value\":1007.0,\"Unit\":\"mb\",\"UnitType\":14},\"Imperial\":{"

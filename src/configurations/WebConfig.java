@@ -30,7 +30,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"controllers", "properties", "sensors", "sysInfo", "hardware"})
+@ComponentScan({"controllers", "properties", "sensors", "sysInfo", "hardware",})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 	@Override

@@ -5,16 +5,13 @@ import java.awt.Color;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import sensors.objects.AccuWeatherSensor;
-import sensors.objects.AirPolutionSensor;
-import sensors.objects.SunRiseSetSensor;
-import sensors.objects.WeatherSensor;
-import sensors.services.SensorInterface;
-import ui.MainTabbedPanel;
+import connectors.accuWeatherConnector.AccuWeatherHandler;
+import connectors.airLyConnector.AirLyHandler;
+import connectors.internalConnector.InternalHandler;
+import connectors.sunRiseSetConnector.SunRiseSetHandler;
 import ui.indicators.WeatherIconIndicator;
 import ui.indicators.accuWeather.CeilingIndicator;
 import ui.indicators.accuWeather.CloudCoverIndicator;
@@ -49,25 +46,21 @@ public class UiUpdateService {
 	 */
 	private final int TIMEOUT = 10000;
 	private final int DELAY_TIMEOUT = 10000;
-	
+		
 	/**
 	 * Sensors
 	 */
 	@Autowired
-	@Qualifier("internal")
-	private SensorInterface inWeatherSensor;
+	private InternalHandler internal;
 	
 	@Autowired
-	@Qualifier("airLy")
-	private SensorInterface airLySensor;
+	public AirLyHandler airLy;
 	
 	@Autowired
-	@Qualifier("sunRiseSet")
-	private SensorInterface sunRiseSet;
+	private SunRiseSetHandler sunRiseSet;
 	
 	@Autowired
-	@Qualifier("AccuWeatherService")
-	private SensorInterface accuWeather;
+	private AccuWeatherHandler accuWeather;
 	
 	/**
 	 * Method executed with set period of time
@@ -76,46 +69,34 @@ public class UiUpdateService {
 	private void refreshUI() {		
 		logger.debug("Refresh UI");
 		/** Internal sensors*/
-		if (inWeatherSensor.getModifyFlag()) {
-			InTemperatureIndicator.getInstance().setText(inWeatherSensor.getSensor(new WeatherSensor()).getTemperature());
-			InHumidityIndicator.getInstance().setText(inWeatherSensor.getSensor(new WeatherSensor()).getHumidity());
-		}
+		InTemperatureIndicator.getInstance().setText(internal.getTemperature());
+		InHumidityIndicator.getInstance().setText(internal.getHumidity());
 		
-		/** External sensors */
-		if (airLySensor.getModifyFlag()) {
-			PressureIndicator.getInstance().setText(airLySensor.getSensor(new WeatherSensor()).getPressure());
-			OutTemperatureIndicator.getInstance().setText(airLySensor.getSensor(new WeatherSensor()).getTemperature());
-			OutHumidityIndicator.getInstance().setText(airLySensor.getSensor(new WeatherSensor()).getHumidity());			
-		
-		
-		/** AirPolution sensors*/
-			CAQiIndicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getCaqi());
-			CAQiIndicator.getInstance().setForeground(Color.decode(airLySensor.getSensor(new AirPolutionSensor()).getCaqiColor()));
-			PM1_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm1());
-			PM10_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm10());
-			PM25_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm25());
-			PM10Percent_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm10percent());
-			PM25Percent_Indicator.getInstance().setText(airLySensor.getSensor(new AirPolutionSensor()).getPm25percent());
-		}
+		/** AirLy sensors */
+		PressureIndicator.getInstance().setText(airLy.getPressure());
+		OutTemperatureIndicator.getInstance().setText(airLy.getTemperature());
+		OutHumidityIndicator.getInstance().setText(airLy.getHumidity());			
+		CAQiIndicator.getInstance().setText(airLy.getCaqi());
+		CAQiIndicator.getInstance().setForeground(Color.decode(airLy.getCaqiColor()));
+		PM1_Indicator.getInstance().setText(airLy.getPm1());
+		PM10_Indicator.getInstance().setText(airLy.getPm10());
+		PM25_Indicator.getInstance().setText(airLy.getPm25());
+		PM10Percent_Indicator.getInstance().setText(airLy.getPm10percent());
+		PM25Percent_Indicator.getInstance().setText(airLy.getPm25percent());
 		
 		/** Sun rise and sun set */
-		if (sunRiseSet.getModifyFlag()) {
-			SunRiseIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunRiseTime());
-			SunSetIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getSunSetTime());
-			DayLengthIndicator.getInstance().setText(sunRiseSet.getSensor(new SunRiseSetSensor()).getDayLengthTime());
-		}
+		SunRiseIndicator.getInstance().setText(sunRiseSet.getSunRiseTime());
+		SunSetIndicator.getInstance().setText(sunRiseSet.getSunSetTime());
+		DayLengthIndicator.getInstance().setText(sunRiseSet.getDayLengthTime());
 		
 		/** Accu weather sensor */
-		if (accuWeather.getModifyFlag()) {
-			WeatherTextIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getWeatherText());
-			WindSpeedIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getSpeed());
-			WindDirectionIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getDirection());
-			WeatherIconIndicator.getInstance().setIconByNumber(accuWeather.getSensor(new AccuWeatherSensor()).getWeatherIcon());
-			CloudCoverIndicator.getInstance().setText(Integer.toString(accuWeather.getSensor(new AccuWeatherSensor()).getCloudCover()));
-			CeilingIndicator.getInstance().setText(Integer.toString(accuWeather.getSensor(new AccuWeatherSensor()).getCeiling()));
-			UVIndexIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getUvIndex());
-			UVTextIndicator.getInstance().setText(accuWeather.getSensor(new AccuWeatherSensor()).getUvIndexText());
-			
-		}
+		WeatherTextIndicator.getInstance().setText(accuWeather.getWeatherText());
+		WindSpeedIndicator.getInstance().setText(accuWeather.getWindSpeed());
+		WindDirectionIndicator.getInstance().setText(accuWeather.getWindDirection());
+		WeatherIconIndicator.getInstance().setIconByNumber(accuWeather.getWeatherIcon());
+		CloudCoverIndicator.getInstance().setText(Integer.toString(accuWeather.getCloudCover()));
+		CeilingIndicator.getInstance().setText(Integer.toString(accuWeather.getCeiling()));
+		UVIndexIndicator.getInstance().setText(accuWeather.getUvIndexValue());
+		UVTextIndicator.getInstance().setText(accuWeather.getUvIndexDescription());
 	}
 }
