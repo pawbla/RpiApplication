@@ -1,7 +1,6 @@
 package configurations;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,23 +9,16 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.resource.ResourceResolver;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
@@ -45,12 +37,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     class ReactResourceResolver implements ResourceResolver {
         private static final String REACT_DIR = "./WebContent/react/";
 
-        private static final String REACT_STATIC_DIR = REACT_DIR + "static/js/";
+        //private static final String REACT_STATIC_DIR = REACT_DIR + "static/js/";
 
         private Resource index = new FileSystemResource(REACT_DIR + "index.html");
         
-        private List<String> rootStaticFiles = Arrays.asList("favicon.io",
-                "asset-manifest.json", "manifest.json", "service-worker.js");
+        //private List<String> rootStaticFiles = Arrays.asList("favicon.io",
+        //        "asset-manifest.json", "manifest.json", "service-worker.js");
 
         @Override
         public Resource resolveResource(HttpServletRequest request, String requestPath,

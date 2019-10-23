@@ -2,7 +2,6 @@ package ui.panels.mainPanels;
 
 import java.awt.Color;
 
-import ui.indicators.accuWeather.CeilingIndicator;
 import ui.indicators.accuWeather.CloudCoverIndicator;
 import ui.indicators.accuWeather.UVIndexIndicator;
 import ui.indicators.accuWeather.UVTextIndicator;

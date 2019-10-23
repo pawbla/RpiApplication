@@ -1,18 +1,8 @@
 package ui.indicators;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,9 +10,6 @@ import javax.swing.SwingConstants;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.util.ResourceUtils;
-
-import ui.indicators.sun.SunRiseIndicator;
 
 public class WeatherIconIndicator extends JLabel {
 	

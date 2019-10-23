@@ -1,6 +1,5 @@
 package controllers.renderers;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,18 +8,13 @@ import org.springframework.stereotype.Component;
 import connectors.accuWeatherConnector.AccuWeatherHandler;
 import connectors.airLyConnector.AirLyHandler;
 import connectors.internalConnector.InternalHandler;
+import connectors.models.Response;
 import connectors.sunRiseSetConnector.SunRiseSetHandler;
 
 @Component
 @Qualifier("WeatherRenderer")
 public class WeatherRestRenderer implements RestRespRenderer {
-	
-	private static final String INTERNAL_KEY = "internal";
-	private static final String EXTERNAL_KEY = "external";
-	private static final String AIR_POLUTION_KEY = "airPolution";
-	private static final String SUN_KEY = "sun";
-	private static final String UV_KEY = "uv";
-	
+		
 	private JSONObject response;
 	
 	@Autowired
@@ -35,89 +29,80 @@ public class WeatherRestRenderer implements RestRespRenderer {
 	@Autowired
 	private AccuWeatherHandler accuWeather;
 	
-	private JSONArray getInternal() {
-		JSONArray arrInternal = new JSONArray();
-		JSONObject sensor = new JSONObject()
-				.put("temperature", internal.getTemperature())
-				.put("humidity", internal.getHumidity())
-				.put("isError", false)
-				.put("date", internal.getResponse().getDate());
-		return arrInternal.put(sensor);
-	}
-	
-	private JSONObject getExternal() {
-		JSONObject airLyJSON = new JSONObject()
-				.put("temperature", airLy.getTemperature())
-				.put("humidity", airLy.getHumidity())
-				.put("pressure", airLy.getPressure())
-				.put("isError", false)
-				.put("date", airLy.getResponse().getDate());
-		
-		JSONObject conditions = new JSONObject()
-				.put("icon", accuWeather.getWeatherIcon())
-				.put("description", accuWeather.getWeatherText())
-				.put("cloudCover", accuWeather.getCloudCover())
-				.put("ceiling", accuWeather.getCeiling())
-				.put("visibility", accuWeather.getVisibility());
-		
-		JSONObject wind = new JSONObject()
-				.put("direction", accuWeather.getWindDirection())
-				.put("degrees", accuWeather.getWindDirectionDeg())
-				.put("speed", accuWeather.getWindSpeed());
-		
-		JSONObject accuJSON = new JSONObject()
-				.put("conditions", conditions)
-				.put("wind", wind)
-				.put("isError", false)
-				.put("date", accuWeather.getResponse().getDate());
-		
-		JSONObject external = new JSONObject()
-				.put("airly", airLyJSON)
-				.put("accu", accuJSON);
-		return external;
-	}
-	
-	private JSONObject getAirPolution() {
-		JSONObject air = new JSONObject()
-				.put("caqi", airLy.getCaqi())
-				.put("caqiColor", airLy.getCaqiColor())
-				.put("pm1", airLy.getPm1())
-				.put("pm10", airLy.getPm10())
-				.put("pm10per", airLy.getPm10percent())
-				.put("pm25", airLy.getPm25())
-				.put("pm25per", airLy.getPm25percent())
-				.put("isError", false)
-				.put("date", airLy.getResponse().getDate());
-		return air;
-	}
-
-	private JSONObject getSunRiseSet() {
-		JSONObject sun = new JSONObject()
-				.put("rise", sunRiseSet.getSunRiseTime())
-				.put("set", sunRiseSet.getSunSetTime())
-				.put("dayLength", sunRiseSet.getDayLengthTime())
-				.put("isError", false)
-				.put("date", sunRiseSet.getResponse().getDate());
-		return sun;
-	}
-	
-	private JSONObject getUV() {
-		JSONObject uv = new JSONObject()
-				.put("value", accuWeather.getUvIndexValue())
-				.put("text", accuWeather.getUvIndexDescription())
-				.put("isError", false)
-				.put("date", accuWeather.getResponse().getDate());
-		return uv;
-	}
-
 	@Override
 	public String getJSON() {
 		response = new JSONObject()
-				.put(INTERNAL_KEY, getInternal())
-				.put(EXTERNAL_KEY, getExternal())
-				.put(AIR_POLUTION_KEY, getAirPolution())
-				.put(SUN_KEY, getSunRiseSet())
-				.put(UV_KEY, getUV());
+			.put("in", new JSONObject()
+				.put("temperature", setMeasureObj(internal.getTemperature(), 
+						internal.getResponse()))
+				.put("humidity", setMeasureObj(internal.getHumidity(), 
+						internal.getResponse())))
+			.put("out", new JSONObject()
+				.put("temperature", setMeasureObj(airLy.getTemperature(), 
+						airLy.getResponse()))
+				.put("humidity", setMeasureObj(airLy.getHumidity(), 
+						airLy.getResponse())))
+			.put("weather", new JSONObject()
+				.put("pressure", setMeasureObj(airLy.getPressure(), 
+						airLy.getResponse()))			
+				.put("weatherIcon", setMeasureObj(accuWeather.getWeatherIcon(), 
+						accuWeather.getResponse()))
+				.put("weatherText", setMeasureObj(accuWeather.getWeatherText(), 
+						accuWeather.getResponse()))
+				.put("cloudCover", setMeasureObj(accuWeather.getCloudCover(), 
+						accuWeather.getResponse()))
+				.put("ceiling", setMeasureObj(accuWeather.getCeiling(), 
+						accuWeather.getResponse()))
+				.put("visibility", setMeasureObj(accuWeather.getVisibility(), 
+						accuWeather.getResponse()))
+				.put("windDirection", setMeasureObj(accuWeather.getWindDirection(), 
+						accuWeather.getResponse()))
+				.put("windDirectionDeg", setMeasureObj(accuWeather.getWindDirectionDeg(), 
+						accuWeather.getResponse()))
+				.put("windSpeed", setMeasureObj(accuWeather.getWindSpeed(), 
+						accuWeather.getResponse()))
+				.put("uvIndexDescr", setMeasureObj(accuWeather.getUvIndexDescription(), 
+						accuWeather.getResponse()))
+				.put("uvIndexValue", setMeasureObj(accuWeather.getUvIndexValue(), 
+						accuWeather.getResponse())))
+			.put("airPolution", new JSONObject()
+				.put("caqi", setMeasureObj(airLy.getCaqi(), 
+						accuWeather.getResponse()))
+				.put("caqiColor", setMeasureObj(airLy.getCaqiColor(), 
+						accuWeather.getResponse()))
+				.put("pm1", setMeasureObj(airLy.getPm1(), 
+						accuWeather.getResponse()))
+				.put("pm10", setMeasureObj(airLy.getPm10(), 
+						accuWeather.getResponse()))
+				.put("pm10percent", setMeasureObj(airLy.getPm10percent(), 
+						accuWeather.getResponse()))
+				.put("pm25", setMeasureObj(airLy.getPm25(), 
+						accuWeather.getResponse()))
+				.put("pm25percen", setMeasureObj(airLy.getPm25percent(), 
+						accuWeather.getResponse())))
+			.put("sun", new JSONObject()
+				.put("rise", setMeasureObj(sunRiseSet.getSunRiseTime(), 
+						accuWeather.getResponse()))
+				.put("set", setMeasureObj(sunRiseSet.getSunSetTime(), 
+						accuWeather.getResponse()))
+				.put("dayLength", setMeasureObj(sunRiseSet.getDayLengthTime(), 
+						accuWeather.getResponse())));
 		return response.toString();
+	}
+	
+	private JSONObject setMeasureObj(String value, Response response) {
+		JSONObject obj = new JSONObject()
+				.put("value", value)
+				.put("isError", response.isError())
+				.put("date", response.getDate());		
+		return obj;
+	}
+	
+	private JSONObject setMeasureObj(int value, Response response) {
+		JSONObject obj = new JSONObject()
+				.put("value", value)
+				.put("isError", response.isError())
+				.put("date", response.getDate());	
+		return obj;
 	}
 }
