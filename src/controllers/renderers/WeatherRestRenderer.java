@@ -78,7 +78,7 @@ public class WeatherRestRenderer implements RestRespRenderer {
 						accuWeather.getResponse()))
 				.put("pm25", setMeasureObj(airLy.getPm25(), 
 						accuWeather.getResponse()))
-				.put("pm25percen", setMeasureObj(airLy.getPm25percent(), 
+				.put("pm25percent", setMeasureObj(airLy.getPm25percent(), 
 						accuWeather.getResponse())))
 			.put("sun", new JSONObject()
 				.put("rise", setMeasureObj(sunRiseSet.getSunRiseTime(), 
