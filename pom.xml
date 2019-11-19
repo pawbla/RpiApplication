@@ -61,19 +61,19 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<dependency>
          <groupId>org.apache.commons</groupId>
          <artifactId>commons-dbcp2</artifactId>
-      </dependency>	
+      	</dependency>	
 		<dependency>
-	    	<groupId>org.springframework.security</groupId>
-	    	<artifactId>spring-security-core</artifactId>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-config</artifactId>
+		    <artifactId>spring-security-jwt</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-web</artifactId>
-		</dependency>
+		    <groupId>org.springframework.security.oauth</groupId>
+		    <artifactId>spring-security-oauth2</artifactId>
+		</dependency>		
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-configuration-processor</artifactId>
@@ -100,6 +100,16 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		    <artifactId>jaxb-api</artifactId>
 		    <version>2.3.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>javax.activation</groupId>
+		    <artifactId>activation</artifactId>
+		    <version>1.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.glassfish.jaxb</groupId>
+		    <artifactId>jaxb-runtime</artifactId>
+		    <version>2.3.0-b170127.1453</version>
+		</dependency>		
 		<dependency>
 		    <groupId>commons-lang</groupId>
 		    <artifactId>commons-lang</artifactId>
