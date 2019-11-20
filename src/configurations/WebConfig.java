@@ -1,6 +1,7 @@
 package configurations;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,27 +33,31 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/**")
                 .resourceChain(true)
                 .addResolver(resolver);
-
 	}
 	
-    class ReactResourceResolver implements ResourceResolver {
+	public class ReactResourceResolver implements ResourceResolver {
+
         private static final String REACT_DIR = "./WebContent/react/";
 
-        //private static final String REACT_STATIC_DIR = REACT_DIR + "static/js/";
+        private static final String REACT_STATIC_DIR = "static";
 
         private Resource index = new FileSystemResource(REACT_DIR + "index.html");
-        
-        //private List<String> rootStaticFiles = Arrays.asList("favicon.io",
-        //        "asset-manifest.json", "manifest.json", "service-worker.js");
+        private List<String> rootStaticFiles = Arrays.asList("favicon.io",
+                "asset-manifest.json", "manifest.json", "service-worker.js");
 
         @Override
-        public Resource resolveResource(HttpServletRequest request, String requestPath,
-                                        List<? extends Resource> locations, ResourceResolverChain chain) {
+        public Resource resolveResource(
+            HttpServletRequest request, String requestPath,
+            List<? extends Resource> locations, ResourceResolverChain chain) {
+
             return resolve(requestPath, locations);
         }
 
         @Override
-        public String resolveUrlPath(String resourcePath, List<? extends Resource> locations, ResourceResolverChain chain) {
+        public String resolveUrlPath(
+            String resourcePath, List<? extends Resource> locations,
+            ResourceResolverChain chain) {
+
             Resource resolvedResource = resolve(resourcePath, locations);
             if (resolvedResource == null) {
                 return null;
@@ -64,17 +69,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
             }
         }
 
-        private Resource resolve(String requestPath, List<? extends Resource> locations) {
+        private Resource resolve(
+            String requestPath, List<? extends Resource> locations) {
 
             if (requestPath == null) return null;
 
-            if (!requestPath.contains("index")) {
-            	return new FileSystemResource(REACT_DIR + requestPath);
-            } else {
+            if (rootStaticFiles.contains(requestPath)
+                    || requestPath.startsWith(REACT_STATIC_DIR)) {
+                return new FileSystemResource(REACT_DIR + requestPath);
+            } else
                 return index;
-            }
         }
-
     }
 	
 	@Bean
