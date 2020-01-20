@@ -64,6 +64,8 @@ public class WeatherRestRenderer implements RestRespRenderer {
 				.put("uvIndexDescr", setMeasureObj(accuWeather.getUvIndexDescription(), 
 						accuWeather.getResponse()))
 				.put("uvIndexValue", setMeasureObj(accuWeather.getUvIndexValue(), 
+						accuWeather.getResponse()))
+				.put("uvIndexColor", setMeasureObj(accuWeather.getUvIndexColor(), 
 						accuWeather.getResponse())))
 			.put("airPolution", new JSONObject()
 				.put("caqi", setMeasureObj(airLy.getCaqi(), 

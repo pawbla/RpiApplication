@@ -49,7 +49,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         public Resource resolveResource(
             HttpServletRequest request, String requestPath,
             List<? extends Resource> locations, ResourceResolverChain chain) {
-
             return resolve(requestPath, locations);
         }
 
@@ -72,7 +71,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         private Resource resolve(
             String requestPath, List<? extends Resource> locations) {
 
-            if (requestPath == null) return null;
+            if (requestPath == null) {
+            	return null;
+            }
 
             if (rootStaticFiles.contains(requestPath)
                     || requestPath.startsWith(REACT_STATIC_DIR)) {

@@ -1,5 +1,7 @@
 package connectors.accuWeatherConnector;
 
+import java.awt.Color;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +30,7 @@ public class AccuWeatherHandler  extends AbstractHandler {
 	private static final String VISIBILITY_KEY = "Visibility";
 	private static final String CLOUD_COVER_KEY = "CloudCover";
 	private static final String CEILING_KEY = "Ceiling";
+	private static final String VIOLET_HEX = "#B803FF";
 	
 	/*
 	 * Variables
@@ -99,6 +102,20 @@ public class AccuWeatherHandler  extends AbstractHandler {
 
 	public int getUvIndexValue() {
 		return uvIndexValue;
+	}
+	
+	public String getUvIndexColor() {
+		Color color = Color.GREEN;
+		if (uvIndexValue >= 3 && uvIndexValue <= 5) {
+			color = Color.YELLOW;
+		} else if (uvIndexValue >= 6 && uvIndexValue <= 7 ) {
+			color = Color.ORANGE;
+		} else if (uvIndexValue >= 8 && uvIndexValue <= 10 ) {
+			color = Color.RED;
+		} else if (uvIndexValue >= 11 ) {
+			color = Color.decode(VIOLET_HEX);
+		}		
+		return "#"+Integer.toHexString(color.getRGB()).substring(2);
 	}
 
 	public String getUvIndexDescription() {

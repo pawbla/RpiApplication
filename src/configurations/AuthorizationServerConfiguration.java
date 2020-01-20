@@ -46,9 +46,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         	.inMemory()
             .withClient(clientId)
             .secret(clientSecret)
-            .authorizedGrantTypes(grantType)
-            .accessTokenValiditySeconds(3600) 
-            .refreshTokenValiditySeconds(28*24*3600)
+            .authorizedGrantTypes(grantType, "refresh_token", "client_credentials")
+            .accessTokenValiditySeconds(2*3600) 
+            .refreshTokenValiditySeconds(2*3600)
             .scopes(scopeRead, scopeWrite)
             .resourceIds(resourceIds);
     }

@@ -1,19 +1,11 @@
 package controllers;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-@Controller
+//@Controller
 public class LoginController {
 	
-	 private final Logger logger = LogManager.getLogger(this.getClass().getName());
+	 //private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
-	  @RequestMapping("/login")
+	  /*@RequestMapping("/login")
 	  public String login() {
 	    return "login";
 	  }
@@ -23,5 +15,5 @@ public class LoginController {
 		logger.warn("Failed login procedure. Local Address: " + req.getLocalAddr() + " Remote Address: " + req.getRemoteAddr() + " Remote Host: " + req.getRemoteHost());
 	    model.addAttribute("loginError", true);
 	    return "index";
-	  }
+	  }*/
 }

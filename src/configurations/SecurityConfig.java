@@ -45,12 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	http 
 	        .sessionManagement()
-	        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	        	.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	        .and()
         		.csrf().disable()
         		.authorizeRequests()
-        		.antMatchers("/index","/oauth/token").permitAll()
-        		.anyRequest().authenticated()
+        		.antMatchers("/**","/oauth/token").permitAll()
     		.and() 
     			.formLogin() 
     			.disable();
