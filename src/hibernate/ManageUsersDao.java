@@ -1,5 +1,5 @@
 package hibernate;
 
-public class ManageUsersDao {
+interface ManageUsersDao {
 
 }

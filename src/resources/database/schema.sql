@@ -3,11 +3,11 @@ CREATE TABLE users (
 	nickname VARCHAR(128) NOT NULL,
 	password VARCHAR(128) NOT NULL,
 	firstname VARCHAR(128) NOT NULL,
-	lastname VARCHAR(128)
-	enabled BOOL NOT NULL DEFAULT False,
+	lastname VARCHAR(128),
 	email VARCHAR(128),
+	enabled BOOL NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (id),
-	UNIQUE (nickname)
+	UNIQUE(nickname)
 );
 
 CREATE TABLE roles (

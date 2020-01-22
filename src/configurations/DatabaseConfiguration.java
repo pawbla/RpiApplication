@@ -1,54 +1,53 @@
 package configurations;
 
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan({"users"})
+@EnableTransactionManagement
+@ComponentScan({ "hibernate" })
 public class DatabaseConfiguration {
 	
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
-    /*@Autowired
+    @Autowired
     Environment environment;
-	
-    //MySQL DB connection
-    @Profile("prod")
-	@Bean
-	public DriverManagerDataSource dataSource() {
-    	logger.info("Create mySQL databse connection.");
-	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-	    driverManagerDataSource.setUrl(environment.getProperty("spring.datasource.url"));
-	    driverManagerDataSource.setUsername(environment.getProperty("spring.datasource.username"));
-	    driverManagerDataSource.setPassword(environment.getProperty("spring.datasource.password"));
-	    return driverManagerDataSource;
-	}
     
-	@Profile("prod")
-	@Bean
-	public JdbcTemplate jdbcTemplate (DataSource dataSource) {
-	 return new JdbcTemplate(dataSource);
-	}
-         
-     //database for test purpose - embedded DB
-     @Profile("dev")
-     @Bean 
-     public DataSource eDataSource() {
-    	 logger.info("Create embedded database connection - for tests.");
-    	 return new EmbeddedDatabaseBuilder()
-    	 .setType(EmbeddedDatabaseType.H2)
-    	 .addScript("classpath:/resources/database/schema.sql")
-    	 .addScript("classpath:/resources/database/data.sql")
-    	 .build();
+    @Bean
+    public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource);
+        sessionFactory.setPackagesToScan(new String[] { "com.websystique.spring.model" });
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        return sessionFactory;
      }
+    
+    private Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.put("hibernate.show_sql", false);
+        properties.put("hibernate.format_sql", false);
+        return properties;        
+    }
      
-     @Profile("dev")
-     @Bean
-     public JdbcTemplate jdbcTemplateE (DataSource eDataSource) {
-    	 logger.info("Create embedded database connection");
-    	 return new JdbcTemplate(eDataSource);
-     }*/
+    @Bean
+    @Autowired
+    public HibernateTransactionManager transactionManager(SessionFactory s) {
+       HibernateTransactionManager txManager = new HibernateTransactionManager();
+       txManager.setSessionFactory(s);
+       return txManager;
+    }
 }
