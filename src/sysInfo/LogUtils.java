@@ -25,7 +25,7 @@ public class LogUtils{
 	/*
 	 * Constatnts
 	 */
-	private static final String DATE_COLUMN = "date";
+	/*private static final String DATE_COLUMN = "date";
 	private static final String LOGGER_COLUMN = "logger";
 	private static final String LEVEL_COLUMN = "level";
 	private static final String MSG_COLUMN = "message";
@@ -83,5 +83,5 @@ public class LogUtils{
 
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
-	}
+	}*/
 }

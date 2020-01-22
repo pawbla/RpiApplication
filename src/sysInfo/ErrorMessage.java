@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +15,7 @@ public class ErrorMessage {
 	/**
 	 * Logger
 	 */
-	private final Logger logger = LogManager.getLogger(this.getClass().getName());
+	/*private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
 	private static final String SELECT_LOGS_QUERY = "SELECT * FROM logs ORDER BY id DESC";
 	private static final int LIMIT_REMOVE_SQL = 100;
@@ -45,5 +44,5 @@ public class ErrorMessage {
 			jdbcTemplate.update(REMOVE_QUERY);
 			rows = jdbcTemplate.queryForObject(SUM_ROWS_QUERY, Integer.class);
 		}
-	}
+	}*/
 }

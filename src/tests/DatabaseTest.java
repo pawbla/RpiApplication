@@ -1,21 +1,7 @@
 package tests;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import static org.junit.Assert.assertEquals;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-
 public class DatabaseTest {
-	private EmbeddedDatabase db;
+	/*private EmbeddedDatabase db;
 
 	Connection con = null;
 	PreparedStatement stmt = null;
@@ -78,5 +64,5 @@ public class DatabaseTest {
     @After
     public void tearDown() {
         db.shutdown();
-    }
+    }*/
 }

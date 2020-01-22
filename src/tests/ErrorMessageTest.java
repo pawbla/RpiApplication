@@ -24,14 +24,14 @@ import sysInfo.ErrorMessage;
 @ActiveProfiles("dev")
 public class ErrorMessageTest {
 	
-	private final Logger logger = LogManager.getLogger(this.getClass().getName());
+	/*private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	@Autowired
 	private ErrorMessage errMsg;
 
 	@Before
 	public void setUp() {
-		/* Create traces stored into DB for test */
+		// Create traces stored into DB for test
 		for (int i = 0; i < 20; i++) {
 			logger.warn("Error no: " + i);
 		}
@@ -44,5 +44,5 @@ public class ErrorMessageTest {
 			System.out.println("===" + row.get("date")  + row.get("level") + row.get("message"));
 		}
 		assertEquals(20, rows.size());
-	}
+	} */
 }

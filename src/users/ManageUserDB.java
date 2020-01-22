@@ -1,24 +1,8 @@
 package users;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class ManageUserDB implements ManageUsersInterface {
-	private final Logger logger = LogManager.getLogger(this.getClass().getName());	
+public class ManageUserDB {
+	/*private final Logger logger = LogManager.getLogger(this.getClass().getName());	
 	
 	private static final String INSERT_USER = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
 	private static final String INSERT_USER_INROLE = "INSERT INTO roles (username) VALUES (?)";
@@ -53,7 +37,7 @@ public class ManageUserDB implements ManageUsersInterface {
 	
 	/**
 	 * Add user into database
-	 */
+	
 	public boolean addUser (User u) {
 		// if false - user has existing
 		logger.info("Add user " + u.getUsername());
@@ -74,19 +58,19 @@ public class ManageUserDB implements ManageUsersInterface {
 			return false;			
 		}
 		return true;
-	}
+	} */
 
 	/**
 	 * Change password into database for selected user
-	 */
+	 
 	public void setPassword (String p, String n) {
 		logger.info("Set password for user: " + n);
 		jdbcTemplate.update(SQL_UPDATE_PASSWORD, p, n);
-	}
+	}*/
 	
 	/**
 	 * Change email into database for selected user
-	 */
+	 
 	public boolean setEmail (User user) {
 		logger.info("Set email for user: " + user.getUsername());
 		if (user.getUsername().equals(null) || user.getEmail().equals(null)) {
@@ -95,11 +79,11 @@ public class ManageUserDB implements ManageUsersInterface {
 		}
 		jdbcTemplate.update(SQL_UPDATE_EMAIL, user.getEmail(), user.getUsername());
 		return true;
-	}
+	}*/
 	
 	/**
 	 * Get password from database
-	 */
+	
 	public String getPassword (User user) {
 		logger.info("Get password for user: " + user.getUsername());
 		String password;
@@ -109,11 +93,11 @@ public class ManageUserDB implements ManageUsersInterface {
 			 return null;
 		 }
 		 return password;
-	}
+	} */
 	
 	/**
 	 * Load user from database to list
-	 */
+	 
 	public void loadUsers() {
 		logger.info("Load users");
 		users.clear();
@@ -127,27 +111,27 @@ public class ManageUserDB implements ManageUsersInterface {
 			u.setRole((String)row.get("role"));
 			users.add(u);
 		}
-	}
+	}*/
 	
 	/**
 	 * Get users list
-	 */
+	
 	public ArrayList<User> getUsers() {
 		logger.info("get Users");
 		return users;
-	}
+	} */
 
 	/**
 	 * Set users list
-	 */
+	
 	public void setUsers(ArrayList<User> users) {
 		logger.info("set Users");
 		this.users = users;
-	}	
+	}	 */
 	
 	/**
 	 * Change enabled value for specified user
-	 */
+	 */  /*
 	public String updateEnabled(ArrayList<User> users) {
 		logger.info("Update enabled disabled users");
 		int i = 0;
@@ -164,21 +148,22 @@ public class ManageUserDB implements ManageUsersInterface {
 			i++;
 		}
 		return "Lista użytkowników została zaktualizowana.";
-	}
+	} */
 	
 	/**
 	 * Get available roles from database
-	 */
+	
 	public ArrayList<String> getRoles() {
 		logger.info("Get roles form DB");
 		return roles;
-	}
+	} */
 	
 	/**
 	 * Check if at least one admin role is enabled
 	 * @param users
 	 * @return
 	 */
+	/*
 	private boolean checkAdminEnabled (ArrayList<User> users) {
 		logger.info("Check if at least one admin is enabled?");
 		//check changes to admin
@@ -190,10 +175,11 @@ public class ManageUserDB implements ManageUsersInterface {
 		//no admin role enabled has found
 		return false;
 	}
-	
+	*/
 	/**
 	 * Check user status for Android app request\
 	 */
+	/*
 	public HttpStatus checkUserStatus (String userName) {
 		System.out.println("checkUserStatus: " + userName);
 		HttpStatus status;
@@ -213,11 +199,12 @@ public class ManageUserDB implements ManageUsersInterface {
 			status = HttpStatus.UNAUTHORIZED;
 		}
 		return status;
-	}
+	}*/
 	
 	/**
 	 * Remove user from database
 	 */
+	/*
 	public void removeUser(User user) {
 		jdbcTemplate.update(SQL_DELETE_ROLE,user.getUsername());
 		jdbcTemplate.update(SQL_DELETE_USER,user.getUsername());
@@ -231,5 +218,5 @@ public class ManageUserDB implements ManageUsersInterface {
 		Matcher matcher = pattern.matcher(email);
 		logger.info("Result: " + matcher.matches());
 		return  matcher.matches();
-	}
+	}*/
 }
