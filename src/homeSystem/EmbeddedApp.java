@@ -24,6 +24,7 @@ public class EmbeddedApp {
 	public static void main(String[] args) {	
 
         SpringApplication.run(EmbeddedApp.class, args);
+       
         System.setProperty("java.awt.headless", "false");
         SwingUtilities.invokeLater(() -> {
         	logger.debug("Initialize MainFrame");

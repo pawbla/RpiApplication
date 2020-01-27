@@ -1,14 +1,48 @@
-package hibernate.entities;
+package dao.entities;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="users")
 public class User {
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@Column(name = "nickname", nullable = false, unique=true)
 	private String nickName;
+	
+	@Column(name = "password", nullable = false)
 	private String password;
+	
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
+	
+	@Column(name = "last_name")
 	private String lastName;
+	
+	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
+	
+	@Column(name = "email")
 	private String email;
+	
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+	private Role role;
+	
+	public User() {
+		
+	}
 	
 	public int getId() {
 		return id;
@@ -52,4 +86,11 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
 }
