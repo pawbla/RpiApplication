@@ -7,41 +7,40 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.AbstractDao;
-import dao.entities.User;
+import dao.entities.Users;
 
 @Repository
 @Transactional
 public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 
 	@Override
-	public User getUser(String nickname) {
-	
-		Query query = getSession().createQuery("from User where nickname=:nickname")
-				.setParameter("nickname", nickname);
-		User user = (User) query.uniqueResult();
+	public Users getUserByName(final String username) {
+		Query query = getSession().createQuery("from Users where username=:username")
+				.setParameter("username", username);
+		Users user = (Users) query.uniqueResult();
 		return user;
 	}
 
 	@Override
-	public List<User> getUsers() {
+	public List<Users> getUsers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addUser(User user) {
+	public void addUser(final Users user) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void removeUser(User user) {
+	public void removeUser(final Users user) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public void updateUser(final Users user) {
 		// TODO Auto-generated method stub
 		
 	}

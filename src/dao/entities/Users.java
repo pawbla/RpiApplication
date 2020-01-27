@@ -12,14 +12,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="users")
-public class User {
+public class Users {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "nickname", nullable = false, unique=true)
-	private String nickName;
+	@Column(name = "username", nullable = false, unique=true)
+	private String username;
 	
 	@Column(name = "password", nullable = false)
 	private String password;
@@ -40,7 +40,7 @@ public class User {
             cascade = CascadeType.ALL)
 	private Role role;
 	
-	public User() {
+	public Users() {
 		
 	}
 	
@@ -50,11 +50,11 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getNickName() {
-		return nickName;
+	public String getUserName() {
+		return username;
 	}
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setUserName(String userName) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;

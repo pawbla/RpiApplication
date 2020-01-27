@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import configurations.DataSourceConfigurationDev;
 import configurations.DatabaseConfiguration;
-import dao.entities.User;
+import dao.entities.Users;
 import dao.service.ManageUsersService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,7 +23,7 @@ public class ManageUsersServiceTest {
 
 	@Test
 	public void getUserDetails() {
-		User user = service.getUser("user");
+		Users user = service.getUserByName("user");
 		Assert.assertEquals("First name for user", "userName1", user.getFirstName());
 		Assert.assertEquals("Password for user", 
 				"40408537d958bee8c46851120c94e4ac6ba054458ba1d791aeaf8e365ec2d2374817ba13edd03fdf", user.getPassword());
@@ -33,7 +33,7 @@ public class ManageUsersServiceTest {
 	
 	@Test
 	public void getGuestDetails() {
-		User user = service.getUser("guest");
+		Users user = service.getUserByName("guest");
 		Assert.assertEquals("First name for guest", "userName2", user.getFirstName());
 		Assert.assertEquals("Password for guest", 
 				"40408537d958bee8c46851120c94e4ac6ba054458ba1d791aeaf8e365ec2d2374817ba13edd03fdf", user.getPassword());
@@ -43,7 +43,7 @@ public class ManageUsersServiceTest {
 	
 	@Test
 	public void getAdminDetails() {
-		User user = service.getUser("admin");
+		Users user = service.getUserByName("admin");
 		Assert.assertEquals("First name for admin", "adminFirstName", user.getFirstName());
 		Assert.assertEquals("Last name for admin", "adminLastName", user.getLastName());
 		Assert.assertEquals("Role for admin", "ROLE_ADMIN", user.getRole().getRole());

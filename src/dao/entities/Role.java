@@ -23,7 +23,7 @@ public class Role {
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-	private User user;
+	private Users user;
 	
 	public Role() {
 	}
@@ -41,11 +41,11 @@ public class Role {
 		this.role = role;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 	

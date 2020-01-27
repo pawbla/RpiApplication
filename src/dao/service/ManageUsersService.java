@@ -2,12 +2,14 @@ package dao.service;
 
 import java.util.List;
 
-import dao.entities.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import dao.entities.Users;
 
 public interface ManageUsersService {
-	public User getUser(String nickname);
-	public List<User> getUsers();
-	public void addUser(User user);
-	public void removeUser(User user);
-	public void updateUser(User user);
+	public Users getUserByName(final String nickname);
+	public List<Users> getUsers();
+	public void addUser(final Users user);
+	public void removeUser(final Users user);
+	public void updateUser(final Users user);
 }
