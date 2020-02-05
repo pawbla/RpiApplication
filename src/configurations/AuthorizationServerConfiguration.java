@@ -3,6 +3,7 @@ package configurations;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -18,12 +19,22 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 	
-   private String clientId = "clientid";
-   private String clientSecret = "clientsectet";
-   private String grantType = "password";
-   private String scopeRead = "read";
-   private String scopeWrite = "write";
-   private String resourceIds = "resourceids";
+	@Value("${security.oauth2.client.id}")
+	private String clientId;
+	@Value("${security.oauth2.client.client-secret}")
+	private String clientSecret;
+	@Value("${security.oauth2.client.grant-type}")
+	private String[] grantType;
+	@Value("${security.oauth2.client.resource-ids}")
+	private String resourceIds;
+	@Value("${security.oauth2.client.access-token-validity-seconds}")
+	private int accessTokenValidity;
+	@Value("${security.oauth2.client.refresh-token-validity-seconds}")
+	private int refreshTokenValidity;
+	
+	private String scopeRead = "read";
+	private String scopeWrite = "write";
+	
 	
 	@Autowired
 	private TokenStore tokenStore;
@@ -46,9 +57,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         	.inMemory()
             .withClient(clientId)
             .secret(clientSecret)
-            .authorizedGrantTypes(grantType, "refresh_token", "client_credentials")
-            .accessTokenValiditySeconds(2*3600) 
-            .refreshTokenValiditySeconds(2*3600)
+            .authorizedGrantTypes(grantType)
+            .accessTokenValiditySeconds(accessTokenValidity) 
+            .refreshTokenValiditySeconds(refreshTokenValidity)
             .scopes(scopeRead, scopeWrite)
             .resourceIds(resourceIds);
     }

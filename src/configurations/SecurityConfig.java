@@ -2,6 +2,7 @@ package configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -19,8 +20,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import dao.service.ManageUsersService;
-
 
 @Configuration
 @EnableWebSecurity
@@ -31,8 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Qualifier("extendedUserDetailsService")
 	private UserDetailsService userService;
 	
-	//below variables should be moved to configuration before commit !!!
-	private String signingKey = "testSigningKey"; 
+	@Value("${security.oauth2.authorization.token-key-access}")
+	private String signingKey; 
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

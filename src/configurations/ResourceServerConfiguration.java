@@ -1,6 +1,7 @@
 package configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -12,8 +13,8 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 	
-	//below variables should be moved to configuration before commit !!!!
-	private String resourceIds = "resourceids";
+	@Value("${security.oauth2.client.resource-ids}")
+	private String resourceIds;
 	
 	@Autowired
     private ResourceServerTokenServices tokenServices;

@@ -2,8 +2,6 @@ package dao.service;
 
 import java.util.List;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import dao.entities.Users;
 
 public interface ManageUsersService {

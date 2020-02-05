@@ -1,22 +1,5 @@
 package sysInfo;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.Appender;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.appender.db.jdbc.ColumnConfig;
-import org.apache.logging.log4j.core.appender.db.jdbc.ConnectionSource;
-import org.apache.logging.log4j.core.appender.db.jdbc.JdbcAppender;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.config.LoggerConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 

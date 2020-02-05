@@ -15,7 +15,7 @@
 	        <SizeBasedTriggeringPolicy size="5 MB"/>
 	    </Policies>
 	    <DefaultRolloverStrategy max="10"/>
-	</RollingFile>  
+	</RollingFile>
   </Appenders>
 
   <!--  Change no important loggers level to warn for console appender -->

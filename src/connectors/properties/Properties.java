@@ -1,11 +1,11 @@
-package properties;
+package connectors.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "custom")
-public class CustomProperties {
+public class Properties {
 	private String ipInternalSensor;
 	private String ipExternalSensor;
 	private String intSensorPassword;

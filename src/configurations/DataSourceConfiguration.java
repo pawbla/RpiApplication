@@ -24,7 +24,7 @@ public class DataSourceConfiguration {
 	public DataSource dataSource() {
     	logger.info("Create mySQL databse connection.");
 	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-	    driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+	    driverManagerDataSource.setDriverClassName("spring.datasource.driver-class-name");
 	    driverManagerDataSource.setUrl(environment.getProperty("spring.datasource.url"));
 	    driverManagerDataSource.setUsername(environment.getProperty("spring.datasource.username"));
 	    driverManagerDataSource.setPassword(environment.getProperty("spring.datasource.password"));
