@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import dao.entities.Role;
 import dao.entities.Users;
 import dao.repository.ManageUsersDao;
 
@@ -20,17 +21,20 @@ public class ManageUsersImpl implements ManageUsersService {
 	public Users getUserByName(final String username) {
 		return dao.getUserByName(username);
 	}
+	
+	@Override
+	public void addUser(final Users user) {
+		Role role = dao.getRole(user.getRole().getRole());
+		if (role != null) {
+			user.setRole(role);
+		}
+		dao.addUser(user);
+	}
 
 	@Override
 	public List<Users> getUsers() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void addUser(final Users user) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

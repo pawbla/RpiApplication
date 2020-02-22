@@ -1,21 +1,23 @@
 CREATE TABLE users (
-	id INT NOT NULL AUTO_INCREMENT,
+	user_id INT NOT NULL AUTO_INCREMENT,
 	username VARCHAR(128) NOT NULL,
 	password VARCHAR(128) NOT NULL,
 	first_name VARCHAR(128) NOT NULL,
 	last_name VARCHAR(128),
 	email VARCHAR(128),
 	enabled BOOL NOT NULL DEFAULT FALSE,
-	PRIMARY KEY (id),
-	UNIQUE(username),
+	role_id INT,
+	PRIMARY KEY (user_id),
+	FOREIGN KEY (role_id) REFERENCES users(role_id),
+	UNIQUE(username)
 );
 
 CREATE TABLE roles (
-	id INT NOT NULL AUTO_INCREMENT,
+	role_id INT NOT NULL AUTO_INCREMENT,
 	role VARCHAR(128) NOT NULL DEFAULT 'ROLE_USER',
 	user_id INT,
-	FOREIGN KEY (user_id) REFERENCES users(id),
-	PRIMARY KEY (id)
+	PRIMARY KEY (role_id),
+	UNIQUE(role)
 );
 
 CREATE TABLE logs (

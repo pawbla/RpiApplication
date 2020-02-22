@@ -2,6 +2,7 @@ package dao.service;
 
 import java.util.List;
 
+import dao.entities.Role;
 import dao.entities.Users;
 
 public interface ManageUsersService {

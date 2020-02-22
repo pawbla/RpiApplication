@@ -3,11 +3,11 @@ package dao.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,7 +16,7 @@ public class Users {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int user_id;
 	
 	@Column(name = "username", nullable = false, unique=true)
 	private String username;
@@ -36,24 +36,20 @@ public class Users {
 	@Column(name = "email")
 	private String email;
 	
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="role_id")
 	private Role role;
 	
-	public Users() {
-		
-	}
-	
 	public int getId() {
-		return id;
+		return user_id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int user_id) {
+		this.user_id = user_id;
 	}
 	public String getUserName() {
 		return username;
 	}
-	public void setUserName(String userName) {
+	public void setUserName(String username) {
 		this.username = username;
 	}
 	public String getPassword() {

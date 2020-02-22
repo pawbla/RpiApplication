@@ -2,12 +2,9 @@ package dao.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,23 +13,17 @@ public class Role {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@Column(name = "role_id")
+	private int role_id;
 	
-	@Column(name = "role")
+	@Column(name = "role", unique=true)
 	private String role;
 	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-	private Users user;
-	
-	public Role() {
-	}
-	
 	public int getId() {
-		return id;
+		return role_id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int  role_id) {
+		this.role_id =  role_id;
 	}
 	public String getRole() {
 		return role;
@@ -40,13 +31,4 @@ public class Role {
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-	public Users getUser() {
-		return user;
-	}
-
-	public void setUser(Users user) {
-		this.user = user;
-	}
-	
 }
