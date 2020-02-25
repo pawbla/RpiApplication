@@ -23,9 +23,6 @@ public class ManageUsersServiceTest {
 	
 	@Autowired
 	private ManageUsersService service;
-	
-	@Autowired
-    private SessionFactory sessionFactory;
 
 	@Test
 	public void getUserDetails() {
@@ -89,40 +86,8 @@ public class ManageUsersServiceTest {
 		Assert.assertFalse("Enabled for added user", user.isEnabled());
 		Assert.assertEquals("Email for added user", EMAIL, user.getEmail());
 		Assert.assertEquals("Password for guest", PASSWORD, user.getPassword());
-		Assert.assertEquals("Role for added user", ROLE, user.getRole().getRole());
+		Assert.assertEquals("Role for added user", "ROLE_USER", user.getRole().getRole()); //user always stored with default role ROLE_USER
 	}
 	
-	@Test
-	public void addUserNoExistingRole() {
-		//given
-		String NICKNAME = "sAddNick2";
-		String PASSWORD = "sAddPass2";
-		String FIRST_NAME = "sAddFirstN2";
-		String LAST_NAME = "sAddLastN2";
-		String EMAIL = "service@add.user2";
-		String ROLE = "ROLE_NO_EXISTING_ROLE";
-		
-		Users testUser = new Users();
-		testUser.setUserName(NICKNAME);
-		testUser.setPassword(PASSWORD);
-		testUser.setFirstName(FIRST_NAME);
-		testUser.setLastName(LAST_NAME);
-		testUser.setEmail(EMAIL);
-		testUser.setEnabled(false);
-		Role role = new Role();
-		role.setRole(ROLE);
-		testUser.setRole(role);
-		//when
-		service.addUser(testUser);
-		//then
-		Users user = service.getUserByName(NICKNAME);
-		Assert.assertEquals("Nickname for added user", NICKNAME, user.getUserName());
-		Assert.assertEquals("First name for added user", FIRST_NAME, user.getFirstName());
-		Assert.assertEquals("Last name for added user", LAST_NAME, user.getLastName());
-		Assert.assertFalse("Enabled for added user", user.isEnabled());
-		Assert.assertEquals("Email for added user", EMAIL, user.getEmail());
-		Assert.assertEquals("Password for guest", PASSWORD, user.getPassword());
-		Assert.assertEquals("Role for added user", ROLE, user.getRole().getRole());
-	}
 }
 	

@@ -24,9 +24,11 @@ public class ManageUsersImpl implements ManageUsersService {
 	
 	@Override
 	public void addUser(final Users user) {
-		Role role = dao.getRole(user.getRole().getRole());
-		if (role != null) {
-			user.setRole(role);
+		//always store user with role as below
+		user.setRole(dao.getRole("ROLE_USER"));
+		//user should be allways stored as disabled
+		if (user.isEnabled()) {
+			user.setEnabled(false);
 		}
 		dao.addUser(user);
 	}
