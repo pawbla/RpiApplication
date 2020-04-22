@@ -1,5 +1,8 @@
 package tests;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,6 +74,7 @@ public class ManageUsersDaoTest {
 		testUser.setLastName(LAST_NAME);
 		testUser.setEmail(EMAIL);
 		testUser.setEnabled(false);
+		
 		Role role = new Role();
 		role.setRole(ROLE);
 		testUser.setRole(role);
@@ -97,6 +101,77 @@ public class ManageUsersDaoTest {
 	@Test
 	public void getIncorrectRole() {
 		Assert.assertNull("Empty object expected", dao.getRole("No_existing_role"));
+	}
+	
+	@Test
+	public void getUsers() {
+		//given
+		List<String> usernames = new ArrayList<String>();
+		usernames.add("user");
+		usernames.add("guest");
+		usernames.add("admin");
+		usernames.add("empty");
+		usernames.add("updateUser");
+		usernames.add("AddUserNick");
+		
+		List<String> roles = new ArrayList<String>();
+		roles.add("ROLE_USER");
+		roles.add("ROLE_GUEST");
+		roles.add("ROLE_ADMIN");
+		roles.add("empty");
+		roles.add("ROLE_USER");
+		roles.add("TEST_ROLE");
+		//when
+		List<Users> users = dao.getUsers();
+		//then
+		Assert.assertEquals("List should contain 5 users", 5, users.size());
+		users.forEach(user -> {
+			Assert.assertEquals("UserName for user: " + user.getId(), usernames.get(user.getId()-1), user.getUserName());
+			Assert.assertEquals("Role for user: " + user.getId(), roles.get(user.getId()-1), user.getRole().getRole());
+		});
+	}
+	
+	@Test
+	public void deleteUser() {
+		//given
+		String NICKNAME = "deleteUser";
+		Assert.assertNotNull("User exists in database", dao.getUserByName(NICKNAME));
+		//when
+		dao.removeUser(NICKNAME);
+		//then
+		Assert.assertNull("User not exists in database", dao.getUserByName(NICKNAME));
+	}
+	
+	@Test //PUT
+	public void updateUser() {
+		//given
+		String NICKNAME = "updateUser";
+		String FIRST_NAME = "NewFirstName";
+		String LAST_NAME = "NewLastName";
+		String EMAIL = "new@email.user";
+		String ROLE = "ROLE_USER";
+		
+		Users testUser = new Users();
+		testUser.setUserName(NICKNAME);
+		testUser.setFirstName(FIRST_NAME);
+		testUser.setLastName(LAST_NAME);
+		testUser.setEmail(EMAIL);
+		testUser.setEnabled(false);
+		
+		Role role = dao.getRole(ROLE);
+		testUser.setRole(role);
+		
+		//when
+		dao.updateUser(testUser);
+		
+		//then
+		Users user = dao.getUserByName(NICKNAME);
+		Assert.assertEquals("Nickname for updated user", NICKNAME, user.getUserName());
+		Assert.assertEquals("First name for updated user", FIRST_NAME, user.getFirstName());
+		Assert.assertEquals("Last name for updated user", LAST_NAME, user.getLastName());
+		Assert.assertFalse("Enabled for updated user", user.isEnabled());
+		Assert.assertEquals("Email for updated user", EMAIL, user.getEmail());
+		Assert.assertEquals("Role for updated user", ROLE, user.getRole().getRole());
 	}
 }
 	

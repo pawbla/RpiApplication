@@ -13,10 +13,14 @@ import dao.entities.Users;
 @Repository
 @Transactional
 public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
+	
+	private String GET_USER_BY_NAME_QUERY = "FROM Users WHERE username=:username";
+	private String GET_ROLE_QUERY = "FROM Role WHERE role=:role";
+	private String GET_USERS_QUERY = "FROM Users";
 
 	@Override
 	public Users getUserByName(final String username) {
-		Query query = getSession().createQuery("from Users where username=:username")
+		Query query = getSession().createQuery(GET_USER_BY_NAME_QUERY)
 				.setParameter("username", username);
 		return (Users) query.uniqueResult();
 	}
@@ -28,26 +32,36 @@ public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 	
 	@Override 
 	public Role getRole(final String role) {
-		Query query = getSession().createQuery("FROM Role WHERE role=:role")
+		Query query = getSession().createQuery(GET_ROLE_QUERY)
 				.setParameter("role", role);		
 		return (Role) query.uniqueResult();
 	}
  
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Users> getUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = getSession().createQuery(GET_USERS_QUERY);
+		return query.list();
 	}
 
 	@Override
-	public void removeUser(final Users user) {
-		// TODO Auto-generated method stub
+	public void removeUser(final String username) {	
+		Users user = getUserByName(username);
 		
+		getSession().delete(user);
+		getSession().flush();
 	}
 
 	@Override
-	public void updateUser(final Users user) {
-		// TODO Auto-generated method stub
+	public void updateUser(final Users updatedUser) {
+		Users userToUpdate = getUserByName(updatedUser.getUserName());
+		userToUpdate.setFirstName(updatedUser.getFirstName());
+		userToUpdate.setLastName(updatedUser.getLastName());
+		userToUpdate.setEnabled(updatedUser.isEnabled());
+		userToUpdate.setEmail(updatedUser.getEmail());
+		userToUpdate.setRole(updatedUser.getRole());
+		
+		getSession().update(userToUpdate);
 		
 	}
 

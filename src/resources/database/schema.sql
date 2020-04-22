@@ -8,7 +8,6 @@ CREATE TABLE users (
 	enabled BOOL NOT NULL DEFAULT FALSE,
 	role_id INT,
 	PRIMARY KEY (user_id),
-	FOREIGN KEY (role_id) REFERENCES users(role_id),
 	UNIQUE(username)
 );
 

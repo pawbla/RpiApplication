@@ -35,19 +35,17 @@ public class ManageUsersImpl implements ManageUsersService {
 
 	@Override
 	public List<Users> getUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getUsers();
 	}
 
 	@Override
-	public void removeUser(final Users user) {
-		// TODO Auto-generated method stub
-		
+	public void removeUser(final String username) {
+		dao.removeUser(username);	
 	}
 
 	@Override
 	public void updateUser(final Users user) {
-		// TODO Auto-generated method stub
-		
+		user.setRole(dao.getRole(user.getRole().getRole()));
+		dao.updateUser(user);
 	}
 }
