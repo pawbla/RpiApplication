@@ -3,8 +3,6 @@ package tests;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -3,10 +3,14 @@ package controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import controllers.renderers.RestRespRenderer;
 import controllers.renderers.UserDetailsRenderer;
+import controllers.renderers.UsersListRenderer;
 import dao.entities.Users;
 import dao.service.ManageUsersService;
 
@@ -28,6 +33,9 @@ public class WeatherController {
 	
 	@Autowired
 	private UserDetailsRenderer userDetails;
+	
+	@Autowired
+	private UsersListRenderer userListRenderer;
 	
 	@Autowired
 	private ManageUsersService userService;
@@ -46,8 +54,27 @@ public class WeatherController {
 	
 	@PostMapping(value = "/register", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<String> storeUser(@RequestBody Users user) {
+	public ResponseEntity<String> registerUser(@RequestBody Users user) {
 		userService.addUser(user);
 		return ResponseEntity.ok().body("user stored successfully");
 	}
-}
+	
+	@GetMapping(value = "/users", produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<String> getUsers() {
+		return ResponseEntity.ok().body(userListRenderer.getJSON());
+	}
+	
+	@DeleteMapping("deleteUser/{username}")
+	public ResponseEntity<Void> deleteUser(@PathVariable String username) {
+		userService.removeUser(username);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PutMapping("updateUser/{username}")
+	public ResponseEntity<String> updateUser(@PathVariable String username, @RequestBody Users user) {
+		userService.updateUser(user);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+ }
