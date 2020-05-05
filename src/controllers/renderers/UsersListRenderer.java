@@ -21,10 +21,11 @@ public class UsersListRenderer implements RestRespRenderer  {
 		JSONArray array = new JSONArray();
 		userService.getUsers().forEach(user -> {
 			JSONObject userItem = new JSONObject()
-					.put("id", user.getId())
-					.put("userName", user.getUserName())
+					.put("user_id", user.getId())
+					.put("username", user.getUserName())
 					.put("firstName", user.getFirstName())
 					.put("lastName", user.getLastName())
+					.put("enabled", user.isEnabled())
 					.put("role", user.getRole().getRole())
 					.put("email", user.getEmail());
 			array.put(userItem);

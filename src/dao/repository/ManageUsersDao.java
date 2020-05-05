@@ -11,6 +11,6 @@ public interface ManageUsersDao {
 	public void addUser(final Users user);
 	public List<Users> getUsers();
 	public Role getRole(final String role);
-	public void removeUser(final String username);
-	public void updateUser(final Users user);
+	public void removeUser(final int user_id);
+	public void updateUser(final int user_id, final Users updatedUser);
 }

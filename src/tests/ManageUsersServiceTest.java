@@ -7,23 +7,28 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import configurations.DataSourceConfigurationDev;
 import configurations.DatabaseConfiguration;
+import configurations.SecurityConfig;
 import dao.entities.Role;
 import dao.entities.Users;
 import dao.service.ManageUsersService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class})
+@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
 @ActiveProfiles("dev")
 public class ManageUsersServiceTest {
 	
 	@Autowired
 	private ManageUsersService service;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Test
 	public void getUserDetails() {
@@ -86,7 +91,7 @@ public class ManageUsersServiceTest {
 		Assert.assertEquals("Last name for added user", LAST_NAME, user.getLastName());
 		Assert.assertFalse("Enabled for added user", user.isEnabled());
 		Assert.assertEquals("Email for added user", EMAIL, user.getEmail());
-		Assert.assertEquals("Password for guest", PASSWORD, user.getPassword());
+		Assert.assertTrue("Password for guest", passwordEncoder.matches(PASSWORD, user.getPassword()));
 		Assert.assertEquals("Role for added user", "ROLE_USER", user.getRole().getRole()); //user always stored with default role ROLE_USER
 	}
 
@@ -124,7 +129,7 @@ public class ManageUsersServiceTest {
 		String NICKNAME = "deleteUser";
 		Assert.assertNotNull("User exists in database", service.getUserByName(NICKNAME));
 		//when
-		service.removeUser(NICKNAME);
+		service.removeUser(4);
 		//then
 		Assert.assertNull("User not exists in database", service.getUserByName(NICKNAME));
 	}
@@ -150,7 +155,7 @@ public class ManageUsersServiceTest {
 		testUser.setRole(role);
 		
 		//when
-		service.updateUser(testUser);
+		service.updateUser(5, testUser);
 		
 		//then
 		Users user = service.getUserByName(NICKNAME);

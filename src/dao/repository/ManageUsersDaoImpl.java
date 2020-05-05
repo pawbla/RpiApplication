@@ -45,16 +45,17 @@ public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 	}
 
 	@Override
-	public void removeUser(final String username) {	
-		Users user = getUserByName(username);
+	public void removeUser(final int user_id) {	
+		Users user = getSession().get(Users.class, user_id);
 		
 		getSession().delete(user);
 		getSession().flush();
 	}
 
 	@Override
-	public void updateUser(final Users updatedUser) {
-		Users userToUpdate = getUserByName(updatedUser.getUserName());
+	public void updateUser(final int user_id, final Users updatedUser) {
+		Users userToUpdate = getSession().get(Users.class, user_id);
+		
 		userToUpdate.setFirstName(updatedUser.getFirstName());
 		userToUpdate.setLastName(updatedUser.getLastName());
 		userToUpdate.setEnabled(updatedUser.isEnabled());

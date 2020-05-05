@@ -55,6 +55,7 @@ public class WeatherController {
 	@PostMapping(value = "/register", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> registerUser(@RequestBody Users user) {
+		System.out.println("USER " + user.getUserName());
 		userService.addUser(user);
 		return ResponseEntity.ok().body("user stored successfully");
 	}
@@ -65,15 +66,16 @@ public class WeatherController {
 		return ResponseEntity.ok().body(userListRenderer.getJSON());
 	}
 	
-	@DeleteMapping("deleteUser/{username}")
-	public ResponseEntity<Void> deleteUser(@PathVariable String username) {
-		userService.removeUser(username);
+	@DeleteMapping("deleteUser/{user_id}")
+	public ResponseEntity<Void> deleteUser(@PathVariable int user_id) {
+		userService.removeUser(user_id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@PutMapping("updateUser/{username}")
-	public ResponseEntity<String> updateUser(@PathVariable String username, @RequestBody Users user) {
-		userService.updateUser(user);
+	@PutMapping("updateUser/{user_id}")
+	public ResponseEntity<String> updateUser(@PathVariable int user_id, @RequestBody Users user) {
+		System.out.println("USER " + user.getUserName());
+		userService.updateUser(user_id, user);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

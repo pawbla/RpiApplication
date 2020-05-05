@@ -13,12 +13,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import configurations.DataSourceConfigurationDev;
 import configurations.DatabaseConfiguration;
+import configurations.SecurityConfig;
 import dao.entities.Role;
 import dao.entities.Users;
 import dao.repository.ManageUsersDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class})
+@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
 @ActiveProfiles("dev")
 public class ManageUsersDaoTest {
 	
@@ -137,7 +138,7 @@ public class ManageUsersDaoTest {
 		String NICKNAME = "deleteUser";
 		Assert.assertNotNull("User exists in database", dao.getUserByName(NICKNAME));
 		//when
-		dao.removeUser(NICKNAME);
+		dao.removeUser(4);
 		//then
 		Assert.assertNull("User not exists in database", dao.getUserByName(NICKNAME));
 	}
@@ -162,7 +163,7 @@ public class ManageUsersDaoTest {
 		testUser.setRole(role);
 		
 		//when
-		dao.updateUser(testUser);
+		dao.updateUser(5, testUser);
 		
 		//then
 		Users user = dao.getUserByName(NICKNAME);
