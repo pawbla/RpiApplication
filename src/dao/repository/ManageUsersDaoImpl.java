@@ -17,6 +17,7 @@ public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 	private String GET_USER_BY_NAME_QUERY = "FROM Users WHERE username=:username";
 	private String GET_ROLE_QUERY = "FROM Role WHERE role=:role";
 	private String GET_USERS_QUERY = "FROM Users";
+	private String GET_NUMBER_ADMINS = "SELECT count(*) FROM Users WHERE role_id = (SELECT role_id FROM Role WHERE role='ROLE_ADMIN')";
 
 	@Override
 	public Users getUserByName(final String username) {
@@ -64,6 +65,17 @@ public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 		
 		getSession().update(userToUpdate);
 		
+	}
+	
+	@Override
+	public int getNumberOfAdmins() {
+		Query query = getSession().createQuery(GET_NUMBER_ADMINS);
+		Long longNumber = (Long) query.uniqueResult();
+		return Long.valueOf(longNumber).intValue();
+	}
+	
+	public Users getUserById(final int user_id) {
+		return getSession().get(Users.class, user_id);
 	}
 
 }

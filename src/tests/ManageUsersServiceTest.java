@@ -2,8 +2,10 @@ package tests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import configurations.SecurityConfig;
 import dao.entities.Role;
 import dao.entities.Users;
 import dao.service.ManageUsersService;
+import exceptions.RemoveAllAdminsException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
@@ -29,7 +32,7 @@ public class ManageUsersServiceTest {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+	
 	@Test
 	public void getUserDetails() {
 		Users user = service.getUserByName("user");
@@ -124,7 +127,7 @@ public class ManageUsersServiceTest {
 	}
 	
 	@Test
-	public void deleteUser() {
+	public void deleteUser() throws RemoveAllAdminsException {
 		//given
 		String NICKNAME = "deleteUser";
 		Assert.assertNotNull("User exists in database", service.getUserByName(NICKNAME));
@@ -135,7 +138,7 @@ public class ManageUsersServiceTest {
 	}
 	
 	@Test //PUT
-	public void updateUser() {
+	public void updateUser() throws RemoveAllAdminsException {
 		//given
 		String NICKNAME = "updateUser";
 		String FIRST_NAME = "NewFirstName";
@@ -165,6 +168,54 @@ public class ManageUsersServiceTest {
 		Assert.assertFalse("Enabled for updated user", user.isEnabled());
 		Assert.assertEquals("Email for updated user", EMAIL, user.getEmail());
 		Assert.assertEquals("Role for updated user", ROLE, user.getRole().getRole());
+	}
+	
+	@Test(expected = RemoveAllAdminsException.class)
+	public void removeLastAdmin() throws RemoveAllAdminsException {
+		//given
+		//when
+		for (Users user : getAdminUserId()) {
+			service.removeUser(user.getId());
+		}
+		//then
+		Assert.fail();
+	}
+	
+	@Test(expected = RemoveAllAdminsException.class)
+	@Ignore
+	public void changeLastAdminRole() throws RemoveAllAdminsException {
+		//given
+		String NICKNAME = "updateUser";
+		String FIRST_NAME = "NewFirstName";
+		String LAST_NAME = "NewLastName";
+		String EMAIL = "new@email.user";
+		String ROLE = "ROLE_USER";
+		
+		Users testUser = new Users();
+		testUser.setUserName(NICKNAME);
+		testUser.setFirstName(FIRST_NAME);
+		testUser.setLastName(LAST_NAME);
+		testUser.setEmail(EMAIL);
+		testUser.setEnabled(false);
+		
+		Role role = new Role();
+		role.setRole(ROLE);
+		testUser.setRole(role);
+		
+		//when
+		for (Users user : getAdminUserId()) {
+			service.updateUser(user.getId(), testUser);
+		}		
+		//then	
+		Assert.fail();
+	}
+	
+	private List<Users> getAdminUserId() {
+		List<Users> users = service.getUsers();
+		List<Users> adminFiltered = users.stream()
+			 .filter(user -> "ROLE_ADMIN".equals(user.getRole().getRole()))
+			 .collect(Collectors.toList());
+		return adminFiltered;
 	}
 }
 	

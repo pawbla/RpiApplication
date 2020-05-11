@@ -22,6 +22,7 @@ import controllers.renderers.UserDetailsRenderer;
 import controllers.renderers.UsersListRenderer;
 import dao.entities.Users;
 import dao.service.ManageUsersService;
+import exceptions.RemoveAllAdminsException;
 
 @RestController
 @RequestMapping(value = "/api/v1")
@@ -67,16 +68,25 @@ public class WeatherController {
 	}
 	
 	@DeleteMapping("deleteUser/{user_id}")
-	public ResponseEntity<Void> deleteUser(@PathVariable int user_id) {
-		userService.removeUser(user_id);
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<Void> deleteUser(@PathVariable int user_id) throws RemoveAllAdminsException {
+		try {
+			userService.removeUser(user_id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (RemoveAllAdminsException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		
 	}
 	
 	@PutMapping("updateUser/{user_id}")
-	public ResponseEntity<String> updateUser(@PathVariable int user_id, @RequestBody Users user) {
-		System.out.println("USER " + user.getUserName());
-		userService.updateUser(user_id, user);
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<String> updateUser(@PathVariable int user_id, @RequestBody Users user) throws RemoveAllAdminsException {
+		try {
+			userService.updateUser(user_id, user);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (RemoveAllAdminsException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
  }

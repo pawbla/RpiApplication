@@ -174,5 +174,28 @@ public class ManageUsersDaoTest {
 		Assert.assertEquals("Email for updated user", EMAIL, user.getEmail());
 		Assert.assertEquals("Role for updated user", ROLE, user.getRole().getRole());
 	}
+	
+	@Test
+	public void numberOfAdmins () {
+		//given 
+		int expectedNoAdmins = 1;
+		//when
+		//then
+		Assert.assertEquals("One admin available in databse", expectedNoAdmins, dao.getNumberOfAdmins());
+	}
+	
+	@Test
+	public void getUserById() {
+		//given
+		int user_id = 1;
+		//when
+		//then
+		Users user = dao.getUserById(user_id);
+		Assert.assertEquals("First name for user", "userName1", user.getFirstName());
+		Assert.assertEquals("Password for user", 
+				"40408537d958bee8c46851120c94e4ac6ba054458ba1d791aeaf8e365ec2d2374817ba13edd03fdf", user.getPassword());
+		Assert.assertFalse("Enabled for user", user.isEnabled());
+		Assert.assertEquals("Role for user", "ROLE_USER", user.getRole().getRole());		
+	}
 }
 	

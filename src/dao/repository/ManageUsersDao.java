@@ -8,9 +8,11 @@ import dao.entities.Users;
 public interface ManageUsersDao {
 
 	public Users getUserByName(final String username);
+	public Users getUserById(final int user_id);
 	public void addUser(final Users user);
 	public List<Users> getUsers();
 	public Role getRole(final String role);
 	public void removeUser(final int user_id);
 	public void updateUser(final int user_id, final Users updatedUser);
+	public int getNumberOfAdmins();
 }
