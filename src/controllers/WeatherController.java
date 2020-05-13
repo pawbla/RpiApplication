@@ -1,6 +1,7 @@
 package controllers;
 
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import controllers.renderers.RestRespRenderer;
+import controllers.renderers.SimplyMessageRenderer;
 import controllers.renderers.UserDetailsRenderer;
 import controllers.renderers.UsersListRenderer;
 import dao.entities.Users;
@@ -41,6 +43,9 @@ public class WeatherController {
 	@Autowired
 	private ManageUsersService userService;
 	
+	@Autowired
+	private SimplyMessageRenderer simplyMessage;
+	
 	@GetMapping(value = "/weather", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> weather() {	
@@ -56,9 +61,8 @@ public class WeatherController {
 	@PostMapping(value = "/register", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> registerUser(@RequestBody Users user) {
-		System.out.println("USER " + user.getUserName());
 		userService.addUser(user);
-		return ResponseEntity.ok().body("user stored successfully");
+		return ResponseEntity.ok().body(simplyMessage.getJSON("user stored succesfully"));
 	}
 	
 	@GetMapping(value = "/users", produces=MediaType.APPLICATION_JSON_VALUE)
