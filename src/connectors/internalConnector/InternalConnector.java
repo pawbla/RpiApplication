@@ -27,7 +27,7 @@ public class InternalConnector extends AbstractRestConnector {
 				.setURL(url)
 				.setHttpMethod(HttpMethod.GET)
 				.addContentType(MediaType.APPLICATION_JSON)
-				.addHeader("Authentication", password)
+				.addHeader("Authorization", password)
 				.build();
 		this.setRequest(request);
 	}
