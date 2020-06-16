@@ -17,9 +17,10 @@ public class EmbeddedApp {
 	private static final Logger logger = LogManager.getLogger("EmbeddedApp");
 	
 	public static void main(String[] args) {	
-
+		System.out.println("User home directory: " + System.getProperty("user.home"));
+		System.out.println("User current working directory: " + System.getProperty("user.dir"));
         SpringApplication.run(EmbeddedApp.class, args);
-       
+
         //System.setProperty("java.awt.headless", "false");
 	}	
 }
