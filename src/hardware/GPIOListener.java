@@ -15,8 +15,8 @@ import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
-@Component
-@Profile("prod")
+//@Component
+//@Profile("prod")
 public class GPIOListener {
 	/**
 	 * Logger

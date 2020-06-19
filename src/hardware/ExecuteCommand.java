@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Execute shell command class
  *
  */
-@Component
+//@Component
 public class ExecuteCommand {
 	/**
 	 * Logger

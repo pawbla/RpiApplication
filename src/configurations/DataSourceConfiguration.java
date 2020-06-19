@@ -22,9 +22,13 @@ public class DataSourceConfiguration {
 	
 	@Bean
 	public DataSource dataSource() {
-    	logger.info("Create mySQL databse connection.");
+    	logger.info("Create mySQL databse connection");
+    	logger.debug("Configuration parameters:" +
+    			" driver " + environment.getProperty("spring.datasource.driver-class-name") +
+    			" url " + environment.getProperty("spring.datasource.url") +
+    			" username " + environment.getProperty("spring.datasource.username"));
 	    DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-	    driverManagerDataSource.setDriverClassName("spring.datasource.driver-class-name");
+	    driverManagerDataSource.setDriverClassName(environment.getProperty("spring.datasource.driver-class-name"));
 	    driverManagerDataSource.setUrl(environment.getProperty("spring.datasource.url"));
 	    driverManagerDataSource.setUsername(environment.getProperty("spring.datasource.username"));
 	    driverManagerDataSource.setPassword(environment.getProperty("spring.datasource.password"));
