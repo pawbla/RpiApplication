@@ -14,7 +14,6 @@ CREATE TABLE users (
 CREATE TABLE roles (
 	role_id INT NOT NULL AUTO_INCREMENT,
 	role VARCHAR(128) NOT NULL DEFAULT 'ROLE_USER',
-	user_id INT,
 	PRIMARY KEY (role_id),
 	UNIQUE(role)
 );
