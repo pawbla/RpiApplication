@@ -27,12 +27,9 @@ public class ConnectorConfiguration {
 	
 	@Autowired
 	private AirLyHandler airLy;
-	
-	private final int TIMEOUT = 120000;
-	private final int DELAY_TIMEOUT = 20000;
-	
+
 	@EventListener(ApplicationReadyEvent.class)
-	@Scheduled(cron="0 0/15 * ? * * *", zone="Europe/Warsaw") //cron at every 15 minutes
+	@Scheduled(cron="0 0/15 * ? * *", zone="Europe/Warsaw") //cron at every 15 minutes
 	public void fetchAirLyData() {
 		airLyConnector.execute();
 		airLy.parse(airLyConnector);
@@ -49,7 +46,7 @@ public class ConnectorConfiguration {
 	private AccuWeatherHandler accuWeather;
 	
 	@EventListener(ApplicationReadyEvent.class)
-	@Scheduled(cron="0 0/30 * ? * * *", zone="Europe/Warsaw")  //cron at every 30 minutes
+	@Scheduled(cron="0 0/30 * ? * *", zone="Europe/Warsaw")  //cron at every 30 minutes
 	public void fetchAccuWeatherData() { 
 		accuWeatherConnector.execute();
 		accuWeather.parse(accuWeatherConnector);

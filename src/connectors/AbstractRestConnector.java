@@ -44,6 +44,7 @@ public abstract class AbstractRestConnector implements ConnectorInterface {
 				response.setErrorMsg(resp.getStatusCode().getReasonPhrase());
 			}
 			if (StringUtils.isNotBlank(resp.getBody())) {
+				logger.trace("Received response for " + request.getIp() + " body: " + resp.getBody());
 				response.setBody(resp.getBody());
 				response.setDate(dateFormat.format(new Date()));
 			}
