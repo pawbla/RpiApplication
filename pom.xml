@@ -226,39 +226,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 					  <fileSet>
 			              <sourceFile>${basedir}/web.xml</sourceFile>
 			              <destinationFile>${basedir}/target/Release/web.xml</destinationFile>
-					  </fileSet>					   
+					  </fileSet>					      
 					  <fileSet>
-		              	<sourceFile>${basedir}/WebContent/WEB-INF/lib/css/style.css</sourceFile>
-		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/lib/css/style.css</destinationFile>
-					  </fileSet>
-					  <fileSet>
-		              	<sourceFile>${basedir}/WebContent/WEB-INF/views/templates/fragments.html</sourceFile>
-		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/views/templates/fragments.html</destinationFile>
-					  </fileSet>      
-					  <fileSet>
-		              	<sourceFile>${basedir}/WebContent/WEB-INF/views/templates/home.html</sourceFile>
-		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/views/templates/home.html</destinationFile>
-					  </fileSet>
-					   <fileSet>
-		              	<sourceFile>${basedir}/WebContent/WEB-INF/views/templates/login.html</sourceFile>
-		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/views/templates/login.html</destinationFile>
-					  </fileSet>   
-					   <fileSet>
-		              	<sourceFile>${basedir}/WebContent/WEB-INF/views/templates/registration.html</sourceFile>
-		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/views/templates/registration.html</destinationFile>
-					  </fileSet>  
-					  <fileSet>
-		              	<sourceFile>${basedir}/WebContent/WEB-INF/views/templates/settings.html</sourceFile>
-		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/views/templates/settings.html</destinationFile>
-					  </fileSet>   
-					  <fileSet>
-		              	<sourceFile>${basedir}/WebContent/WEB-INF/views/templates/weather.html</sourceFile>
-		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/views/templates/weather.html</destinationFile>
-					  </fileSet> 
-					  <fileSet>
-		              	<sourceFile>${basedir}/WebContent/WEB-INF/views/templates/sysinfo.html</sourceFile>
-		              	<destinationFile>${basedir}/target/Release/WebContent/WEB-INF/views/templates/sysinfo.html</destinationFile>
-					  </fileSet>					   					             
+		              	<sourceFile>${basedir}/starting_page/starting_page.html</sourceFile>
+		              	<destinationFile>${basedir}/target/Release/WebContent/starting_page/starting_page.html</destinationFile>
+					  </fileSet>   					   					             
 					</fileSets>
 		            </configuration>
 		          </execution>
