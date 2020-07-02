@@ -107,7 +107,7 @@ public class AccuWeatherHandler  extends AbstractHandler {
 	public String getUvIndexColor() {
 		Color color = Color.GREEN;
 		if (uvIndexValue >= 3 && uvIndexValue <= 5) {
-			color = Color.YELLOW;
+			color = Color.decode("#e0d900");
 		} else if (uvIndexValue >= 6 && uvIndexValue <= 7 ) {
 			color = Color.ORANGE;
 		} else if (uvIndexValue >= 8 && uvIndexValue <= 10 ) {

@@ -21,6 +21,8 @@ import connectors.models.Request;
 public class AirLyInstallationConnector extends AbstractRestConnector {
 	
 	private static final String API_KEY_NAME = "apikey";
+	private static final String ACCEPTED_LANG_KEY = "Accept-Language";
+	private static final String ACCEPTED_LANG_VALUE = "pl";
 	
 	public AirLyInstallationConnector(@Value("${custom.ipAirLyInstallation}") String url, @Value("${custom.apiKeyAirLy}") String apiKey) {
 		Request request = new RequestBuilder()
@@ -28,6 +30,7 @@ public class AirLyInstallationConnector extends AbstractRestConnector {
 				.setHttpMethod(HttpMethod.GET)
 				.addContentType(MediaType.APPLICATION_JSON)
 				.addHeader(API_KEY_NAME, apiKey)
+				.addHeader(ACCEPTED_LANG_KEY, ACCEPTED_LANG_VALUE)
 				.build();
 		this.setRequest(request);
 	}
