@@ -45,7 +45,7 @@ public class WeatherController {
 	@Autowired
 	private SimplyMessageRenderer simplyMessage;
 	
-	@GetMapping(value = "/weather", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/weather", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> weather() {	
 		return ResponseEntity.ok().body(weather.getJSON());
