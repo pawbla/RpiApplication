@@ -1,6 +1,9 @@
 package controllers;
 
 
+import java.io.IOException;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import controllers.renderers.RestRespRenderer;
 import controllers.renderers.SimplyMessageRenderer;
 import controllers.renderers.UserDetailsRenderer;
@@ -24,6 +31,8 @@ import controllers.renderers.UsersListRenderer;
 import dao.entities.Users;
 import dao.service.ManageUsersService;
 import exceptions.RemoveAllAdminsException;
+import exceptions.UpdatePasswordException;
+import model.PasswordUpdate;
 
 @RestController
 @RequestMapping(value = "/api/v1")
@@ -88,6 +97,16 @@ public class WeatherController {
 			userService.updateUser(user_id, user);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (RemoveAllAdminsException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PutMapping("changepass/{user_id}")
+	public  ResponseEntity<String> updatePassword (@PathVariable int user_id, @RequestBody PasswordUpdate passwordUpdate) throws UpdatePasswordException {
+		try {
+			userService.updatePassword(user_id, passwordUpdate.getOldPassword(), passwordUpdate.getNewPassword());
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (UpdatePasswordException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
