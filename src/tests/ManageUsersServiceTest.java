@@ -21,6 +21,7 @@ import dao.entities.Role;
 import dao.entities.Users;
 import dao.service.ManageUsersService;
 import exceptions.RemoveAllAdminsException;
+import exceptions.UpdatePasswordException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
@@ -107,6 +108,7 @@ public class ManageUsersServiceTest {
 		usernames.add("admin");
 		usernames.add("empty");
 		usernames.add("updateUser");
+		usernames.add("UserPassChange");
 		usernames.add("sAddNick");
 		
 		List<String> roles = new ArrayList<String>();
@@ -116,10 +118,11 @@ public class ManageUsersServiceTest {
 		roles.add("empty");
 		roles.add("ROLE_USER");
 		roles.add("ROLE_USER");
+		roles.add("ROLE_USER");
 		//when
 		List<Users> users = service.getUsers();
 		//then
-		Assert.assertEquals("List should contain 5 users", 5, users.size());
+		Assert.assertEquals("List should contain 6 users", 6, users.size());
 		users.forEach(user -> {
 			Assert.assertEquals("UserName for user: " + user.getId(), usernames.get(user.getId()-1), user.getUserName());
 			Assert.assertEquals("Role for user: " + user.getId(), roles.get(user.getId()-1), user.getRole().getRole());
@@ -216,6 +219,45 @@ public class ManageUsersServiceTest {
 			 .filter(user -> "ROLE_ADMIN".equals(user.getRole().getRole()))
 			 .collect(Collectors.toList());
 		return adminFiltered;
+	}
+	
+	@Test
+	public void updatePassword() throws UpdatePasswordException {
+		//given
+		String OLD_PASSWORD = "password";
+		String NEW_PASSWORD = "nowe_haslo";
+		String USER_NAME = "UserPassChange";
+		int USER_ID = 6;
+		//when
+		service.updatePassword(USER_ID, OLD_PASSWORD, NEW_PASSWORD);
+		//then
+		Users user = service.getUserByName(USER_NAME);
+		Assert.assertTrue("New password", passwordEncoder.matches(NEW_PASSWORD, user.getPassword()));
+	}
+	
+	@Test(expected = UpdatePasswordException.class)
+	public void updateSamePasswords() throws UpdatePasswordException {
+		//given
+		String PASSWORD = "password";
+		int USER_ID = 6;
+		//when
+		service.updatePassword(USER_ID, PASSWORD, PASSWORD);
+		//then
+		//then	
+		Assert.fail();
+	}
+	
+	@Test(expected = UpdatePasswordException.class)
+	public void updateIncorrectPassword() throws UpdatePasswordException {
+		//given
+		String OLD_PASSWORD = "incpassword";
+		String NEW_PASSWORD = "nowe_haslo";
+		int USER_ID = 6;
+		//when
+		service.updatePassword(USER_ID, OLD_PASSWORD, NEW_PASSWORD);
+		//then
+		//then	
+		Assert.fail();
 	}
 }
 	

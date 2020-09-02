@@ -78,4 +78,9 @@ public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 		return getSession().get(Users.class, user_id);
 	}
 
+	public void updatePassword(final int user_id, String password) {
+		Users user = this.getUserById(user_id);
+		user.setPassword(password);
+		persist(user);
+	}
 }

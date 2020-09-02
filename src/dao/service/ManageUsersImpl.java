@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import dao.entities.Users;
 import dao.repository.ManageUsersDao;
 import exceptions.RemoveAllAdminsException;
+import exceptions.UpdatePasswordException;
 
 @Service
 @Transactional
@@ -22,7 +23,9 @@ public class ManageUsersImpl implements ManageUsersService {
 	private PasswordEncoder passwordEncoder;
 	
 	private static final String LAST_ADMIN_ROLE_MSG = "Operation could remove admin access to application.";
-
+	private static final String OLD_NEW_PASS_SAME_MSG = "Old and new password cannot be the same";
+	private static final String INCORRECT_PASS_MSG = "Incorrect password";
+	
 	@Override
 	public Users getUserByName(final String username) {
 		return dao.getUserByName(username);
@@ -85,5 +88,16 @@ public class ManageUsersImpl implements ManageUsersService {
 			}
 		}
 		return allowOperation;
+	}
+	
+	public void updatePassword(final int user_id, String oldPassword, String newPassword) throws UpdatePasswordException {
+		if (oldPassword.equals(newPassword)) {
+			throw new UpdatePasswordException(OLD_NEW_PASS_SAME_MSG);
+		}
+		if (passwordEncoder.matches(oldPassword, dao.getUserById(user_id).getPassword())) {
+			dao.updatePassword(user_id, passwordEncoder.encode(newPassword));
+		} else {
+			throw new UpdatePasswordException(INCORRECT_PASS_MSG);
+		}
 	}
 }

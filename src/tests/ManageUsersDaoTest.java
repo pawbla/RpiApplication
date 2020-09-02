@@ -113,6 +113,7 @@ public class ManageUsersDaoTest {
 		usernames.add("admin");
 		usernames.add("empty");
 		usernames.add("updateUser");
+		usernames.add("UserPassChange");
 		usernames.add("AddUserNick");
 		
 		List<String> roles = new ArrayList<String>();
@@ -121,11 +122,12 @@ public class ManageUsersDaoTest {
 		roles.add("ROLE_ADMIN");
 		roles.add("empty");
 		roles.add("ROLE_USER");
+		roles.add("ROLE_USER");
 		roles.add("TEST_ROLE");
 		//when
 		List<Users> users = dao.getUsers();
 		//then
-		Assert.assertEquals("List should contain 5 users", 5, users.size());
+		Assert.assertEquals("List should contain 6 users", 6, users.size());
 		users.forEach(user -> {
 			Assert.assertEquals("UserName for user: " + user.getId(), usernames.get(user.getId()-1), user.getUserName());
 			Assert.assertEquals("Role for user: " + user.getId(), roles.get(user.getId()-1), user.getRole().getRole());
@@ -196,6 +198,18 @@ public class ManageUsersDaoTest {
 				"40408537d958bee8c46851120c94e4ac6ba054458ba1d791aeaf8e365ec2d2374817ba13edd03fdf", user.getPassword());
 		Assert.assertFalse("Enabled for user", user.isEnabled());
 		Assert.assertEquals("Role for user", "ROLE_USER", user.getRole().getRole());		
+	}
+	
+	@Test
+	public void updatePassword() {
+		//given
+		String NEW_PASSWORD = "nowe_haslo";
+		int USER_ID = 6;
+		//when
+		dao.updatePassword(USER_ID, NEW_PASSWORD);
+		//then
+		Users user = dao.getUserById(USER_ID);
+		Assert.assertEquals("New password", NEW_PASSWORD, user.getPassword());
 	}
 }
 	

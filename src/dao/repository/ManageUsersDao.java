@@ -15,4 +15,5 @@ public interface ManageUsersDao {
 	public void removeUser(final int user_id);
 	public void updateUser(final int user_id, final Users updatedUser);
 	public int getNumberOfAdmins();
+	public void updatePassword(final int user_id, String password);
 }
