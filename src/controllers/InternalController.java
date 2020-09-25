@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import controllers.renderers.RestRespRenderer;
 
 @RestController
-@RequestMapping(value = "/internal/v1/api")
+@RequestMapping(value = "/internal/api/v1")
 public class InternalController {
 	
 	@Autowired
 	@Qualifier("WeatherRenderer")
 	private RestRespRenderer weather;
 	
-	@GetMapping(value = "/test", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/weather", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> test(HttpServletRequest request) {	
 		if (request.getLocalPort() == 8081) {
