@@ -17,7 +17,7 @@ import connectors.models.Request;
  *
  */
 @Component
-@Qualifier("internalConnector")
+@Qualifier("internal")
 public class InternalConnector extends AbstractRestConnector {
 	
 	

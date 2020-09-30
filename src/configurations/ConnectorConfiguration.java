@@ -8,9 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import connectors.ConnectorInterface;
+import connectors.RestInterface;
 import connectors.accuWeatherConnector.AccuWeatherHandler;
 import connectors.airLyConnector.AirLyHandler;
+import connectors.handler.HandlerInterface;
 import connectors.internalConnector.InternalHandler;
 import connectors.sunRiseSetConnector.SunRiseSetHandler;
 
@@ -22,45 +23,34 @@ public class ConnectorConfiguration {
 	 * AirLy Connector configuration
 	 **/
 	@Autowired
-	@Qualifier("airLyConnector")
-	private ConnectorInterface airLyConnector;
-	
-	@Autowired
-	private AirLyHandler airLy;
+	@Qualifier("AirLy")
+	private HandlerInterface airLy;
 
 	@EventListener(ApplicationReadyEvent.class)
 	@Scheduled(cron="0 0/15 * ? * *", zone="Europe/Warsaw") //cron at every 15 minutes
 	public void fetchAirLyData() {
-		airLyConnector.execute();
-		airLy.parse(airLyConnector);
+		airLy.execute();
 	}
 	
 	/**
 	 * AccuWeather Connector configuration
 	 */
 	@Autowired
-	@Qualifier("accuWeatherConnector")
-	private ConnectorInterface accuWeatherConnector;
-	
-	@Autowired
-	private AccuWeatherHandler accuWeather;
+	@Qualifier("accuWeather")
+	private HandlerInterface accuWeather;
 	
 	@EventListener(ApplicationReadyEvent.class)
 	@Scheduled(cron="0 0/30 * ? * *", zone="Europe/Warsaw")  //cron at every 30 minutes
 	public void fetchAccuWeatherData() { 
-		accuWeatherConnector.execute();
-		accuWeather.parse(accuWeatherConnector);
+		accuWeather.execute();
 	}
 	
 	/**
 	 * Internal Connector configuration
 	 */	
 	@Autowired
-	@Qualifier("internalConnector")
- 	private ConnectorInterface internalConnector;
-	
-	@Autowired
-	private InternalHandler internal;
+	@Qualifier("internal")
+ 	private HandlerInterface internal;
 	
 	private final int INT_TIMEOUT = 30000;
 	private final int INT_DELAY_TIMEOUT = 20000;
@@ -68,25 +58,20 @@ public class ConnectorConfiguration {
 	@EventListener(ApplicationReadyEvent.class)
 	@Scheduled(fixedRate = INT_TIMEOUT, initialDelay = INT_DELAY_TIMEOUT)
 	public void fetchInternalData() {
-		internalConnector.execute();
-		internal.parse(internalConnector);
+		internal.execute();
 	}
 		
 	/**
 	 * Sun rise set configuration
 	 */
 	@Autowired
-	@Qualifier("sunRiseSetConnector")
-	private ConnectorInterface sunRiseSetConnector;
-	
-	@Autowired
-	private SunRiseSetHandler sunRiseSet;
-	
+	@Qualifier("sunRiseSet")
+	private HandlerInterface sunRiseSet;
+
 	@EventListener(ApplicationReadyEvent.class)
 	@Scheduled(cron="10 0 0 * * ?", zone="Europe/Warsaw") //cron configured at 00:00:10am every day
 	public void fetchSunRiseSetData() {
-		sunRiseSetConnector.execute();
-		sunRiseSet.parse(sunRiseSetConnector);
+		sunRiseSet.execute();
 	}
 }
 

@@ -3,7 +3,7 @@ package connectors.airLyInstallationConnector;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import connectors.AbstractHandler;
+import connectors.handler.AbstractHandler;
 import connectors.models.Response;
 
 public class AirLyInstallationHandler extends AbstractHandler {
@@ -29,7 +29,7 @@ public class AirLyInstallationHandler extends AbstractHandler {
 		street = "";
 	}
 
-	@Override
+/*	@Override
 	protected void parser(Response response) throws JSONException {
 		JSONObject jsonArray = new JSONObject(response.getBody()).getJSONObject(ADDRESS_KEY);
 		country = jsonArray.getString(COUNTRY_KEY);
@@ -47,5 +47,5 @@ public class AirLyInstallationHandler extends AbstractHandler {
 
 	public String getStreet() {
 		return street;
-	}
+	}*/
 }

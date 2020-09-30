@@ -17,7 +17,7 @@ import connectors.models.Request;
  *
  */
 @Component
-@Qualifier("airLyInstallationConnector")
+//@Qualifier("airLyInstallationConnector")
 public class AirLyInstallationConnector extends AbstractRestConnector {
 	
 	private static final String API_KEY_NAME = "apikey";

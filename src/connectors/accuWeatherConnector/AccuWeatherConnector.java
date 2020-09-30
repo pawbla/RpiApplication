@@ -17,7 +17,7 @@ import connectors.models.Request;
  *
  */
 @Component
-@Qualifier("accuWeatherConnector")
+@Qualifier("accuWeather")
 public class AccuWeatherConnector extends AbstractRestConnector {
 	private static final String ACCEPTED_LANG_KEY = "Accept-Language";
 	private static final String ACCEPTED_LANG_VALUE = "pl-PL";

@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import connectors.models.Request;
 import connectors.models.Response;
 	
-public abstract class AbstractRestConnector implements ConnectorInterface {
+public abstract class AbstractRestConnector implements RestInterface {
 	/**
 	 * Logger
 	 */

@@ -17,7 +17,7 @@ import connectors.models.Request;
  *
  */
 @Component
-@Qualifier("sunRiseSetConnector")
+@Qualifier("sunRiseSet")
 public class SunRiseSetConnector extends AbstractRestConnector {
 	
 	public SunRiseSetConnector(@Value("${custom.ipSunSetRise}") String url) {
