@@ -12,7 +12,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import connectors.models.Connector;
-import connectors.models.Request;
 import connectors.models.Response;
 	
 public class RestConnector implements RestInterface {

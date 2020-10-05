@@ -39,7 +39,6 @@ public class AccuWeatherParser extends AbstractParser {
 		this.addParsed("weatherText", mainObj.getString(WEATHER_TEXT_KEY));
 		this.addParsed("weatherIcon", Integer.toString(mainObj.getInt(WEATHER_ICON_KEY)));
 		/* Wind */
-		System.out.println("================" + mainObj.getInt(WEATHER_ICON_KEY));
 		JSONObject wind = mainObj.getJSONObject(WIND_KEY);
 		JSONObject direction = wind.getJSONObject(WIND_DIRECTION_KEY);
 		this.addParsed("windDirection", direction.getString(WIND_LOCALIZED_KEY));

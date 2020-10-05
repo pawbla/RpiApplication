@@ -1,10 +1,9 @@
 package connectors.airLyInstallationConnector;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import connectors.handler.AbstractHandler;
-import connectors.models.Response;
+import connectors.registry.ConnectorsRegistryInterface;
 
 public class AirLyInstallationHandler extends AbstractHandler {
 	
@@ -23,7 +22,9 @@ public class AirLyInstallationHandler extends AbstractHandler {
 	private String city;
 	private String street;
 	
-	public AirLyInstallationHandler() {
+	@Autowired
+	public AirLyInstallationHandler(ConnectorsRegistryInterface registry) {
+		super(registry);
 		country = "";
 		city = "";
 		street = "";

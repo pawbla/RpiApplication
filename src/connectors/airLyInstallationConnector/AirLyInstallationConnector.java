@@ -1,14 +1,7 @@
 package connectors.airLyInstallationConnector;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-
-import connectors.RestConnector;
-import connectors.RequestBuilder;
-import connectors.models.Request;
 
 /**
  * Connector to fetch datas from AirLy service

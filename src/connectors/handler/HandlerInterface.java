@@ -1,9 +1,5 @@
 package connectors.handler;
 
-import org.springframework.stereotype.Component;
-
-import connectors.ConnectorInterface;
-import connectors.RestInterface;
 import connectors.models.Connector;
 import connectors.models.Response;
 import connectors.parser.ParserInterface;

@@ -1,28 +1,28 @@
 package connectors.handler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import connectors.ConnectorInterface;
 import connectors.RestConnector;
 import connectors.models.Connector;
 import connectors.models.Response;
 import connectors.parser.ParserInterface;
+import connectors.registry.ConnectorsRegistryInterface;
 
 public abstract class AbstractHandler implements HandlerInterface {
-	
-	/**
-	 * Logger
-	 */
-	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	private ParserInterface parser;
 	private RestConnector restConnector;
 	private Connector connector;
+	private ConnectorsRegistryInterface registry;
+	
+	public AbstractHandler(ConnectorsRegistryInterface registry) {
+		this.registry = registry;
+	}
 	
 	public void setConnector(Connector connector) {
 		this.restConnector = new RestConnector();
 		this.restConnector.setConnector(connector);
 		this.connector = connector;	
+		this.registry.registerConnector(connector);
 	}
 	
 	public void setParser(ParserInterface parser) {

@@ -6,7 +6,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import connectors.RestConnector;
 import connectors.ConnectorBuilder;
 import connectors.ConnectorInterface;
 import connectors.RequestBuilder;

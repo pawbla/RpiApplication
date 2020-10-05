@@ -8,12 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import connectors.RestInterface;
-import connectors.accuWeatherConnector.AccuWeatherHandler;
-import connectors.airLyConnector.AirLyHandler;
 import connectors.handler.HandlerInterface;
-import connectors.internalConnector.InternalHandler;
-import connectors.sunRiseSetConnector.SunRiseSetHandler;
 
 @Configuration
 @ComponentScan({"connectors", "parsers"})
