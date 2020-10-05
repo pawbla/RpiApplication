@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import controllers.renderers.ConnectorDetailsRenderer;
 import controllers.renderers.RestRespRenderer;
 import controllers.renderers.SimplyMessageRenderer;
 import controllers.renderers.UserDetailsRenderer;
@@ -46,6 +47,9 @@ public class WeatherController {
 	
 	@Autowired
 	private SimplyMessageRenderer simplyMessage;
+	
+	@Autowired
+	private ConnectorDetailsRenderer connectorsDetails;
 	
 	@GetMapping(value = "/weather", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
@@ -102,6 +106,12 @@ public class WeatherController {
 		} catch (UpdatePasswordException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@GetMapping(value = "/connectors", produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<String> getConnectorsDetails() {
+		return ResponseEntity.ok().body(connectorsDetails.getJSON());
 	}
 	
  }

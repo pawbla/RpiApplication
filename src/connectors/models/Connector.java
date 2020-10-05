@@ -10,10 +10,6 @@ public class Connector {
 	private String name;
 	private String provider;
 	private String linkToProviderPage;
-	private int responseCode;
-	private String lastCorrectResponseTime;
-	private String errorMessage;
-	private String errorInfo;
 	private String sensorPosition;
 	
 	private Request request;
@@ -50,30 +46,6 @@ public class Connector {
 	}
 	public void setLinkToProviderPage(String linkToProviderPage) {
 		this.linkToProviderPage = linkToProviderPage;
-	}
-	public int getResponseCode() {
-		return responseCode;
-	}
-	public void setResponseCode(int responseCode) {
-		this.responseCode = responseCode;
-	}
-	public String getLastCorrectResponseTime() {
-		return lastCorrectResponseTime;
-	}
-	public void setLastCorrectResponseTime(String lastCorrectResponseTime) {
-		this.lastCorrectResponseTime = lastCorrectResponseTime;
-	}
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-	public String getErrorInfo() {
-		return errorInfo;
-	}
-	public void setErrorInfo(String errorInfo) {
-		this.errorInfo = errorInfo;
 	}
 	public String getSensorPosition() {
 		return sensorPosition;
