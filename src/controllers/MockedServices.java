@@ -21,7 +21,12 @@ public class MockedServices {
 	/**
 	 * Example of responses
 	 */
-	private static final String INTERNAL_JSON = "{\"Temperature\": \"11\", \"Humidity\": \"35\", \"Pressure\" : \"12345\"}";
+	private int intTemp = 0; 
+	
+	private String getInternal() {
+		intTemp++;
+		return "{\"Temperature\": \"" + intTemp + "\", \"Humidity\": \"35\", \"Pressure\" : \"12345\"}";
+	}
 	
 	private static final String OPEN_WEATHER_JSON = "{\"coord\":{\"lon\":19.92,\"lat\":50.08},\"weather"
 			+ "\":[{\"id\":500,\"main\":\"Rain\",\"description\":\"light rain\",\"icon\":\"10d\"}],\"base\""
@@ -2371,7 +2376,7 @@ public class MockedServices {
 	@ResponseBody
 	@ResponseStatus( HttpStatus.OK )
 	public String internalSensorMock() {
-		return INTERNAL_JSON;
+		return getInternal();
 	}
 	
 	@RequestMapping(value = "/mocked_externalsensor", method=GET, produces = "application/json")

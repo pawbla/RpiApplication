@@ -16,7 +16,7 @@ public class AirLyHandler extends AbstractHandler {
 	@Autowired
 	public AirLyHandler(@Qualifier("AirLy") ParserInterface parser,
 			@Qualifier("AirLy") ConnectorInterface connector) {
-		this.setConnector(connector);
+		this.setConnector(connector.getConnector());
 		this.setParser(parser);
 	}
 }

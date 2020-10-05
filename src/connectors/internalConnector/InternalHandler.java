@@ -16,7 +16,7 @@ public class InternalHandler extends AbstractHandler {
 	@Autowired
 	public InternalHandler(@Qualifier("internal") ParserInterface parser, 
 			@Qualifier("internal") ConnectorInterface connector) {
-		this.setConnector(connector);
+		this.setConnector(connector.getConnector());
 		this.setParser(parser);
 	}
 }

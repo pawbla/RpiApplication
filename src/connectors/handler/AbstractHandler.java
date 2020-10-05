@@ -4,7 +4,7 @@ import org.apache.logging.log4j.Logger;
 
 import connectors.ConnectorInterface;
 import connectors.RestConnector;
-import connectors.RestInterface;
+import connectors.models.Connector;
 import connectors.models.Response;
 import connectors.parser.ParserInterface;
 
@@ -17,10 +17,12 @@ public abstract class AbstractHandler implements HandlerInterface {
 	
 	private ParserInterface parser;
 	private RestConnector restConnector;
+	private Connector connector;
 	
-	public void setConnector(ConnectorInterface connector) {
-		restConnector = new RestConnector();
-		restConnector.setRequest(connector.getConnector().getRequest());
+	public void setConnector(Connector connector) {
+		this.restConnector = new RestConnector();
+		this.restConnector.setConnector(connector);
+		this.connector = connector;	
 	}
 	
 	public void setParser(ParserInterface parser) {
@@ -28,16 +30,16 @@ public abstract class AbstractHandler implements HandlerInterface {
 	}
 	
 	public Response getResponse() {
-		return restConnector.getResponse();
+		return this.connector.getResponse();
 	}
 	
 	@Override
 	public void execute() {
-		restConnector.execute();
-		parser.parse(restConnector.getResponse());			
+		this.restConnector.execute();
+		this.parser.parse(this.connector.getResponse());			
 	}
 
 	public String getResponseValue(String key) {
-		return parser.getParsed().get(key);
+		return this.parser.getParsed().get(key);
 	}
 }

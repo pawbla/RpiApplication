@@ -16,7 +16,7 @@ public class SunRiseSetHandler extends AbstractHandler {
 	@Autowired
 	public SunRiseSetHandler(@Qualifier("sunRiseSet") ParserInterface parser, 
 			@Qualifier("sunRiseSet") ConnectorInterface connector) {
-		this.setConnector(connector);
+		this.setConnector(connector.getConnector());
 		this.setParser(parser);
 	}
 }

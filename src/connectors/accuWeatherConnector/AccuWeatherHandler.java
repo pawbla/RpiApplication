@@ -16,7 +16,7 @@ public class AccuWeatherHandler  extends AbstractHandler {
 	@Autowired
 	public AccuWeatherHandler(@Qualifier("accuWeather") ParserInterface parser,
 			@Qualifier("accuWeather") ConnectorInterface connector) {
-		this.setConnector(connector);
+		this.setConnector(connector.getConnector());
 		this.setParser(parser);
 	}
 }
