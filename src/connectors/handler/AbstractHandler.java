@@ -2,6 +2,8 @@ package connectors.handler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import connectors.ConnectorInterface;
+import connectors.RestConnector;
 import connectors.RestInterface;
 import connectors.models.Response;
 import connectors.parser.ParserInterface;
@@ -14,10 +16,11 @@ public abstract class AbstractHandler implements HandlerInterface {
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	private ParserInterface parser;
-	private RestInterface restConnector;
+	private RestConnector restConnector;
 	
-	public void setRestConnector(RestInterface restConnector) {
-		this.restConnector = restConnector;
+	public void setConnector(ConnectorInterface connector) {
+		restConnector = new RestConnector();
+		restConnector.setRequest(connector.getConnector().getRequest());
 	}
 	
 	public void setParser(ParserInterface parser) {

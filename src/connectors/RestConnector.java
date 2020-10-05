@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import connectors.models.Request;
 import connectors.models.Response;
 	
-public abstract class AbstractRestConnector implements RestInterface {
+public class RestConnector implements RestInterface {
 	/**
 	 * Logger
 	 */
@@ -25,7 +25,7 @@ public abstract class AbstractRestConnector implements RestInterface {
 	private DateFormat dateFormat;
 	private Response response;
 	
-	public AbstractRestConnector() {
+	public RestConnector() {
 		logger.info("Create REST Template object.");
 		rest = new RestTemplate();
 		response = new Response();
@@ -77,7 +77,7 @@ public abstract class AbstractRestConnector implements RestInterface {
 		return resp;
 	}
 	
-	protected void setRequest(Request request) {
+	public void setRequest(Request request) {
 		this.request = request;
 	}
 	

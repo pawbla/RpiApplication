@@ -6,7 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import connectors.AbstractRestConnector;
+import connectors.RestConnector;
 import connectors.RequestBuilder;
 import connectors.models.Request;
 
@@ -18,20 +18,20 @@ import connectors.models.Request;
  */
 @Component
 //@Qualifier("airLyInstallationConnector")
-public class AirLyInstallationConnector extends AbstractRestConnector {
+public class AirLyInstallationConnector {
 	
 	private static final String API_KEY_NAME = "apikey";
 	private static final String ACCEPTED_LANG_KEY = "Accept-Language";
 	private static final String ACCEPTED_LANG_VALUE = "pl";
 	
 	public AirLyInstallationConnector(@Value("${custom.ipAirLyInstallation}") String url, @Value("${custom.apiKeyAirLy}") String apiKey) {
-		Request request = new RequestBuilder()
+		/*Request request = new RequestBuilder()
 				.setURL(url)
 				.setHttpMethod(HttpMethod.GET)
 				.addContentType(MediaType.APPLICATION_JSON)
 				.addHeader(API_KEY_NAME, apiKey)
 				.addHeader(ACCEPTED_LANG_KEY, ACCEPTED_LANG_VALUE)
 				.build();
-		this.setRequest(request);
+		this.setRequest(request);*/
 	}
 }

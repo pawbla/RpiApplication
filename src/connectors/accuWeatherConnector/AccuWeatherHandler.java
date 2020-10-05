@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import connectors.ConnectorInterface;
 import connectors.RestInterface;
 import connectors.handler.AbstractHandler;
 import connectors.parser.ParserInterface;
@@ -14,8 +15,8 @@ public class AccuWeatherHandler  extends AbstractHandler {
 	
 	@Autowired
 	public AccuWeatherHandler(@Qualifier("accuWeather") ParserInterface parser,
-			@Qualifier("accuWeather") RestInterface restConnector) {
-		this.setRestConnector(restConnector);
+			@Qualifier("accuWeather") ConnectorInterface connector) {
+		this.setConnector(connector);
 		this.setParser(parser);
 	}
 }
