@@ -34,6 +34,7 @@ public class ConnectorDetailsRenderer implements RestRespRenderer {
 			.put("link", connector.getLinkToProviderPage())
 			.put("position", connector.getSensorPosition())
 			.put("responseCode", connector.getResponse().getResponseCode())
+			.put("isError", connector.getResponse().isError())
 			.put("errorMessage", connector.getResponse().getErrorMsg())
 			.put("date", connector.getResponse().getDate());
 		return response; 

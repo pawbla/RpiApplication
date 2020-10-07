@@ -48,6 +48,7 @@ public class RestConnector implements RestInterface {
 				response.setBody(resp.getBody());
 				response.setDate(dateFormat.format(new Date()));
 			}
+			response.setResponseCode(resp.getStatusCodeValue());
 		} catch (RestClientException e) {
 			response.setResponseCode(520);
 			response.setErrorMsg("Unknown error has occured: " + e.getMessage());

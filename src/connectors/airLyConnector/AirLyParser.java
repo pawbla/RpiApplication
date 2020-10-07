@@ -6,12 +6,39 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import connectors.Values;
+import connectors.airLyConnector.AirLyParser.AirLyValues;
 import connectors.models.Response;
 import connectors.parser.AbstractParser;
 
 @Component
 @Qualifier("AirLy")
 public class AirLyParser extends AbstractParser {
+	
+	public enum AirLyValues implements Values {
+		
+		TEMPERATURE("temperature"),
+		HUMIDITY("humidity"),
+		PRESSURE("pressure"),
+		PM_1("pm1"),
+		PM_10("pm10"),
+		PM_25("pm25"),
+		CAQI("caqi"),
+		CAQI_COLOR("caqiColor"),
+		PM_10_PERCENT("pm10percent"),
+		PM_25_PERCENT("pm25percent");
+		
+
+		public final String value;
+		
+		private AirLyValues(String value) {
+			this.value = value;
+		}
+		
+		public String getValue() {
+			return value;
+		}
+	}
 		
 	/**
 	 * Constants
@@ -39,16 +66,16 @@ public class AirLyParser extends AbstractParser {
 		JSONArray jsonArrayValues = jsonObject.getJSONArray(VALUES_KEY);
 		JSONArray jsonArrayIndexes = jsonObject.getJSONArray(INDEXES_KEY);
 		JSONArray jsonArrayStandards = jsonObject.getJSONArray(STANDARDS_KEY);
-		this.addParsed("pm1", String.format("%.0f", jsonArrayValues.getJSONObject(PM1_POS).getDouble(VALUE_KEY)));
-		this.addParsed("pm10", String.format("%.0f", jsonArrayValues.getJSONObject(PM10_POS).getDouble(VALUE_KEY)));
-		this.addParsed("pm25", String.format("%.0f", jsonArrayValues.getJSONObject(PM25_POS).getDouble(VALUE_KEY)));
-		this.addParsed("caqi", String.format("%.0f", jsonArrayIndexes.getJSONObject(CAQI_POS).getDouble(VALUE_KEY)));
-		this.addParsed("caqiColor", jsonArrayIndexes.getJSONObject(CAQI_POS).getString(COLOR_KEY));
-		this.addParsed("pm10percent", String.format("%.0f", jsonArrayStandards.getJSONObject(PM10_PERCENT_POS).getDouble(PERCENT_KEY)));
-		this.addParsed("pm25percent", String.format("%.0f", jsonArrayStandards.getJSONObject(PM25_PERCENT_POS).getDouble(PERCENT_KEY)));
-		this.addParsed("humidity", String.format("%.0f", jsonArrayValues.getJSONObject(HUMIDITY_POS).getDouble(VALUE_KEY)));
-		this.addParsed("pressure", String.format("%.0f", jsonArrayValues.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY)));
-		this.addParsed("temperature", String.format("%.0f", jsonArrayValues.getJSONObject(TEMPERATURE_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.PM_1, String.format("%.0f", jsonArrayValues.getJSONObject(PM1_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.PM_10, String.format("%.0f", jsonArrayValues.getJSONObject(PM10_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.PM_25, String.format("%.0f", jsonArrayValues.getJSONObject(PM25_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.CAQI, String.format("%.0f", jsonArrayIndexes.getJSONObject(CAQI_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.CAQI_COLOR, jsonArrayIndexes.getJSONObject(CAQI_POS).getString(COLOR_KEY));
+		this.addParsed(AirLyValues.PM_10_PERCENT, String.format("%.0f", jsonArrayStandards.getJSONObject(PM10_PERCENT_POS).getDouble(PERCENT_KEY)));
+		this.addParsed(AirLyValues.PM_25_PERCENT, String.format("%.0f", jsonArrayStandards.getJSONObject(PM25_PERCENT_POS).getDouble(PERCENT_KEY)));
+		this.addParsed(AirLyValues.HUMIDITY, String.format("%.0f", jsonArrayValues.getJSONObject(HUMIDITY_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.PRESSURE, String.format("%.0f", jsonArrayValues.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.TEMPERATURE, String.format("%.0f", jsonArrayValues.getJSONObject(TEMPERATURE_POS).getDouble(VALUE_KEY)));
 	}
 
 }

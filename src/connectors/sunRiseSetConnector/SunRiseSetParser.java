@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import connectors.Values;
 import connectors.models.Response;
 import connectors.parser.AbstractParser;
 
@@ -22,6 +23,23 @@ import connectors.parser.AbstractParser;
 @Qualifier("sunRiseSet")
 public class SunRiseSetParser extends AbstractParser {
 	
+	public enum SunValues implements Values {
+		
+		SUN_RISE("rise"),
+		SUN_SET("set"),
+		DAY_LENGTH("dayLength");
+
+		public final String value;
+		
+		private SunValues(String value) {
+			this.value = value;
+		}
+		
+		public String getValue() {
+			return value;
+		}
+	}
+
 	/**
 	 * Logger
 	 */
@@ -64,9 +82,9 @@ public class SunRiseSetParser extends AbstractParser {
 		long dayLentStr = (long) jsonObject.getJSONObject(RESULTS_KEY).getInt(DAY_LENGTH_KEY);
 		logger.trace("Fetched datas: rise: " + sunRiseStr + " set: " + sunSetStr + " day length: " + dayLentStr);
 		
-		this.addParsed("rise", outFormatter.format(DateTime.parse(sunRiseStr, inFormatter).toDate()));
-		this.addParsed("set", outFormatter.format(DateTime.parse(sunSetStr, inFormatter).toDate()));
-		this.addParsed("dayLength", outFormatter2.format(new Date((long)(dayLentStr*1000))));
+		this.addParsed(SunValues.SUN_RISE, outFormatter.format(DateTime.parse(sunRiseStr, inFormatter).toDate()));
+		this.addParsed(SunValues.SUN_SET, outFormatter.format(DateTime.parse(sunSetStr, inFormatter).toDate()));
+		this.addParsed(SunValues.DAY_LENGTH, outFormatter2.format(new Date((long)(dayLentStr*1000))));
 	}
 	
 	private TimeZone getCurrentTimeZone() {

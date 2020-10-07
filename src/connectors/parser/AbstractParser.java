@@ -3,6 +3,8 @@ package connectors.parser;
 import java.util.HashMap;
 import java.util.Map;
 
+import connectors.Values;
+
 public abstract class AbstractParser implements ParserInterface {
 
 	private Map<String, String> parsed;
@@ -11,8 +13,8 @@ public abstract class AbstractParser implements ParserInterface {
 		parsed = new HashMap<String, String>();
 	}
 	
-	protected void addParsed(String key, String value) {
-		parsed.put(key, value);
+	protected void addParsed(Values key, String value) {
+		parsed.put(key.getValue(), value);
 	}
 	
 	@Override

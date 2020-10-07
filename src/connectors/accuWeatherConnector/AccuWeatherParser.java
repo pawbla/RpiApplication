@@ -1,17 +1,45 @@
 package connectors.accuWeatherConnector;
 
+import java.awt.Color;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import connectors.Values;
 import connectors.models.Response;
 import connectors.parser.AbstractParser;
 
 @Component
 @Qualifier("accuWeather")
 public class AccuWeatherParser extends AbstractParser {
+	
+	public enum AccuWeatherValues implements Values {
+		
+		WEATHER_TEXT("weatherText"),
+		WEATHER_ICON("weatherIcon"),
+		WIND_DIRECTION("windDirection"),
+		WIND_DIRECTION_DEG("windDirectionDeg"),
+		WIND_SPEED("windSpeed"),
+		UV_INDEX_VALUE("uvIndexValue"),
+		UV_INDEX_DESCRIPTION("uvIndexDescription"),
+		UV_INDEX_COLOR("uvIndexColor"),
+		VISIBILITY("visibility"),
+		CLOUD_COVER("cloudCover"),
+		CEILING("ceiling");
+
+		public final String value;
+		
+		private AccuWeatherValues(String value) {
+			this.value = value;
+		}
+		
+		public String getValue() {
+			return value;
+		}
+	}
 	
 	/**
 	 * Constants
@@ -36,21 +64,37 @@ public class AccuWeatherParser extends AbstractParser {
 	public void parse (Response response) throws JSONException {
 		JSONObject mainObj = (JSONObject) new JSONArray(response.getBody()).get(0);
 		/* General */
-		this.addParsed("weatherText", mainObj.getString(WEATHER_TEXT_KEY));
-		this.addParsed("weatherIcon", Integer.toString(mainObj.getInt(WEATHER_ICON_KEY)));
+		this.addParsed(AccuWeatherValues.WEATHER_TEXT, mainObj.getString(WEATHER_TEXT_KEY));
+		this.addParsed(AccuWeatherValues.WEATHER_ICON, Integer.toString(mainObj.getInt(WEATHER_ICON_KEY)));
 		/* Wind */
 		JSONObject wind = mainObj.getJSONObject(WIND_KEY);
 		JSONObject direction = wind.getJSONObject(WIND_DIRECTION_KEY);
-		this.addParsed("windDirection", direction.getString(WIND_LOCALIZED_KEY));
-		this.addParsed("windDirectionDeg", Integer.toString(direction.getInt(WIND_DEGREE_KEY)));
-		this.addParsed("windSpeed", String.format("%.0f", wind.getJSONObject(WIND_SPEED_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
+		this.addParsed(AccuWeatherValues.WIND_DIRECTION, direction.getString(WIND_LOCALIZED_KEY));
+		this.addParsed(AccuWeatherValues.WIND_DIRECTION_DEG, Integer.toString(direction.getInt(WIND_DEGREE_KEY)));
+		this.addParsed(AccuWeatherValues.WIND_SPEED, String.format("%.0f", wind.getJSONObject(WIND_SPEED_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
 		/* UV indexes and visibility */
-		this.addParsed("uvIndexValue", Integer.toString(mainObj.getInt(UV_INDEX_KEY)));
-		this.addParsed("uvIndexDescription", mainObj.getString(UV_INDEX_TEXT_KEY));
-		this.addParsed("visibility", String.format("%.0f", mainObj.getJSONObject(VISIBILITY_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
+		this.addParsed(AccuWeatherValues.UV_INDEX_VALUE, Integer.toString(mainObj.getInt(UV_INDEX_KEY)));
+		this.addParsed(AccuWeatherValues.UV_INDEX_DESCRIPTION, mainObj.getString(UV_INDEX_TEXT_KEY));
+		this.addParsed(AccuWeatherValues.UV_INDEX_COLOR, this.getUvIndexColor(mainObj.getInt(UV_INDEX_KEY)));
+		this.addParsed(AccuWeatherValues.VISIBILITY, String.format("%.0f", mainObj.getJSONObject(VISIBILITY_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
 		/* Cloud cover and ceiling */
-		this.addParsed("cloudCover", Integer.toString(mainObj.getInt(CLOUD_COVER_KEY)));
-		this.addParsed("ceiling", Integer.toString(mainObj.getJSONObject(CEILING_KEY).getJSONObject(METRIC_KEY).getInt(VALUE_KEY)));
+		this.addParsed(AccuWeatherValues.CLOUD_COVER, Integer.toString(mainObj.getInt(CLOUD_COVER_KEY)));
+		this.addParsed(AccuWeatherValues.CEILING, Integer.toString(mainObj.getJSONObject(CEILING_KEY).getJSONObject(METRIC_KEY).getInt(VALUE_KEY)));
 	}
+	
+	private String getUvIndexColor(int uvIndexValue) {
+		Color color = Color.GREEN;
+		if (uvIndexValue >= 3 && uvIndexValue <= 5) {
+			color = Color.decode("#e0d900");
+		} else if (uvIndexValue >= 6 && uvIndexValue <= 7 ) {
+			color = Color.ORANGE;
+		} else if (uvIndexValue >= 8 && uvIndexValue <= 10 ) {
+			color = Color.RED;
+		} else if (uvIndexValue >= 11 ) {
+			color = Color.decode(VIOLET_HEX);
+		}		
+		return "#"+Integer.toHexString(color.getRGB()).substring(2);
+	}
+
 
 }
