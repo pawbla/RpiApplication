@@ -1,5 +1,6 @@
 package controllers.renderers;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,10 +21,11 @@ public class ConnectorDetailsRenderer implements RestRespRenderer {
 	@Override
 	public String getJSON() {
 		JSONObject response = new JSONObject();
+		JSONArray array = new JSONArray();
 		register.getNamesList().forEach(name -> {
-			response.put(name, populateValue(name));
+			array.put(populateValue(name));
 		});
-		return response.toString();
+		return response.put("connectors", array).toString();
 	}
 	
 	private JSONObject populateValue(String name) {
