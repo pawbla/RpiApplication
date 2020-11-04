@@ -59,11 +59,11 @@ public class MockedServices {
 			"      }," + 
 			"      {" + 
 			"        \"name\": \"HUMIDITY\"," + 
-			"        \"value\": 95.71" + 
+			"        \"value\": 95.4" + 
 			"      }," + 
 			"      {" + 
 			"        \"name\": \"TEMPERATURE\"," + 
-			"        \"value\": 8.46" + 
+			"        \"value\": 8.56" + 
 			"      }" + 
 			"    ]," + 
 			"    \"indexes\": [" + 

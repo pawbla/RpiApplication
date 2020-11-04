@@ -1,5 +1,6 @@
 package connectors.parser;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,5 +21,10 @@ public abstract class AbstractParser implements ParserInterface {
 	@Override
 	public Map<String, String> getParsed() {
 		return parsed;
+	}
+	
+	public String getRoundedDouble(Double value) {
+		DecimalFormat df = new DecimalFormat("#");
+		return df.format(value).toString();
 	}
 }

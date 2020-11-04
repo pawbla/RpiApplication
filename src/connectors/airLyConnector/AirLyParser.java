@@ -1,5 +1,9 @@
 package connectors.airLyConnector;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,16 +70,16 @@ public class AirLyParser extends AbstractParser {
 		JSONArray jsonArrayValues = jsonObject.getJSONArray(VALUES_KEY);
 		JSONArray jsonArrayIndexes = jsonObject.getJSONArray(INDEXES_KEY);
 		JSONArray jsonArrayStandards = jsonObject.getJSONArray(STANDARDS_KEY);
-		this.addParsed(AirLyValues.PM_1, String.format("%.0f", jsonArrayValues.getJSONObject(PM1_POS).getDouble(VALUE_KEY)));
-		this.addParsed(AirLyValues.PM_10, String.format("%.0f", jsonArrayValues.getJSONObject(PM10_POS).getDouble(VALUE_KEY)));
-		this.addParsed(AirLyValues.PM_25, String.format("%.0f", jsonArrayValues.getJSONObject(PM25_POS).getDouble(VALUE_KEY)));
-		this.addParsed(AirLyValues.CAQI, String.format("%.0f", jsonArrayIndexes.getJSONObject(CAQI_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.PM_1, getRoundedDouble(jsonArrayValues.getJSONObject(PM1_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.PM_10, getRoundedDouble(jsonArrayValues.getJSONObject(PM10_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.PM_25, getRoundedDouble(jsonArrayValues.getJSONObject(PM25_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.CAQI, getRoundedDouble(jsonArrayIndexes.getJSONObject(CAQI_POS).getDouble(VALUE_KEY)));
 		this.addParsed(AirLyValues.CAQI_COLOR, jsonArrayIndexes.getJSONObject(CAQI_POS).getString(COLOR_KEY));
-		this.addParsed(AirLyValues.PM_10_PERCENT, String.format("%.0f", jsonArrayStandards.getJSONObject(PM10_PERCENT_POS).getDouble(PERCENT_KEY)));
-		this.addParsed(AirLyValues.PM_25_PERCENT, String.format("%.0f", jsonArrayStandards.getJSONObject(PM25_PERCENT_POS).getDouble(PERCENT_KEY)));
-		this.addParsed(AirLyValues.HUMIDITY, String.format("%.0f", jsonArrayValues.getJSONObject(HUMIDITY_POS).getDouble(VALUE_KEY)));
-		this.addParsed(AirLyValues.PRESSURE, String.format("%.0f", jsonArrayValues.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY)));
-		this.addParsed(AirLyValues.TEMPERATURE, String.format("%.0f", jsonArrayValues.getJSONObject(TEMPERATURE_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.PM_10_PERCENT, getRoundedDouble(jsonArrayStandards.getJSONObject(PM10_PERCENT_POS).getDouble(PERCENT_KEY)));
+		this.addParsed(AirLyValues.PM_25_PERCENT, getRoundedDouble(jsonArrayStandards.getJSONObject(PM25_PERCENT_POS).getDouble(PERCENT_KEY)));
+		this.addParsed(AirLyValues.HUMIDITY,  getRoundedDouble(jsonArrayValues.getJSONObject(HUMIDITY_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.PRESSURE, getRoundedDouble(jsonArrayValues.getJSONObject(PRESSURE_POS).getDouble(VALUE_KEY)));
+		this.addParsed(AirLyValues.TEMPERATURE, getRoundedDouble(jsonArrayValues.getJSONObject(TEMPERATURE_POS).getDouble(VALUE_KEY)));
 	}
 
 }

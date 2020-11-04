@@ -71,12 +71,12 @@ public class AccuWeatherParser extends AbstractParser {
 		JSONObject direction = wind.getJSONObject(WIND_DIRECTION_KEY);
 		this.addParsed(AccuWeatherValues.WIND_DIRECTION, direction.getString(WIND_LOCALIZED_KEY));
 		this.addParsed(AccuWeatherValues.WIND_DIRECTION_DEG, Integer.toString(direction.getInt(WIND_DEGREE_KEY)));
-		this.addParsed(AccuWeatherValues.WIND_SPEED, String.format("%.0f", wind.getJSONObject(WIND_SPEED_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
+		this.addParsed(AccuWeatherValues.WIND_SPEED, getRoundedDouble(wind.getJSONObject(WIND_SPEED_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
 		/* UV indexes and visibility */
 		this.addParsed(AccuWeatherValues.UV_INDEX_VALUE, Integer.toString(mainObj.getInt(UV_INDEX_KEY)));
 		this.addParsed(AccuWeatherValues.UV_INDEX_DESCRIPTION, mainObj.getString(UV_INDEX_TEXT_KEY));
 		this.addParsed(AccuWeatherValues.UV_INDEX_COLOR, this.getUvIndexColor(mainObj.getInt(UV_INDEX_KEY)));
-		this.addParsed(AccuWeatherValues.VISIBILITY, String.format("%.0f", mainObj.getJSONObject(VISIBILITY_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
+		this.addParsed(AccuWeatherValues.VISIBILITY, getRoundedDouble(mainObj.getJSONObject(VISIBILITY_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
 		/* Cloud cover and ceiling */
 		this.addParsed(AccuWeatherValues.CLOUD_COVER, Integer.toString(mainObj.getInt(CLOUD_COVER_KEY)));
 		this.addParsed(AccuWeatherValues.CEILING, Integer.toString(mainObj.getJSONObject(CEILING_KEY).getJSONObject(METRIC_KEY).getInt(VALUE_KEY)));
