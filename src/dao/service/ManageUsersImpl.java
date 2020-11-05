@@ -61,7 +61,7 @@ public class ManageUsersImpl implements ManageUsersService {
 
 	@Override
 	public void updateUser(final int user_id, final Users user) throws RemoveAllAdminsException {
-		if (allowChangeIfAdminRole(user_id, user.getRole().getRole())) {
+		if (allowChangeIfAdminRole(user_id, user.getRole().getRole(), user.isEnabled())) {
 			user.setRole(dao.getRole(user.getRole().getRole()));
 			dao.updateUser(user_id, user);
 		} else {
@@ -79,11 +79,11 @@ public class ManageUsersImpl implements ManageUsersService {
 		return allowOperation;
 	}
 	
-	private boolean allowChangeIfAdminRole(final int user_id, String updatedRole) {
+	private boolean allowChangeIfAdminRole(final int user_id, String updatedRole, boolean updatedEnable) {
 		boolean allowOperation = true;
 		Users user = dao.getUserById(user_id);
 		if ("ROLE_ADMIN".equals(user.getRole().getRole()) && dao.getNumberOfAdmins() <= 1) {
-			if (!"ROLE_ADMIN".equals(updatedRole)) {
+			if (!("ROLE_ADMIN".equals(updatedRole) && updatedEnable)) {
 				allowOperation = false;
 			}
 		}

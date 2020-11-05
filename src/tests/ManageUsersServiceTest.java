@@ -213,6 +213,35 @@ public class ManageUsersServiceTest {
 		Assert.fail();
 	}
 	
+	@Test(expected = RemoveAllAdminsException.class)
+	@Ignore
+	public void disableLastAdmin() throws RemoveAllAdminsException {
+		//given
+		String NICKNAME = "updateUser";
+		String FIRST_NAME = "NewFirstName";
+		String LAST_NAME = "NewLastName";
+		String EMAIL = "new@email.user";
+		String ROLE = "ROLE_ADMIN";
+		
+		Users testUser = new Users();
+		testUser.setUserName(NICKNAME);
+		testUser.setFirstName(FIRST_NAME);
+		testUser.setLastName(LAST_NAME);
+		testUser.setEmail(EMAIL);
+		testUser.setEnabled(false);
+		
+		Role role = new Role();
+		role.setRole(ROLE);
+		testUser.setRole(role);
+		
+		//when
+		for (Users user : getAdminUserId()) {
+			service.updateUser(user.getId(), testUser);
+		}		
+		//then	
+		Assert.fail();
+	}
+	
 	private List<Users> getAdminUserId() {
 		List<Users> users = service.getUsers();
 		List<Users> adminFiltered = users.stream()
