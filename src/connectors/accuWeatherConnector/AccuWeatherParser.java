@@ -2,6 +2,8 @@ package connectors.accuWeatherConnector;
 
 import java.awt.Color;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +17,11 @@ import connectors.parser.AbstractParser;
 @Component
 @Qualifier("accuWeather")
 public class AccuWeatherParser extends AbstractParser {
+	
+	/**
+	 * Logger
+	 */
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	public enum AccuWeatherValues implements Values {
 		
@@ -62,24 +69,28 @@ public class AccuWeatherParser extends AbstractParser {
 	
 	@Override
 	public void parse (Response response) throws JSONException {
-		JSONObject mainObj = (JSONObject) new JSONArray(response.getBody()).get(0);
-		/* General */
-		this.addParsed(AccuWeatherValues.WEATHER_TEXT, mainObj.getString(WEATHER_TEXT_KEY));
-		this.addParsed(AccuWeatherValues.WEATHER_ICON, Integer.toString(mainObj.getInt(WEATHER_ICON_KEY)));
-		/* Wind */
-		JSONObject wind = mainObj.getJSONObject(WIND_KEY);
-		JSONObject direction = wind.getJSONObject(WIND_DIRECTION_KEY);
-		this.addParsed(AccuWeatherValues.WIND_DIRECTION, direction.getString(WIND_LOCALIZED_KEY));
-		this.addParsed(AccuWeatherValues.WIND_DIRECTION_DEG, Integer.toString(direction.getInt(WIND_DEGREE_KEY)));
-		this.addParsed(AccuWeatherValues.WIND_SPEED, getRoundedDouble(wind.getJSONObject(WIND_SPEED_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
-		/* UV indexes and visibility */
-		this.addParsed(AccuWeatherValues.UV_INDEX_VALUE, Integer.toString(mainObj.getInt(UV_INDEX_KEY)));
-		this.addParsed(AccuWeatherValues.UV_INDEX_DESCRIPTION, mainObj.getString(UV_INDEX_TEXT_KEY));
-		this.addParsed(AccuWeatherValues.UV_INDEX_COLOR, this.getUvIndexColor(mainObj.getInt(UV_INDEX_KEY)));
-		this.addParsed(AccuWeatherValues.VISIBILITY, getRoundedDouble(mainObj.getJSONObject(VISIBILITY_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
-		/* Cloud cover and ceiling */
-		this.addParsed(AccuWeatherValues.CLOUD_COVER, Integer.toString(mainObj.getInt(CLOUD_COVER_KEY)));
-		this.addParsed(AccuWeatherValues.CEILING, Integer.toString(mainObj.getJSONObject(CEILING_KEY).getJSONObject(METRIC_KEY).getInt(VALUE_KEY)));
+		try {
+			JSONObject mainObj = (JSONObject) new JSONArray(response.getBody()).get(0);
+			/* General */
+			this.addParsed(AccuWeatherValues.WEATHER_TEXT, mainObj.getString(WEATHER_TEXT_KEY));
+			this.addParsed(AccuWeatherValues.WEATHER_ICON, Integer.toString(mainObj.getInt(WEATHER_ICON_KEY)));
+			/* Wind */
+			JSONObject wind = mainObj.getJSONObject(WIND_KEY);
+			JSONObject direction = wind.getJSONObject(WIND_DIRECTION_KEY);
+			this.addParsed(AccuWeatherValues.WIND_DIRECTION, direction.getString(WIND_LOCALIZED_KEY));
+			this.addParsed(AccuWeatherValues.WIND_DIRECTION_DEG, Integer.toString(direction.getInt(WIND_DEGREE_KEY)));
+			this.addParsed(AccuWeatherValues.WIND_SPEED, getRoundedDouble(wind.getJSONObject(WIND_SPEED_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
+			/* UV indexes and visibility */
+			this.addParsed(AccuWeatherValues.UV_INDEX_VALUE, Integer.toString(mainObj.getInt(UV_INDEX_KEY)));
+			this.addParsed(AccuWeatherValues.UV_INDEX_DESCRIPTION, mainObj.getString(UV_INDEX_TEXT_KEY));
+			this.addParsed(AccuWeatherValues.UV_INDEX_COLOR, this.getUvIndexColor(mainObj.getInt(UV_INDEX_KEY)));
+			this.addParsed(AccuWeatherValues.VISIBILITY, getRoundedDouble(mainObj.getJSONObject(VISIBILITY_KEY).getJSONObject(METRIC_KEY).getDouble(VALUE_KEY)));
+			/* Cloud cover and ceiling */
+			this.addParsed(AccuWeatherValues.CLOUD_COVER, Integer.toString(mainObj.getInt(CLOUD_COVER_KEY)));
+			this.addParsed(AccuWeatherValues.CEILING, Integer.toString(mainObj.getJSONObject(CEILING_KEY).getJSONObject(METRIC_KEY).getInt(VALUE_KEY)));
+		} catch (JSONException e) {
+			logger.error("An error has occured during JSON conversion" + e.getMessage());
+		}
 	}
 	
 	private String getUvIndexColor(int uvIndexValue) {

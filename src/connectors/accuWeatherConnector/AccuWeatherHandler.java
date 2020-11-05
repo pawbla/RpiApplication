@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import connectors.ConnectorInterface;
 import connectors.handler.AbstractHandler;
-import connectors.models.Connector;
 import connectors.parser.ParserInterface;
 import connectors.registry.ConnectorsRegistryInterface;
 

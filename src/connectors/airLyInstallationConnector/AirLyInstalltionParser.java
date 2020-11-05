@@ -1,5 +1,7 @@
 package connectors.airLyInstallationConnector;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +14,11 @@ import connectors.parser.AbstractParser;
 @Component
 @Qualifier("AirLyInstallation")
 public class AirLyInstalltionParser  extends AbstractParser {
+	
+	/**
+	 * Logger
+	 */
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	public enum AirLyInstalltionValues implements Values {
 		
@@ -40,10 +47,14 @@ public class AirLyInstalltionParser  extends AbstractParser {
 
 	@Override
 	public void parse(Response response) throws JSONException {
-		JSONObject jsonArray = new JSONObject(response.getBody()).getJSONObject(ADDRESS_KEY);
-		this.addParsed(AirLyInstalltionValues.COUNTRY, jsonArray.getString(COUNTRY_KEY));
-		this.addParsed(AirLyInstalltionValues.CITY, jsonArray.getString(CITY_KEY));
-		this.addParsed(AirLyInstalltionValues.STREET, jsonArray.getString(STREET_KEY));
+		try {
+			JSONObject jsonArray = new JSONObject(response.getBody()).getJSONObject(ADDRESS_KEY);
+			this.addParsed(AirLyInstalltionValues.COUNTRY, jsonArray.getString(COUNTRY_KEY));
+			this.addParsed(AirLyInstalltionValues.CITY, jsonArray.getString(CITY_KEY));
+			this.addParsed(AirLyInstalltionValues.STREET, jsonArray.getString(STREET_KEY));
+		} catch (JSONException e) {
+			logger.error("An error has occured during JSON conversion" + e.getMessage());
+		}
 	}
 
 }

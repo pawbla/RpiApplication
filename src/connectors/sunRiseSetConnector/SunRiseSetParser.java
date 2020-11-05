@@ -75,16 +75,20 @@ public class SunRiseSetParser extends AbstractParser {
 
 	@Override
 	public void parse(Response response) throws JSONException {
-		JSONObject jsonObject = new JSONObject(response.getBody());
-		String sunRiseStr = jsonObject.getJSONObject(RESULTS_KEY).getString(SUN_RISE_KEY);
-		String sunSetStr = jsonObject.getJSONObject(RESULTS_KEY).getString(SUN_SET_KEY);
+		try {
+			JSONObject jsonObject = new JSONObject(response.getBody());
+			String sunRiseStr = jsonObject.getJSONObject(RESULTS_KEY).getString(SUN_RISE_KEY);
+			String sunSetStr = jsonObject.getJSONObject(RESULTS_KEY).getString(SUN_SET_KEY);
 		
-		long dayLentStr = (long) jsonObject.getJSONObject(RESULTS_KEY).getInt(DAY_LENGTH_KEY);
-		logger.trace("Fetched datas: rise: " + sunRiseStr + " set: " + sunSetStr + " day length: " + dayLentStr);
+			long dayLentStr = (long) jsonObject.getJSONObject(RESULTS_KEY).getInt(DAY_LENGTH_KEY);
+			logger.trace("Fetched datas: rise: " + sunRiseStr + " set: " + sunSetStr + " day length: " + dayLentStr);
 		
-		this.addParsed(SunValues.SUN_RISE, outFormatter.format(DateTime.parse(sunRiseStr, inFormatter).toDate()));
-		this.addParsed(SunValues.SUN_SET, outFormatter.format(DateTime.parse(sunSetStr, inFormatter).toDate()));
-		this.addParsed(SunValues.DAY_LENGTH, outFormatter2.format(new Date((long)(dayLentStr*1000))));
+			this.addParsed(SunValues.SUN_RISE, outFormatter.format(DateTime.parse(sunRiseStr, inFormatter).toDate()));
+			this.addParsed(SunValues.SUN_SET, outFormatter.format(DateTime.parse(sunSetStr, inFormatter).toDate()));
+			this.addParsed(SunValues.DAY_LENGTH, outFormatter2.format(new Date((long)(dayLentStr*1000))));
+		} catch (JSONException e) {
+			logger.error("An error has occured during JSON conversion" + e.getMessage());
+		}
 	}
 	
 	private TimeZone getCurrentTimeZone() {

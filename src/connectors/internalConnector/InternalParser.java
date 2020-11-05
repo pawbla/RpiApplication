@@ -1,5 +1,7 @@
 package connectors.internalConnector;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +14,11 @@ import connectors.parser.AbstractParser;
 @Component
 @Qualifier("internal")
 public class InternalParser extends AbstractParser {
+	
+	/**
+	 * Logger
+	 */
+	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	public enum InternalValues implements Values {
 		
@@ -39,9 +46,13 @@ public class InternalParser extends AbstractParser {
 	
 	@Override
 	public void parse(Response response) throws JSONException {
-		JSONObject jsonObject = new JSONObject(response.getBody());
-		this.addParsed(InternalValues.HUMIDITY, jsonObject.getString(HUMIDITY_SENSOR_KEY));
-		this.addParsed(InternalValues.TEMPERATURE, jsonObject.getString(TEMPERATURE_SENSOR_KEY));
-		this.addParsed(InternalValues.PRESSURE, jsonObject.getString(PRESSURE_SENSOR_KEY));
+		try {
+			JSONObject jsonObject = new JSONObject(response.getBody());
+			this.addParsed(InternalValues.HUMIDITY, jsonObject.getString(HUMIDITY_SENSOR_KEY));
+			this.addParsed(InternalValues.TEMPERATURE, jsonObject.getString(TEMPERATURE_SENSOR_KEY));
+			this.addParsed(InternalValues.PRESSURE, jsonObject.getString(PRESSURE_SENSOR_KEY));
+		} catch (JSONException e) {
+			logger.error("An error has occured during JSON conversion" + e.getMessage());
+		}
 	}
 }
