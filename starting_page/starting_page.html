@@ -1,11 +1,48 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<style>
+		.main {
+			width: 480px;
+    		height: 320px;
+    		background: black;
+    		color: white;
+    	}
+    	.main > div {
+    		position: relative;
+			top: 25%;
+    		margin: auto;
+    		display: flex;
+    		flex-direction: column;
+    		align-items: center;
+    	}
+    	.main > div > h2, h4 {
+    		font-family: "Lucida Console", Courier, monospace;
+    		margin: 20px auto;
+    	}
+    	#progress_bar {
+    		width: 90%;
+    		background-color: #ddd;
+    		border: 2px solid green;
+    		border-radius: 8px;
+    	}
+    	#status {
+    		position: relative;
+			width: 8%; 
+  			height: 20px; 
+  			background-color: #4CAF50; 
+  			text-align: center; 
+  			line-height: 32px; 
+  			border-radius: 8px;
+    	}
+	</style>
+</head>
 
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript">
-		setInterval(function(){ 
+		$(document).ready(setInterval(function(){ 
 			const url = "http://localhost:8081/internal"; 
 			 $.ajax({
 			    url: url,
@@ -23,11 +60,41 @@
 			        console.log("Error");
 			    }
 			});
-		}, 3000);
+		}, 3000));
 
+			
 	</script>
+<div class="main">
+	<div>
+	<h2>Ładowanie systemu</h2>
+	
 
-<h1>Starting page</h1>
-
+	<div id="progress_bar">
+		<div id="status"></div>
+	</div>
+	<h4>Może to potrwać kilka minut...</h4>
+</div>
+</div>
+<script type="text/javascript">
+	var pos = 0;
+	var maxVal = 93;
+	var minVal = 0;
+	var up = true;
+	var element = document.getElementById("status"); 
+	setInterval(function(){
+		if (up) {
+			pos++;
+		} else {
+			pos--;
+		}
+		if (up && pos >= maxVal) {
+			up = false;
+		}
+		if (!up && pos <= minVal) {
+			up = true;
+		}
+		element.style.left = pos + "%";
+	}, 40);
+</script>
 </body>
 </html>
