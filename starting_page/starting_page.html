@@ -42,7 +42,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript">
-		$(document).ready(setInterval(function(){ 
+		setInterval(function(){ 
 			const url = "http://localhost:8081/internal"; 
 			 $.ajax({
 			    url: url,
@@ -60,7 +60,7 @@
 			        console.log("Error");
 			    }
 			});
-		}, 3000));
+		}, 3000);
 
 			
 	</script>
@@ -94,7 +94,7 @@
 			up = true;
 		}
 		element.style.left = pos + "%";
-	}, 40);
+	}, 20);
 </script>
 </body>
 </html>
