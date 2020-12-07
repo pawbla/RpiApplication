@@ -1,5 +1,8 @@
 package dao.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -39,6 +43,9 @@ public class Users {
 	@ManyToOne(cascade= CascadeType.PERSIST)
 	@JoinColumn(name="role_id")
 	private Role role;
+	
+	@ManyToMany(mappedBy = "users")
+	private Set<EntityTypes> entityTypes = new HashSet<>();
 	
 	public int getId() {
 		return user_id;
@@ -88,5 +95,10 @@ public class Users {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	
+	public Set<EntityTypes> getEntityTypes() {
+		return entityTypes;
+	}
+	public void setEntityTypes(Set<EntityTypes> entityTypes) {
+		this.entityTypes = entityTypes;
+	}
 }

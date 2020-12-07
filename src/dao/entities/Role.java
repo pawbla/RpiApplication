@@ -8,26 +8,29 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")
 	private int role_id;
-	
-	@Column(name = "role", unique=true)
+
+	@Column(name = "role", unique = true)
 	private String role;
-	
+
 	public int getId() {
 		return role_id;
 	}
-	public void setId(int  role_id) {
-		this.role_id =  role_id;
+
+	public void setId(int role_id) {
+		this.role_id = role_id;
 	}
+
 	public String getRole() {
 		return role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}

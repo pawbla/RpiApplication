@@ -17,7 +17,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 	
-	<dependencies> 
+	<dependencies>
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-web</artifactId>

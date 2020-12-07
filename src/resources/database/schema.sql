@@ -18,6 +18,36 @@ CREATE TABLE roles (
 	UNIQUE(role)
 );
 
+CREATE TABLE followers (
+	id INT NOT NULL AUTO_INCREMENT,
+	user_id INT,
+	entity_type_id INT,
+	PRIMARY KEY (id),
+);
+
+CREATE TABLE entity_types (
+	id INT NOT NULL AUTO_INCREMENT,
+	entity_type VARCHAR(128) NOT NULL,
+	PRIMARY KEY (id),
+);
+
+CREATE TABLE notification_entity (
+	id INT NOT NULL AUTO_INCREMENT,
+	entity_type_id INT,
+	sender INT NOT NULL,
+	create DATETIME NOT NULL,
+	message  VARCHAR(256) NOT NULL,
+	PRIMARY KEY (id),
+);
+
+CREATE TABLE notification (
+	id INT NOT NULL AUTO_INCREMENT,
+	user_id INT NOT NULL,
+	notification_id INT NOT NULL,
+	enabled BOOL NOT NULL DEFAULT TRUE,
+	PRIMARY KEY (id),
+);
+
 CREATE TABLE logs (
 	id INT NOT NULL AUTO_INCREMENT,
     date TIMESTAMP,
@@ -27,3 +57,4 @@ CREATE TABLE logs (
     exception TEXT,
     PRIMARY KEY (id)
 );
+
