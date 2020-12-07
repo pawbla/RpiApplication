@@ -46,7 +46,7 @@ public class AccuWeatherConnector implements ConnectorInterface {
 		Request request = new RequestBuilder()
 				.setURL(url)
 				.setHttpMethod(HttpMethod.GET)
-				.addContentType(MediaType.APPLICATION_JSON_UTF8)
+				.addContentType(MediaType.APPLICATION_JSON)
 				.addHeader(ACCEPTED_LANG_KEY, ACCEPTED_LANG_VALUE)
 				.build();
 		return request;

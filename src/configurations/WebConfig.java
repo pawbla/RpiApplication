@@ -1,6 +1,7 @@
 package configurations;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -97,8 +98,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) 
     {
         return restTemplateBuilder
-           .setConnectTimeout(2000)
-           .setReadTimeout(2000)
+           .setConnectTimeout(Duration.ofSeconds(2000))
+           .setReadTimeout(Duration.ofSeconds(2000))
            .build();
      }     
     
