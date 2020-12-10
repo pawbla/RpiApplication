@@ -2,7 +2,7 @@ package dao.repository;
 
 import java.util.List;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +21,9 @@ public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 
 	@Override
 	public Users getUserByName(final String username) {
-		Query query = getSession().createQuery(GET_USER_BY_NAME_QUERY)
+		Query<?> query = getSession().createQuery(GET_USER_BY_NAME_QUERY)
 				.setParameter("username", username);
-		return (Users) query.uniqueResult();
+		return (Users)query.uniqueResult();
 	}
 	
 	@Override
@@ -33,7 +33,7 @@ public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 	
 	@Override 
 	public Role getRole(final String role) {
-		Query query = getSession().createQuery(GET_ROLE_QUERY)
+		Query<?> query = getSession().createQuery(GET_ROLE_QUERY)
 				.setParameter("role", role);		
 		return (Role) query.uniqueResult();
 	}
@@ -41,7 +41,7 @@ public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Users> getUsers() {
-		Query query = getSession().createQuery(GET_USERS_QUERY);
+		Query<Users> query = getSession().createQuery(GET_USERS_QUERY);
 		return query.list();
 	}
 
@@ -69,7 +69,7 @@ public class ManageUsersDaoImpl extends AbstractDao implements ManageUsersDao {
 	
 	@Override
 	public int getNumberOfAdmins() {
-		Query query = getSession().createQuery(GET_NUMBER_ADMINS);
+		Query<?> query = getSession().createQuery(GET_NUMBER_ADMINS);
 		Long longNumber = (Long) query.uniqueResult();
 		return Long.valueOf(longNumber).intValue();
 	}

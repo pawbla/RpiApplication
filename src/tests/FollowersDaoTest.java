@@ -10,7 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import configurations.DataSourceConfigurationDev;
 import configurations.DatabaseConfiguration;
 import configurations.SecurityConfig;
-import dao.entities.Users;
 import dao.repository.FollowersDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)

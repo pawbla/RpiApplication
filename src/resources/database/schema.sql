@@ -22,13 +22,13 @@ CREATE TABLE followers (
 	id INT NOT NULL AUTO_INCREMENT,
 	user_id INT,
 	entity_type_id INT,
-	PRIMARY KEY (id),
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE entity_types (
 	id INT NOT NULL AUTO_INCREMENT,
 	entity_type VARCHAR(128) NOT NULL,
-	PRIMARY KEY (id),
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE notification_entity (
@@ -37,7 +37,7 @@ CREATE TABLE notification_entity (
 	sender INT NOT NULL,
 	create DATETIME NOT NULL,
 	message  VARCHAR(256) NOT NULL,
-	PRIMARY KEY (id),
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE notification (
@@ -45,7 +45,7 @@ CREATE TABLE notification (
 	user_id INT NOT NULL,
 	notification_id INT NOT NULL,
 	enabled BOOL NOT NULL DEFAULT TRUE,
-	PRIMARY KEY (id),
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE logs (

@@ -39,7 +39,7 @@ public class ManageUsersServiceTest {
 		Users user = service.getUserByName("user");
 		Assert.assertEquals("First name for user", "userName1", user.getFirstName());
 		Assert.assertEquals("Password for user", 
-				"40408537d958bee8c46851120c94e4ac6ba054458ba1d791aeaf8e365ec2d2374817ba13edd03fdf", user.getPassword());
+				"$2a$10$vz/0q8l5p7f6fNFUgFn/fueDX65INhr47s/LqLMoYPlKrtUbmAqxK", user.getPassword());
 		Assert.assertFalse("Enabled for user", user.isEnabled());
 		Assert.assertEquals("Role for user", "ROLE_USER", user.getRole().getRole());
 	}
@@ -49,7 +49,7 @@ public class ManageUsersServiceTest {
 		Users user = service.getUserByName("guest");
 		Assert.assertEquals("First name for guest", "userName2", user.getFirstName());
 		Assert.assertEquals("Password for guest", 
-				"40408537d958bee8c46851120c94e4ac6ba054458ba1d791aeaf8e365ec2d2374817ba13edd03fdf", user.getPassword());
+				"$2a$10$vz/0q8l5p7f6fNFUgFn/fueDX65INhr47s/LqLMoYPlKrtUbmAqxK", user.getPassword());
 		Assert.assertFalse("Enabled for guest", user.isEnabled());
 		Assert.assertEquals("Role for guest", "ROLE_GUEST", user.getRole().getRole());
 	}
@@ -63,7 +63,7 @@ public class ManageUsersServiceTest {
 		Assert.assertTrue("Enabled for admin", user.isEnabled());
 		Assert.assertEquals("Email for admin", "adres.email@email.com", user.getEmail());
 		Assert.assertEquals("Password for guest", 
-				"40408537d958bee8c46851120c94e4ac6ba054458ba1d791aeaf8e365ec2d2374817ba13edd03fdf", user.getPassword());	
+				"$2a$10$vz/0q8l5p7f6fNFUgFn/fueDX65INhr47s/LqLMoYPlKrtUbmAqxK", user.getPassword());	
 	}
 	
 	@Test

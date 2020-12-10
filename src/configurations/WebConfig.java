@@ -13,27 +13,28 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.ResourceResolver;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan({"controllers", "properties", "sensors", "sysInfo", "hardware",})
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig implements WebMvcConfigurer {
 
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        ResourceResolver resolver = new ReactResourceResolver();
+		ResourceResolver resolver = new ReactResourceResolver();
         registry.addResourceHandler("/**")
                 .resourceChain(true)
-                .addResolver(resolver);
+                .addResolver( resolver);
 	}
 	
 	public class ReactResourceResolver implements ResourceResolver {
@@ -83,11 +84,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 return index;
         }
     }
-	
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-	    return new StandardPasswordEncoder("a2z3tg");
-	}
 	
     /**
      * Rest Teplate builder configuration
