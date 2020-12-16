@@ -22,6 +22,6 @@ public class FollowersDaoTest {
 	
 	@Test
 	public void addFollowerTest() {
-
+		
 	}
 }

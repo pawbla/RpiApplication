@@ -27,7 +27,7 @@ public class ExtendedUserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(final String username) 
 		throws UsernameNotFoundException {
 	
-		Users user = dao.getUserByName(username);
+		Users user = dao.findByUsername(username);
 		List<GrantedAuthority> authorities = buildUserAuthority(user.getRole().getRole());
 
 		return buildUserForAuthentication(user, authorities);

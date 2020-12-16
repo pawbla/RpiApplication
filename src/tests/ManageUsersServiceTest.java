@@ -67,6 +67,36 @@ public class ManageUsersServiceTest {
 	}
 	
 	@Test
+	public void getUsers() {
+		//given
+		List<String> usernames = new ArrayList<String>();
+		usernames.add("user");
+		usernames.add("guest");
+		usernames.add("admin");
+		usernames.add("deleteUser");
+		usernames.add("updateUser");
+		usernames.add("UserPassChange");
+		usernames.add("sAddNick");
+		
+		List<String> roles = new ArrayList<String>();
+		roles.add("ROLE_USER");
+		roles.add("ROLE_GUEST");
+		roles.add("ROLE_ADMIN");
+		roles.add("ROLE_USER");
+		roles.add("ROLE_USER");
+		roles.add("ROLE_USER");
+		roles.add("ROLE_USER");
+		//when
+		List<Users> users = service.getUsers();
+		//then
+		Assert.assertEquals("List should contain 6 users", 6, users.size());
+		users.forEach(user -> {
+			Assert.assertEquals("UserName for user: " + user.getId(), usernames.get(user.getId()-1), user.getUserName());
+			Assert.assertEquals("Role for user: " + user.getId(), roles.get(user.getId()-1), user.getRole().getRole());
+		});
+	}
+	
+	@Test
 	public void addUserExistingRole() {
 		//given
 		String NICKNAME = "sAddNick";
@@ -99,35 +129,7 @@ public class ManageUsersServiceTest {
 		Assert.assertEquals("Role for added user", "ROLE_USER", user.getRole().getRole()); //user always stored with default role ROLE_USER
 	}
 
-	@Test
-	public void getUsers() {
-		//given
-		List<String> usernames = new ArrayList<String>();
-		usernames.add("user");
-		usernames.add("guest");
-		usernames.add("admin");
-		usernames.add("empty");
-		usernames.add("updateUser");
-		usernames.add("UserPassChange");
-		usernames.add("sAddNick");
-		
-		List<String> roles = new ArrayList<String>();
-		roles.add("ROLE_USER");
-		roles.add("ROLE_GUEST");
-		roles.add("ROLE_ADMIN");
-		roles.add("empty");
-		roles.add("ROLE_USER");
-		roles.add("ROLE_USER");
-		roles.add("ROLE_USER");
-		//when
-		List<Users> users = service.getUsers();
-		//then
-		Assert.assertEquals("List should contain 6 users", 6, users.size());
-		users.forEach(user -> {
-			Assert.assertEquals("UserName for user: " + user.getId(), usernames.get(user.getId()-1), user.getUserName());
-			Assert.assertEquals("Role for user: " + user.getId(), roles.get(user.getId()-1), user.getRole().getRole());
-		});
-	}
+	
 	
 	@Test
 	public void deleteUser() throws RemoveAllAdminsException {
@@ -287,6 +289,6 @@ public class ManageUsersServiceTest {
 		//then
 		//then	
 		Assert.fail();
-	}
+	} 
 }
 	
