@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="entity_types")
@@ -22,10 +27,10 @@ public class EntityTypes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "entity_type", nullable = false)
-	private String entity_type;
+	@Column(name = "entitytype", nullable = false)
+	private String entityType;
 	
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
 	@JoinTable(
 			name="followers",
 			joinColumns = @JoinColumn(name="entity_type_id"),
@@ -39,14 +44,9 @@ public class EntityTypes {
 	}
 	
 	public Set<Users> getUsers() {
-		return users;
+		return this.users;
 	}
 	
-	public void removeUser(Users user) {
-		this.users.remove(user);
-		user.getEntityTypes().remove(this);
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -55,11 +55,28 @@ public class EntityTypes {
 		this.id = id;
 	}
 
-	public String getEntity_type() {
-		return entity_type;
+	public String getEntityType() {
+		return entityType;
 	}
 
-	public void setEntity_type(String entity_type) {
-		this.entity_type = entity_type;
+	public void setEntityType(final String entityType) {
+		this.entityType = entityType;
 	}
+	
+	@Override
+    public int hashCode(){
+        int hashcode = 0;
+        hashcode = id * 20;
+        return hashcode;
+    }
+	
+    @Override
+    public boolean equals(Object obj){       
+        if (obj instanceof EntityTypes) {
+        	EntityTypes entityType = (EntityTypes) obj;
+            return (entityType.getId() == this.id);
+        } else {
+            return false;
+        }
+    }
 }

@@ -16,7 +16,7 @@ import configurations.DatabaseConfiguration;
 import configurations.SecurityConfig;
 import dao.entities.Role;
 import dao.entities.Users;
-import dao.repository.ManageUsersDao;
+import dao.repository.ManageUsersRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
@@ -24,7 +24,7 @@ import dao.repository.ManageUsersDao;
 public class ManageUsersDaoTest {
 	
 	@Autowired
-	private ManageUsersDao dao;
+	private ManageUsersRepository dao;
 
 	@Test
 	public void getUserDetails() {

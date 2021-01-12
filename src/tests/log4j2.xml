@@ -30,20 +30,12 @@
 
   <!--  Change no important loggers level to warn for console appender -->
   <Loggers>
-     <Logger name="thymeleaf.TemplateEngine" level="warn">
-      <AppenderRef ref="Console"/>
-    </Logger>
-     <Logger name="org.hibernate" level="warn">
-      <AppenderRef ref="Console"/>
-    </Logger>  
-     <Logger name="org.springframework" level="warn">
-      <AppenderRef ref="Console"/>
-    </Logger>
+
     
     <!--  ROOT LOGGER CONFIGURATION -->
       
     <Root level="trace">
-      <AppenderRef ref="Console" level="debug"/>
+      <AppenderRef ref="Console" level="trace"/>
       <AppenderRef ref="RollingFile" level="trace"/>
       <AppenderRef ref="WarningRollingFile" level="debug"/>
     </Root>

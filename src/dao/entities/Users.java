@@ -6,13 +6,19 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="users")
@@ -44,7 +50,7 @@ public class Users {
 	@JoinColumn(name="role_id")
 	private Role role;
 	
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
 	private Set<EntityTypes> entityTypes = new HashSet<>();
 	
 	public int getId() {
@@ -95,10 +101,30 @@ public class Users {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
 	public Set<EntityTypes> getEntityTypes() {
-		return entityTypes;
+		return this.entityTypes;
 	}
-	public void setEntityTypes(Set<EntityTypes> entityTypes) {
+	
+	public void setEntityTypes(final Set<EntityTypes> entityTypes) {
 		this.entityTypes = entityTypes;
 	}
+	
+	@Override
+    public int hashCode(){
+        int hashcode = 0;
+        hashcode = user_id * 20;
+        hashcode += username.hashCode();
+        return hashcode;
+    }
+	
+    @Override
+    public boolean equals(Object obj){       
+        if (obj instanceof Users) {
+        	Users user = (Users) obj; 
+            return (user.getUserName().equals(this.getUserName()));
+        } else {
+            return false;
+        }
+    }
 }

@@ -27,13 +27,13 @@ CREATE TABLE followers (
 
 CREATE TABLE entity_types (
 	id INT NOT NULL AUTO_INCREMENT,
-	entity_type VARCHAR(128) NOT NULL,
+	entitytype VARCHAR(128) NOT NULL,
 	PRIMARY KEY (id)
 );
 
 CREATE TABLE notification_entity (
 	id INT NOT NULL AUTO_INCREMENT,
-	entity_type_id INT,
+	entitytype_id INT,
 	sender INT NOT NULL,
 	create DATETIME NOT NULL,
 	message  VARCHAR(256) NOT NULL,

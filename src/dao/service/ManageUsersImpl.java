@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.entities.Users;
-import dao.repository.ManageUsersDao;
+import dao.repository.ManageUsersRepository;
 import exceptions.RemoveAllAdminsException;
 import exceptions.UpdatePasswordException;
 
@@ -17,7 +17,7 @@ import exceptions.UpdatePasswordException;
 public class ManageUsersImpl implements ManageUsersService {
 	
 	@Autowired
-	ManageUsersDao dao;
+	ManageUsersRepository dao;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;

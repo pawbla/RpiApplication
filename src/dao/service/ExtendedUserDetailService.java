@@ -15,13 +15,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import dao.entities.Users;
-import dao.repository.ManageUsersDao;
+import dao.repository.ManageUsersRepository;
 
 @Service("extendedUserDetailsService")
 public class ExtendedUserDetailService implements UserDetailsService {
 
 	@Autowired
-	ManageUsersDao dao;
+	ManageUsersRepository dao;
 	
 	@Override
 	public UserDetails loadUserByUsername(final String username) 

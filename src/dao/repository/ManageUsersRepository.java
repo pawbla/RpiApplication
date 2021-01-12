@@ -13,7 +13,7 @@ import dao.entities.Users;
 
 @Repository
 @Transactional
-public interface ManageUsersDao extends JpaRepository<Users, Long> {
+public interface ManageUsersRepository extends JpaRepository<Users, Long> {
 
 	
 	public Users findByUsername (final String username);
@@ -34,4 +34,5 @@ public interface ManageUsersDao extends JpaRepository<Users, Long> {
 	@Transactional
 	@Query("UPDATE Users SET password = :password WHERE user_id = :user_id")
 	public void updatePassword(final int user_id, String password);
+	
 }
