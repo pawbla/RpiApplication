@@ -15,7 +15,6 @@ import dao.entities.Users;
 @Transactional
 public interface ManageUsersRepository extends JpaRepository<Users, Long> {
 
-	
 	public Users findByUsername (final String username);
 	
 	@Query("FROM Users WHERE user_id=:user_id")

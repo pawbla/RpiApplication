@@ -33,8 +33,8 @@ CREATE TABLE entity_types (
 
 CREATE TABLE notification_entity (
 	id INT NOT NULL AUTO_INCREMENT,
-	entitytype_id INT,
-	sender INT NOT NULL,
+	entity_type_id INT,
+	sender_id INT NOT NULL,
 	create DATETIME NOT NULL,
 	message  VARCHAR(256) NOT NULL,
 	PRIMARY KEY (id)
@@ -44,7 +44,7 @@ CREATE TABLE notification (
 	id INT NOT NULL AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	notification_id INT NOT NULL,
-	enabled BOOL NOT NULL DEFAULT TRUE,
+	enabled BOOL NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (id)
 );
 

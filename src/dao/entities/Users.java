@@ -11,14 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.PreRemove;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="users")
@@ -52,6 +47,9 @@ public class Users {
 	
 	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
 	private Set<EntityTypes> entityTypes = new HashSet<>();
+	
+	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+	private Set<NotificationEntity> notificationEntity = new HashSet<>();
 	
 	public int getId() {
 		return user_id;
@@ -108,6 +106,14 @@ public class Users {
 	
 	public void setEntityTypes(final Set<EntityTypes> entityTypes) {
 		this.entityTypes = entityTypes;
+	}
+	
+	public Set<NotificationEntity> getNotificationEntity() {
+		return this.notificationEntity;
+	}
+	
+	public void setNotificationEntity(final Set<NotificationEntity> notificationEntity) {
+		this.notificationEntity = notificationEntity;
 	}
 	
 	@Override

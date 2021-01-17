@@ -1,8 +1,6 @@
-package tests;
+package tests.service;
 
 import java.util.Set;
-
-import javax.transaction.Transactional;
 
 import org.junit.Assert;
 import org.junit.Test;

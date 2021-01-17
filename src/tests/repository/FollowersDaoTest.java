@@ -1,4 +1,4 @@
-package tests;
+package tests.repository;
 
 import java.util.Set;
 

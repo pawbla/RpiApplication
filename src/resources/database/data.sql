@@ -19,3 +19,11 @@ INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM use
 INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM users WHERE user_id = 2), (SELECT id FROM entity_types WHERE entitytype = 'Sensor error'));
 INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM users WHERE user_id = 2), (SELECT id FROM entity_types WHERE entitytype = 'User deleted'));
 INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM users WHERE user_id = 3), (SELECT id FROM entity_types WHERE entitytype = 'Sensor error'));
+
+INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (1, 5, DATE '2021-01-12', 'CREATED NOTIFICATION ENTITY');
+INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (2, 6, DATE '2021-01-11', 'NOTIFICATION ENTITY TO DELETE');
+INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (3, 7, DATE '2021-01-10', 'NOTIFICATION TO ADD TEST');
+INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (3, 8, DATE '2021-01-09', 'NOTIFICATION MESSAGE TEST');
+
+INSERT INTO notification (user_id, notification_id) VALUES (2, 3);
+INSERT INTO notification (user_id, notification_id) VALUES (2, 4);
