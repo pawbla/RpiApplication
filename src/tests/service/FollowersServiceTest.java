@@ -1,11 +1,14 @@
 package tests.service;
 
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,6 +21,7 @@ import dao.service.FollowersService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("dev")
 public class FollowersServiceTest {
 	
@@ -57,5 +61,14 @@ public class FollowersServiceTest {
 		Set<EntityTypes> entityTypes = followersService.getFollowedEntities(user_id);
 		//then	
 		Assert.assertEquals("Entity list size", 2, entityTypes.size());
+	}
+	
+	@Test
+	public void allEntityListTest() {
+		//given
+		//when
+		List<EntityTypes> entityTypes = followersService.getAllEntityTypes();
+		//then
+		Assert.assertEquals("EntityList size", 3, entityTypes.size());
 	}
 }

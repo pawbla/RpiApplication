@@ -1,5 +1,6 @@
 package dao.service;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -36,6 +37,11 @@ public class FollowersServiceImpl implements FollowersService {
 	@Override
 	public Set<EntityTypes> getFollowedEntities(int user_id) {	
 		return manageUsersRepository.findByUserId(user_id).getEntityTypes();
+	}
+
+	@Override
+	public List<EntityTypes> getAllEntityTypes() {
+		return entityTypesRepository.findAll();
 	}
 
 }

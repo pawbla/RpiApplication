@@ -1,5 +1,6 @@
 package tests.repository;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -7,6 +8,8 @@ import javax.annotation.Resource;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -22,6 +25,7 @@ import dao.repository.ManageUsersRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
 @ActiveProfiles("dev")
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class FollowersDaoTest {
 
 	@Resource
@@ -81,5 +85,14 @@ public class FollowersDaoTest {
 		//then
 		Assert.assertEquals("EntityList size", 2, entityTypes.size());
 		
+	}
+	
+	@Test
+	public void getEntityTypesTest() {
+		//given
+		//when
+		List<EntityTypes> entityTypes = entityTypesRepository.findAll();
+		//then
+		Assert.assertEquals("EntityList size", 3, entityTypes.size());
 	}
 }

@@ -26,4 +26,12 @@ public interface NotificationService {
 	 * @return notification entity object
 	 */
 	public NotificationEntity getNotificationEntity(final int id);
+	
+	/**
+	 * Remove notification from database. When there is no notification connected to entity, 
+	 * notification entity will be removed too.
+	 * @param id notification id
+	 * @param user_id user id
+	 */
+	public void removeNotification(final int id, final int user_id);
 }

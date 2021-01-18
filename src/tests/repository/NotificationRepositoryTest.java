@@ -6,12 +6,18 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import configurations.DataSourceConfigurationDev;
 import configurations.DatabaseConfiguration;
@@ -25,6 +31,7 @@ import dao.repository.NotificationRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
 @ActiveProfiles("dev")
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class NotificationRepositoryTest {
 	
 	@Resource
@@ -84,29 +91,13 @@ public class NotificationRepositoryTest {
 		//then	
 		Assert.assertEquals("NotificationEntityList size", notificationsSize + 1, manageUsersRepository.findByUserId(user_id).getNotificationEntity().size());
 	}
-
-	@Test
-	public void removeNotification() {
-		//given
-		int notification_entity_id = 3;
-		int user_id = 1;
-		NotificationEntity notificationEntity = notificationRepository.findById(notification_entity_id);
-		Users user = manageUsersRepository.findByUserId(user_id);
-		notificationEntity.addUser(user);
-		notificationRepository.save(notificationEntity);
-		int notificationsSize = manageUsersRepository.findByUserId(user_id).getNotificationEntity().size();
-		//when
-		notificationRepository.deleteByUserIdAndNotificationId(user_id, notification_entity_id);
-		//then		
-		Assert.assertEquals("NotificationEntityList size", notificationsSize - 1, manageUsersRepository.findByUserId(user_id).getNotificationEntity().size());
-	}
 	
 	@Test
 	public void getNotificationsByUser() {
 		//given
 		int user_id = 2;
 		int notification_entity_id_1 = 1;
-		int notification_entity_id_2 = 3;
+		int notification_entity_id_2 = 4;
 		Users user = manageUsersRepository.findByUserId(user_id);
 		//add first notification to the user
 		NotificationEntity notificationEntity_1 = notificationRepository.findById(notification_entity_id_1);
@@ -147,10 +138,33 @@ public class NotificationRepositoryTest {
 	}
 	
 	@Test
+	public void removeNotification() {
+		//given
+		int notification_entity_id = 3;
+		int user_id = 1;
+		NotificationEntity notificationEntity = notificationRepository.findById(notification_entity_id);
+		Users user = manageUsersRepository.findByUserId(user_id);
+		notificationEntity.addUser(user);
+		notificationRepository.save(notificationEntity);
+		int notificationsSize = manageUsersRepository.findByUserId(user_id).getNotificationEntity().size();
+		//when
+		notificationRepository.deleteByUserIdAndNotificationId(user_id, notification_entity_id);
+		//then		
+		Assert.assertEquals("NotificationEntityList size", notificationsSize - 1, 
+				manageUsersRepository.findByUserId(user_id).getNotificationEntity().size());
+	}
+	
+	@Test
 	public void removeFollowedNotificationEntity() {
 		//given
+		int notification_id = 3;
+		int user_id = 2;
+		int size = notificationRepository.findNotificationsByUserId(user_id).size();
 		//when
-		//then		
+		notificationRepository.deleteNotificationEntityById(notification_id);
+		//then
+		Assert.assertEquals("NotificationEntity list", size - 1, 
+				notificationRepository.findNotificationsByUserId(user_id).size());
 	}
 	
 }

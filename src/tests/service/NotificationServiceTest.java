@@ -9,6 +9,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -26,6 +28,7 @@ import dao.service.NotificationService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
 @ActiveProfiles("dev")
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class NotificationServiceTest {
 	
 	@Autowired
@@ -63,7 +66,7 @@ public class NotificationServiceTest {
 		//when
 		List<Notification> notifications = notificationService.getNotifications(user_id);
 		//then
-		Assert.assertEquals("Notification list size", 3, notifications.size());
+		Assert.assertEquals("Notification list size", 2, notifications.size());
 	}
 	
 	@Test
@@ -80,5 +83,25 @@ public class NotificationServiceTest {
 		Assert.assertEquals("Message", "CREATED NOTIFICATION ENTITY", notificationEntity.getMessage());
 		Assert.assertEquals("Create date", new GregorianCalendar(2021, 00, 12).getTime().getTime(), 
 				notificationEntity.getCreate().getTime());
+	}
+	
+	@Test
+	public void removeNotificationTest() {
+		//given
+		int user_id_1 = 5;
+		int user_id_2 = 6;
+		int notification_id = 5;
+		int notification_user_id_1 = notificationService.getNotifications(user_id_1).size();
+		int notification_user_id_2 = notificationService.getNotifications(user_id_2).size();
+		//when
+		notificationService.removeNotification(notification_id, user_id_1);
+		Assert.assertNotNull("NotificationEntity exist", notificationService.getNotificationEntity(notification_id));
+		notificationService.removeNotification(notification_id, user_id_2);
+		//then
+		Assert.assertEquals("Notifications for the first user", notification_user_id_1 - 1, 
+				notificationService.getNotifications(user_id_1).size());
+		Assert.assertEquals("Notifications for the second user", notification_user_id_2 - 1, 
+				notificationService.getNotifications(user_id_2).size());
+		Assert.assertNull("NotificationEntity not exist", notificationService.getNotificationEntity(notification_id));
 	}
 }

@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,6 +27,7 @@ import exceptions.UpdatePasswordException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("dev")
 public class ManageUsersServiceTest {
 	
@@ -149,7 +152,7 @@ public class ManageUsersServiceTest {
 		String FIRST_NAME = "NewFirstName";
 		String LAST_NAME = "NewLastName";
 		String EMAIL = "new@email.user";
-		String ROLE = "ROLE_USER";
+		String ROLE = "ROLE_ADMIN";
 		
 		Users testUser = new Users();
 		testUser.setUserName(NICKNAME);
