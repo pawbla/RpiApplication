@@ -44,7 +44,7 @@ CREATE TABLE notification (
 	id INT NOT NULL AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	notification_id INT NOT NULL,
-	enabled BOOL NOT NULL DEFAULT FALSE,
+	read BOOL NOT NULL DEFAULT FALSE,
 	PRIMARY KEY (id)
 );
 

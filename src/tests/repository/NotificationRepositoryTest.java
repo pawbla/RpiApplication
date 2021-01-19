@@ -114,6 +114,18 @@ public class NotificationRepositoryTest {
 	}
 	
 	@Test
+	public void getNotificationsById() {
+		//given
+		int id = 2;
+		//when
+		Notification notifications = notificationRepository.findNotificationsById(id);
+		//then		
+		Assert.assertEquals("User id", 2, notifications.getUser_id());
+		Assert.assertEquals("Notification entity", 4, notifications.getNotification_id());
+		Assert.assertFalse("Unread", notifications.isRead());
+	}
+	
+	@Test
 	public void getNotificationEntities() {
 		int user_id = 3;
 		int notification_entity_id_1 = 1;
@@ -165,6 +177,22 @@ public class NotificationRepositoryTest {
 		//then
 		Assert.assertEquals("NotificationEntity list", size - 1, 
 				notificationRepository.findNotificationsByUserId(user_id).size());
+	}
+	
+	@Test
+	public void changeReadStatusTest() {
+		//given
+		int id = 3;
+		// change from false (default) to true
+		//when
+		notificationRepository.updateReadStatus(true, id);
+		//then
+		Assert.assertTrue("Read status true", notificationRepository.findNotificationsById(id).isRead());
+		//change from true to false
+		//when
+		notificationRepository.updateReadStatus(false, id);
+		//then
+		Assert.assertFalse("Read status false", notificationRepository.findNotificationsById(id).isRead());
 	}
 	
 }

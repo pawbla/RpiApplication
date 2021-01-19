@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,7 @@ import dao.entities.EntityTypes;
 import dao.entities.Notification;
 import dao.entities.NotificationEntity;
 import dao.entities.Users;
+import dao.repository.NotificationRepository;
 import dao.service.FollowersService;
 import dao.service.NotificationService;
 
@@ -36,6 +39,10 @@ public class NotificationServiceTest {
 	
 	@Autowired
 	private FollowersService followersService;
+	
+	//only for test purpose to do not create unusbale service method for get notification by id
+	@Resource
+	private NotificationRepository notificationRepository;
 
 	@Test
 	public void addNotificationByFollowersTest() {
@@ -60,7 +67,7 @@ public class NotificationServiceTest {
 	}
 	
 	@Test
-	public void getNotificationTest() {
+	public void getNotificationsTest() {
 		//given
 		int user_id = 2;
 		//when
@@ -103,5 +110,21 @@ public class NotificationServiceTest {
 		Assert.assertEquals("Notifications for the second user", notification_user_id_2 - 1, 
 				notificationService.getNotifications(user_id_2).size());
 		Assert.assertNull("NotificationEntity not exist", notificationService.getNotificationEntity(notification_id));
+	}
+	
+	@Test
+	public void switchReadUnreadTest() {
+		//given
+		int id = 2;
+		//from false to true
+		//when
+		notificationService.setReadStatus(true, id);
+		//then
+		Assert.assertTrue("Read status true", notificationRepository.findNotificationsById(id).isRead());
+		//from true to false
+		//when
+		notificationService.setReadStatus(false, id);
+		//then
+		Assert.assertFalse("Read status false", notificationRepository.findNotificationsById(id).isRead());
 	}
 }

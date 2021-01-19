@@ -34,4 +34,11 @@ public interface NotificationService {
 	 * @param user_id user id
 	 */
 	public void removeNotification(final int id, final int user_id);
+	
+	/**
+	 * Set read/unread status for notification
+	 * @param status status to be set
+	 * @param id notification id
+	 */
+	public void setReadStatus(boolean status, int id);
 }

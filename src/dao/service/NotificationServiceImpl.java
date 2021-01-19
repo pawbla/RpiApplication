@@ -52,5 +52,8 @@ public class NotificationServiceImpl implements NotificationService {
 		}
 	}
 
-	
+	@Override
+	public void setReadStatus(boolean status, int id) {
+		notificationRepository.updateReadStatus(status, id);
+	}
 }

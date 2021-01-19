@@ -28,4 +28,12 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
 	
 	@Query("FROM Notification WHERE user_id = :user_id")
 	public List<Notification> findNotificationsByUserId(int user_id);
+	
+	@Query("FROM Notification WHERE id = :id")
+	public Notification findNotificationsById(int id);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Notification SET read = :status WHERE id = :id")
+	public void updateReadStatus(boolean status, int id);
 }
