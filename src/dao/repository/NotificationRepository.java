@@ -1,5 +1,6 @@
 package dao.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,12 +16,7 @@ import dao.entities.NotificationEntity;
 @Transactional
 public interface NotificationRepository extends JpaRepository<NotificationEntity, Long> {
 	NotificationEntity findById(int id);
-	
-	@Transactional
-	@Modifying
-	@Query("DELETE FROM Notification WHERE user_id=:user_id AND notification_id=:notification_id")
-	public void deleteByUserIdAndNotificationId(final int user_id, final int notification_id);
-	
+		
 	@Transactional
 	@Modifying
 	@Query("DELETE FROM NotificationEntity WHERE id=:id")
@@ -36,4 +32,9 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
 	@Modifying
 	@Query("UPDATE Notification SET read = :status WHERE id = :id")
 	public void updateReadStatus(boolean status, int id);
+	
+	List<NotificationEntity> findByCreateBefore(Date date);
+	
+	@Query("FROM Notification WHERE notification_id = :notification_id AND read = :read")
+	public List<Notification> findNotificationByEntityIdAndRead(int notification_id, boolean read);
 }

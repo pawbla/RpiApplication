@@ -22,7 +22,7 @@ public interface NotificationService {
 	
 	/**
 	 * Get notification entity by id
-	 * @param id notification id
+	 * @param id notification entity id
 	 * @return notification entity object
 	 */
 	public NotificationEntity getNotificationEntity(final int id);
@@ -30,7 +30,7 @@ public interface NotificationService {
 	/**
 	 * Remove notification from database. When there is no notification connected to entity, 
 	 * notification entity will be removed too.
-	 * @param id notification id
+	 * @param id notification entity id
 	 * @param user_id user id
 	 */
 	public void removeNotification(final int id, final int user_id);
@@ -41,4 +41,18 @@ public interface NotificationService {
 	 * @param id notification id
 	 */
 	public void setReadStatus(boolean status, int id);
+	
+	/**
+	 * Remove expired and read notification when notifications created date is older than one month. 
+	 * When there is no notification connected to entity, notification entity will be removed too. 
+	 * Method is annonated with @Scheduled and is executed at every 1st day of month 
+	 */
+	public void removeExpiredAndReadNotifications();
+
+	/**
+	 * Remove expired and read notification when notifications created date is older than half a year. 
+	 * When there is no notification connected to entity, notification entity will be removed too. 
+	 * Method is annonated with @Scheduled and is executed at every 1st day of month 
+	 */
+	public void removeExpiredAndUnReadNotifications();
 }

@@ -20,14 +20,17 @@ INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM use
 INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM users WHERE user_id = 2), (SELECT id FROM entity_types WHERE entitytype = 'User deleted'));
 INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM users WHERE user_id = 3), (SELECT id FROM entity_types WHERE entitytype = 'Sensor error'));
 
-INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (1, 5, DATE '2021-01-12', 'CREATED NOTIFICATION ENTITY');
-INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (2, 6, DATE '2021-01-11', 'NOTIFICATION ENTITY TO DELETE');
-INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (3, 7, DATE '2021-01-10', 'NOTIFICATION TO ADD TEST');
-INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (3, 8, DATE '2021-01-09', 'NOTIFICATION MESSAGE TEST');
-INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (2, 8, DATE '2021-01-08', 'Notification to test remove in service');
+INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (1, 5, DATE '2020-01-12', 'CREATED NOTIFICATION ENTITY');
+INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (2, 6, DATE '2020-02-12', 'NOTIFICATION ENTITY TO DELETE');
+INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (3, 7, NOW(), 'NOTIFICATION TO ADD TEST');
+INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (3, 8, DATE '2020-03-12', 'NOTIFICATION MESSAGE TEST');
+INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (2, 8, DATE '2020-04-12', 'Notification to test remove in service');
 
 INSERT INTO notification (user_id, notification_id) VALUES (2, 3);
 INSERT INTO notification (user_id, notification_id) VALUES (2, 4);
 
-INSERT INTO notification (user_id, notification_id) VALUES (5, 5);
-INSERT INTO notification (user_id, notification_id) VALUES (6, 5);
+INSERT INTO notification (user_id, notification_id) VALUES (5, 1);
+INSERT INTO notification (user_id, notification_id) VALUES (6, 1);
+
+UPDATE notification SET read = TRUE WHERE id = 2;
+UPDATE notification SET read = TRUE WHERE id = 3;

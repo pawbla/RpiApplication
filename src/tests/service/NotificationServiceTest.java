@@ -20,10 +20,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import configurations.DataSourceConfigurationDev;
 import configurations.DatabaseConfiguration;
 import configurations.SecurityConfig;
-import dao.entities.EntityTypes;
 import dao.entities.Notification;
 import dao.entities.NotificationEntity;
-import dao.entities.Users;
 import dao.repository.NotificationRepository;
 import dao.service.FollowersService;
 import dao.service.NotificationService;
@@ -80,15 +78,13 @@ public class NotificationServiceTest {
 	public void getNotificationEntityTest() {
 		//given
 		int notification_id = 1;
-		Calendar createDate = Calendar.getInstance();
-		createDate.set(2021, 01, 12);
 		//when
 		NotificationEntity notificationEntity = notificationService.getNotificationEntity(notification_id);
 		//then	
 		Assert.assertEquals("Entity type id", 1, notificationEntity.getEntity_type_id());
 		Assert.assertEquals("Sender id", 5, notificationEntity.getSender_id());
 		Assert.assertEquals("Message", "CREATED NOTIFICATION ENTITY", notificationEntity.getMessage());
-		Assert.assertEquals("Create date", new GregorianCalendar(2021, 00, 12).getTime().getTime(), 
+		Assert.assertEquals("Create date", new GregorianCalendar(2020, 00, 12).getTime().getTime(), 
 				notificationEntity.getCreate().getTime());
 	}
 	
@@ -97,7 +93,7 @@ public class NotificationServiceTest {
 		//given
 		int user_id_1 = 5;
 		int user_id_2 = 6;
-		int notification_id = 5;
+		int notification_id = 1;
 		int notification_user_id_1 = notificationService.getNotifications(user_id_1).size();
 		int notification_user_id_2 = notificationService.getNotifications(user_id_2).size();
 		//when
@@ -126,5 +122,40 @@ public class NotificationServiceTest {
 		notificationService.setReadStatus(false, id);
 		//then
 		Assert.assertFalse("Read status false", notificationRepository.findNotificationsById(id).isRead());
+	}
+	
+	@Test
+	public void removeExpiredAndReadNotificationTest() {
+		//given	
+		//then
+		notificationService.removeExpiredAndReadNotifications();
+		//when
+		Assert.assertNotNull(notificationRepository.findNotificationsById(1));
+		Assert.assertNull(notificationRepository.findNotificationsById(2));
+		Assert.assertNull(notificationRepository.findNotificationsById(3));
+		Assert.assertNotNull(notificationRepository.findNotificationsById(4));
+		
+		Assert.assertNotNull(notificationService.getNotificationEntity(1));
+		Assert.assertNotNull(notificationService.getNotificationEntity(3));
+		Assert.assertNull(notificationService.getNotificationEntity(4));		
+	}
+	
+	@Test
+	public void removeExpiredAndUnReadNotificationTest() {
+		//given
+		notificationService.removeExpiredAndReadNotifications();
+		//then
+		notificationService.removeExpiredAndUnReadNotifications();
+		//when	
+		Assert.assertNotNull(notificationRepository.findNotificationsById(1));
+		Assert.assertNull(notificationRepository.findNotificationsById(2));
+		Assert.assertNull(notificationRepository.findNotificationsById(3));
+		Assert.assertNull(notificationRepository.findNotificationsById(4));
+		
+		Assert.assertNull(notificationService.getNotificationEntity(1));
+		Assert.assertNotNull(notificationService.getNotificationEntity(3));
+		Assert.assertNull(notificationService.getNotificationEntity(4));
+		
+		
 	}
 }

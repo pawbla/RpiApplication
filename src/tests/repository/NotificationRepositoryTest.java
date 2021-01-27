@@ -1,23 +1,21 @@
 package tests.repository;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import configurations.DataSourceConfigurationDev;
 import configurations.DatabaseConfiguration;
@@ -116,12 +114,12 @@ public class NotificationRepositoryTest {
 	@Test
 	public void getNotificationsById() {
 		//given
-		int id = 2;
+		int id = 1;
 		//when
 		Notification notifications = notificationRepository.findNotificationsById(id);
 		//then		
 		Assert.assertEquals("User id", 2, notifications.getUser_id());
-		Assert.assertEquals("Notification entity", 4, notifications.getNotification_id());
+		Assert.assertEquals("Notification entity", 3, notifications.getNotification_id());
 		Assert.assertFalse("Unread", notifications.isRead());
 	}
 	
@@ -160,7 +158,11 @@ public class NotificationRepositoryTest {
 		notificationRepository.save(notificationEntity);
 		int notificationsSize = manageUsersRepository.findByUserId(user_id).getNotificationEntity().size();
 		//when
-		notificationRepository.deleteByUserIdAndNotificationId(user_id, notification_entity_id);
+		NotificationEntity entity = notificationRepository.findById( notification_entity_id);
+		Optional<Users> usert = entity.getUsers().stream().filter(userL -> userL.getId() == user_id).findAny();
+		usert.get().getEntityTypes().remove(entity);
+		entity.getUsers().remove(usert.get());
+		notificationRepository.save(entity);
 		//then		
 		Assert.assertEquals("NotificationEntityList size", notificationsSize - 1, 
 				manageUsersRepository.findByUserId(user_id).getNotificationEntity().size());
@@ -194,5 +196,39 @@ public class NotificationRepositoryTest {
 		//then
 		Assert.assertFalse("Read status false", notificationRepository.findNotificationsById(id).isRead());
 	}
+	
+	@Test
+	public void getOldEnitytTypesTest() {
+		//given
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -6); //six months ago
+		//when
+		List<NotificationEntity> oldNotification = notificationRepository.findByCreateBefore(cal.getTime());
+		//then
+		Assert.assertEquals("EntityTypes older than six months", 4, oldNotification.size());
+	}
+	
+	/*@Test
+	public void deleteReadNotificationTest() {
+		//given
+		int notification_id = 1;
+		//then
+		notificationRepository.deleteByNotificationIdAndRead(notification_id, true);
+		//then
+		Assert.assertNotNull("Unread notification exists", notificationRepository.findNotificationsById(4));
+		Assert.assertNull("Read notification do not exists", notificationRepository.findNotificationsById(3));
+	}
+	
+	@Test
+	public void deleteUnReadNotificationTest() {
+		//given
+		int notification_id = 1;
+		//then
+		notificationRepository.deleteByNotificationIdAndRead(notification_id, false);
+		//then
+		Assert.assertNotNull("Unread notification exists", notificationRepository.findNotificationsById(3));
+		Assert.assertNull("Read notification do not exists", notificationRepository.findNotificationsById(4));
+	}*/
+	
 	
 }
