@@ -19,9 +19,11 @@ import configurations.SecurityConfig;
 import dao.entities.Role;
 import dao.entities.Users;
 import dao.repository.ManageUsersRepository;
+import tests.ConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
+@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class,
+		SecurityConfig.class, ConfigurationTest.class})
 @ActiveProfiles("dev")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ManageUsersDaoTest {

@@ -1,4 +1,4 @@
-package dao.service;
+package services;
 
 import java.util.Calendar;
 import java.util.List;
@@ -6,8 +6,11 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import notifications.wrapper.NotificationWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +38,12 @@ public class NotificationServiceImpl implements NotificationService {
 	
 	@Resource
 	private ManageUsersRepository manageUsersRepository;
+
+	@Autowired
+	@Qualifier("removeExpired")
+	NotificationWrapper notifyRemoveExpired;
+
+	private static final int SENDER_ID = 2;
 
 	@Override
 	public void addNotificationForFollowers(NotificationEntity notificationEntity) {
@@ -80,6 +89,7 @@ public class NotificationServiceImpl implements NotificationService {
 		notificationRepository.findByCreateBefore(cal.getTime()).forEach(entity -> {
 			notificationRepository.findNotificationByEntityIdAndRead(entity.getId(), true).forEach(notification -> {
 				this.removeNotification(notification.getNotification_id(), notification.getUser_id());
+				notifyRemoveExpired.notifyObserver(SENDER_ID, notification);
 			});
 		});
 	}
@@ -95,6 +105,7 @@ public class NotificationServiceImpl implements NotificationService {
 		notificationRepository.findByCreateBefore(cal.getTime()).forEach(entity -> {
 			notificationRepository.findNotificationByEntityIdAndRead(entity.getId(), false).forEach(notification -> {
 				this.removeNotification(notification.getNotification_id(), notification.getUser_id());
+				notifyRemoveExpired.notifyObserver(SENDER_ID, notification);
 			});
 		});				
 	}

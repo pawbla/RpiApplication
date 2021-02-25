@@ -17,10 +17,12 @@ import configurations.DataSourceConfigurationDev;
 import configurations.DatabaseConfiguration;
 import configurations.SecurityConfig;
 import dao.entities.EntityTypes;
-import dao.service.FollowersService;
+import services.FollowersService;
+import tests.ConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
+@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class,
+		SecurityConfig.class, ConfigurationTest.class})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("dev")
 public class FollowersServiceTest {
@@ -69,6 +71,6 @@ public class FollowersServiceTest {
 		//when
 		List<EntityTypes> entityTypes = followersService.getAllEntityTypes();
 		//then
-		Assert.assertEquals("EntityList size", 3, entityTypes.size());
+		Assert.assertEquals("EntityList size", 4, entityTypes.size());
 	}
 }

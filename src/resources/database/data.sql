@@ -14,11 +14,14 @@ INSERT INTO users (username, password, first_name, role_id) VALUES ('UserPassCha
 INSERT INTO entity_types (entitytype) VALUES ('New user registered');
 INSERT INTO entity_types (entitytype) VALUES ('User deleted');
 INSERT INTO entity_types (entitytype) VALUES ('Sensor error');
+INSERT INTO entity_types (entitytype) VALUES ('Expired notification removed');
 
-INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM users WHERE user_id = 1), (SELECT id FROM entity_types WHERE entitytype = 'Sensor error'));
-INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM users WHERE user_id = 2), (SELECT id FROM entity_types WHERE entitytype = 'Sensor error'));
-INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM users WHERE user_id = 2), (SELECT id FROM entity_types WHERE entitytype = 'User deleted'));
-INSERT INTO followers (user_id, entity_type_id) VALUES ((SELECT user_id FROM users WHERE user_id = 3), (SELECT id FROM entity_types WHERE entitytype = 'Sensor error'));
+INSERT INTO followers (user_id, entity_type_id) VALUES (1, (SELECT id FROM entity_types WHERE entitytype = 'Sensor error'));
+INSERT INTO followers (user_id, entity_type_id) VALUES (2, (SELECT id FROM entity_types WHERE entitytype = 'Sensor error'));
+INSERT INTO followers (user_id, entity_type_id) VALUES (2, (SELECT id FROM entity_types WHERE entitytype = 'User deleted'));
+INSERT INTO followers (user_id, entity_type_id) VALUES (3, (SELECT id FROM entity_types WHERE entitytype = 'Sensor error'));
+INSERT INTO followers (user_id, entity_type_id) VALUES (5, (SELECT id FROM entity_types WHERE entitytype = 'Expired notification removed'));
+INSERT INTO followers (user_id, entity_type_id) VALUES (6, (SELECT id FROM entity_types WHERE entitytype = 'New user registered'));
 
 INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (1, 5, DATE '2020-01-12', 'CREATED NOTIFICATION ENTITY');
 INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (2, 6, DATE '2020-02-12', 'NOTIFICATION ENTITY TO DELETE');

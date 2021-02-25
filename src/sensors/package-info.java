@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author Pawe³
+ * @author Pawel
  *
  */
 package sensors;

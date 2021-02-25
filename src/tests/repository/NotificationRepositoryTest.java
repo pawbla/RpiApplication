@@ -25,9 +25,11 @@ import dao.entities.NotificationEntity;
 import dao.entities.Users;
 import dao.repository.ManageUsersRepository;
 import dao.repository.NotificationRepository;
+import tests.ConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
+@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class,
+		SecurityConfig.class, ConfigurationTest.class})
 @ActiveProfiles("dev")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class NotificationRepositoryTest {

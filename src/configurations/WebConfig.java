@@ -23,7 +23,7 @@ import org.springframework.web.servlet.resource.ResourceResolverChain;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"controllers", "properties", "sensors", "sysInfo", "hardware",})
+@ComponentScan({"controllers", "properties", "sensors", "sysInfo", "hardware", "services"})
 public class WebConfig implements WebMvcConfigurer {
 
 	@Override

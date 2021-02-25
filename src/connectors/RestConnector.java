@@ -4,9 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import notifications.wrapper.NotificationWrapper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -24,6 +27,12 @@ public class RestConnector implements RestInterface {
 	private Connector connector;
 	private Response response;
 	private DateFormat dateFormat;
+
+	@Autowired
+	@Qualifier("sensorError")
+	NotificationWrapper sensorErrorNotification;
+
+	private static final int SENDER_ID = 4;
 	
 	public RestConnector() {
 		logger.info("Create REST Template object.");
@@ -42,6 +51,7 @@ public class RestConnector implements RestInterface {
 				response.setError(true);
 				response.setModified(false);
 				response.setErrorMsg(resp.getStatusCode().getReasonPhrase());
+				sensorErrorNotification.notifyObserver(SENDER_ID, connector.getName() + " response Code " + response.getResponseCode());
 			}
 			if (StringUtils.isNotBlank(resp.getBody())) {
 				logger.trace("Received response for " + connector.getRequest().getIp() + " body: " + resp.getBody());
@@ -54,6 +64,7 @@ public class RestConnector implements RestInterface {
 			response.setErrorMsg("Unknown error has occured: " + e.getMessage());
 			response.setError(true);
 			response.setModified(false);
+			sensorErrorNotification.notifyObserver(SENDER_ID, connector.getName() + " exception:  " + e.getMessage());
 			logger.warn("An exception has occured when executed connection to url " + connector.getRequest().getIp() + ": " + e.getMessage());
 		} finally {
 			connector.setResponse(response);

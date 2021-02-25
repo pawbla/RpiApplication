@@ -21,9 +21,11 @@ import dao.entities.EntityTypes;
 import dao.entities.Users;
 import dao.repository.EntityTypesRepository;
 import dao.repository.ManageUsersRepository;
+import tests.ConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
+@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class,
+		SecurityConfig.class, ConfigurationTest.class})
 @ActiveProfiles("dev")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class FollowersDaoTest {
@@ -93,6 +95,6 @@ public class FollowersDaoTest {
 		//when
 		List<EntityTypes> entityTypes = entityTypesRepository.findAll();
 		//then
-		Assert.assertEquals("EntityList size", 3, entityTypes.size());
+		Assert.assertEquals("EntityList size", 4, entityTypes.size());
 	}
 }

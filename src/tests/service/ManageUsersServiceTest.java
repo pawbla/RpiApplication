@@ -21,12 +21,14 @@ import configurations.DatabaseConfiguration;
 import configurations.SecurityConfig;
 import dao.entities.Role;
 import dao.entities.Users;
-import dao.service.ManageUsersService;
+import services.ManageUsersService;
 import exceptions.RemoveAllAdminsException;
 import exceptions.UpdatePasswordException;
+import tests.ConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
+@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class,
+		SecurityConfig.class, ConfigurationTest.class})
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @ActiveProfiles("dev")
 public class ManageUsersServiceTest {

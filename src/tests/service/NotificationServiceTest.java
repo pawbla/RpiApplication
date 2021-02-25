@@ -1,6 +1,5 @@
 package tests.service;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -23,11 +22,13 @@ import configurations.SecurityConfig;
 import dao.entities.Notification;
 import dao.entities.NotificationEntity;
 import dao.repository.NotificationRepository;
-import dao.service.FollowersService;
-import dao.service.NotificationService;
+import services.FollowersService;
+import services.NotificationService;
+import tests.ConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class, SecurityConfig.class})
+@ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class,
+		SecurityConfig.class, ConfigurationTest.class})
 @ActiveProfiles("dev")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class NotificationServiceTest {

@@ -171,8 +171,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 		<defaultGoal>install</defaultGoal>
 	    <finalName>EmbeddedApp</finalName>
 	    <sourceDirectory>${basedir}/src/</sourceDirectory>
-	    <scriptSourceDirectory>${basedir}/src/scripts</scriptSourceDirectory>
-	    <testSourceDirectory>${basedir}/src/tess</testSourceDirectory>
+	    <testSourceDirectory>${basedir}/src/tests</testSourceDirectory>
 	    <outputDirectory>${basedir}/target/classes</outputDirectory>
 	    <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
 		<plugins>
@@ -198,8 +197,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-jar-plugin</artifactId>
 			    <configuration>
-			    	<source>1.8</source>
-					<target>1.8</target>
 					<outputDirectory>${basedir}/target/Release/</outputDirectory>
 			        <archive>
 			            <manifest>

@@ -1,8 +1,11 @@
-package dao.service;
+package services;
 
 import java.util.List;
 
+import notifications.Subject;
+import notifications.wrapper.NotificationWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +24,23 @@ public class ManageUsersImpl implements ManageUsersService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	Subject notificationSubject;
+
+	@Autowired
+	@Qualifier("addUser")
+	NotificationWrapper notifyAddUser;
+
+	@Autowired
+	@Qualifier("removeUser")
+	NotificationWrapper notifyRemoveUser;
 	
 	private static final String LAST_ADMIN_ROLE_MSG = "Operation could remove admin access to application.";
 	private static final String OLD_NEW_PASS_SAME_MSG = "Old and new password cannot be the same";
 	private static final String INCORRECT_PASS_MSG = "Incorrect password";
+
+	private static final int SENDER_ID = 1;
 	
 	@Override
 	public Users getUserByName(String username) {
@@ -45,7 +61,7 @@ public class ManageUsersImpl implements ManageUsersService {
 			user.setEnabled(false);
 		}
 		dao.save(user);
-		
+		notifyAddUser.notifyObserver(SENDER_ID, user);
 	}
 	@Override
 	public void removeUser(int user_id) throws RemoveAllAdminsException {
@@ -56,8 +72,9 @@ public class ManageUsersImpl implements ManageUsersService {
 		} else {
 			throw new RemoveAllAdminsException(LAST_ADMIN_ROLE_MSG);	
 		}
-		
+		notifyRemoveUser.notifyObserver(SENDER_ID, user_id);
 	}
+
 	@Override
 	public void updateUser(int user_id, Users user) throws RemoveAllAdminsException {
 		Users userDao = dao.findByUserId(user_id);

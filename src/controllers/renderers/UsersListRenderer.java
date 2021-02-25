@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import dao.service.ManageUsersService;
+import services.ManageUsersService;
 
 @Component
 public class UsersListRenderer implements RestRespRenderer  {

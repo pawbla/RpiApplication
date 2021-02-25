@@ -14,8 +14,9 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 @Configuration
 public class EmbeddedApp {	
 	
-	public static void main(String[] args) {	
+	public static void main(String[] args) {
         SpringApplication.run(EmbeddedApp.class, args);
         //System.setProperty("java.awt.headless", "false");
+
 	}	
 }

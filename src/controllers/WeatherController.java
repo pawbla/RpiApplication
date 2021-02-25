@@ -23,7 +23,7 @@ import controllers.renderers.SimplyMessageRenderer;
 import controllers.renderers.UserDetailsRenderer;
 import controllers.renderers.UsersListRenderer;
 import dao.entities.Users;
-import dao.service.ManageUsersService;
+import services.ManageUsersService;
 import exceptions.RemoveAllAdminsException;
 import exceptions.UpdatePasswordException;
 import model.PasswordUpdate;

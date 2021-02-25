@@ -1,4 +1,4 @@
-package dao.service;
+package services;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public interface NotificationService {
 	
 	/**
 	 * Add created notification to all followed users
-	 * @param notification created notification
+	 * @param notificationEntity created notification
 	 */
 	public void addNotificationForFollowers(NotificationEntity notificationEntity);
 	

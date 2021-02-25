@@ -1,23 +1,9 @@
 package dao.entities;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="notification_entity")
@@ -47,6 +33,16 @@ public class NotificationEntity {
 			inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName = "user_id")
 	)
 	private Set<Users> users =  new HashSet<>();
+
+	public NotificationEntity() {};
+
+	public NotificationEntity(final int entity_type_id, final int sender_id,
+							  final Date create, final String message) {
+		this.entity_type_id = entity_type_id;
+		this.sender_id = sender_id;
+		this.create = create;
+		this.message = message;
+	}
 	
 	public void addUser(Users user) {
 		this.users.add(user);
