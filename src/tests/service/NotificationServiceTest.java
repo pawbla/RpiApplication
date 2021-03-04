@@ -50,7 +50,7 @@ public class NotificationServiceTest {
 		int entity_type_id = 2;
 		int sender_id = 4;
 		//follow entity
-		followersService.addFollowedEntity(user_id, entity_type_id);
+		//followersService.addFollowedEntity(user_id, entity_type_id);
 		//add entity
 		String message = "Notification Entityt Test Message";
 		NotificationEntity notificationEntity = new NotificationEntity();

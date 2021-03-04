@@ -1,32 +1,24 @@
 package controllers;
 
 
+import controllers.renderers.*;
+import dao.entities.EntityTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import controllers.renderers.ConnectorDetailsRenderer;
-import controllers.renderers.RestRespRenderer;
-import controllers.renderers.SimplyMessageRenderer;
-import controllers.renderers.UserDetailsRenderer;
-import controllers.renderers.UsersListRenderer;
 import dao.entities.Users;
+import services.FollowersService;
 import services.ManageUsersService;
 import exceptions.RemoveAllAdminsException;
 import exceptions.UpdatePasswordException;
 import model.PasswordUpdate;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1")
@@ -50,6 +42,12 @@ public class WeatherController {
 	
 	@Autowired
 	private ConnectorDetailsRenderer connectorsDetails;
+
+	@Autowired
+	private FollowedNotificationsRenderer followedNotifications;
+
+	@Autowired
+	private FollowersService followersService;
 	
 	@GetMapping(value = "/weather", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -108,10 +106,24 @@ public class WeatherController {
 		}
 	}
 	
-	@GetMapping(value = "/connectors", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/connectorss", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> getConnectorsDetails() {
 		return ResponseEntity.ok().body(connectorsDetails.getJSON());
 	}
-	
- }
+
+	@GetMapping(value = "/followednotifications", produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<String> getFollowedNotifications(@RequestParam("user_id") int user_id) {
+		return ResponseEntity.ok().body(followedNotifications.getJSON(user_id));
+	}
+
+	@PutMapping(value = "/followednotifications/{user_id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateFollowedNotifications(
+			@PathVariable("user_id") String user_id,
+			@RequestBody Map<String, Boolean> changedEntity) {
+			followersService.updateFollowedEntities(Integer.parseInt(user_id), changedEntity);
+			return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+}

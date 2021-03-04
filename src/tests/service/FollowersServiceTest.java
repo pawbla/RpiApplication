@@ -1,6 +1,8 @@
 package tests.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -18,6 +20,7 @@ import configurations.DatabaseConfiguration;
 import configurations.SecurityConfig;
 import dao.entities.EntityTypes;
 import services.FollowersService;
+import services.ManageUsersService;
 import tests.ConfigurationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,31 +32,9 @@ public class FollowersServiceTest {
 	
 	@Autowired
 	private FollowersService followersService;
-	
-	@Test
-	public void followEntityTest() {
-		//given
-		final int user_id = 1;
-		final int entity_type_id = 1;
-		Assert.assertEquals("Entity list size before add", 1, followersService.getFollowedEntities(user_id).size());
-		//when
-		followersService.addFollowedEntity(user_id, entity_type_id);
-		//then
-		Assert.assertEquals("Entity list size", 2, followersService.getFollowedEntities(user_id).size());
-	}
-	
-	@Test
-	public void unfollowEntityTest() {
-		//given
-		final int user_id = 3;
-		final int entity_type_id = 1;
-		followersService.addFollowedEntity(user_id, entity_type_id);
-		Assert.assertEquals("Entity list size before remove", 2, followersService.getFollowedEntities(user_id).size());
-		//when
-		followersService.removeFollowedEntity(user_id, entity_type_id);
-		//then
-		Assert.assertEquals("Entity list size after remove", 1, followersService.getFollowedEntities(user_id).size());
-	}
+
+	@Autowired
+	private ManageUsersService usersService;
 	
 	@Test
 	public void entityListTest() {
@@ -72,5 +53,28 @@ public class FollowersServiceTest {
 		List<EntityTypes> entityTypes = followersService.getAllEntityTypes();
 		//then
 		Assert.assertEquals("EntityList size", 4, entityTypes.size());
+	}
+
+	@Test
+	public void updateFollowedEntities() {
+		//given
+		int user_id = 2;
+		String nickname = "guest";
+		Map<String, Boolean> changedEntity = Map.of("1", true, "2", false,
+				"3", true, "4", false);
+		//when
+		followersService.updateFollowedEntities(user_id, changedEntity);
+		//then
+		Set<EntityTypes> entityTypes = followersService.getFollowedEntities(user_id);
+		Assert.assertEquals("Size of list", 2, entityTypes.size());
+		List<EntityTypes> entityTypesList = followersService.getAllEntityTypes();
+		Assert.assertTrue("Entity is followed",
+				entityTypesList.get(0).getUsers().contains(usersService.getUserByName(nickname)));
+		Assert.assertFalse("Entity is not followed",
+				entityTypesList.get(1).getUsers().contains(usersService.getUserByName(nickname)));
+		Assert.assertTrue("Entity is followed",
+				entityTypesList.get(2).getUsers().contains(usersService.getUserByName(nickname)));
+		Assert.assertFalse("Entity is not followed",
+				entityTypesList.get(3).getUsers().contains(usersService.getUserByName(nickname)));
 	}
 }
