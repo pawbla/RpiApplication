@@ -25,14 +25,13 @@ public class NotificationEntity {
 
 	@Column(name = "message", nullable = false)
 	private String message;
-	
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-	@JoinTable(
-			name="notification",
-			joinColumns = @JoinColumn(name="notification_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName = "user_id")
-	)
-	private Set<Users> users =  new HashSet<>();
+
+	@OneToOne(mappedBy="notificationEntity")
+	private Notification notification;
+
+	public void setNotification(Notification notification) {
+		this.notification = notification;
+	}
 
 	public NotificationEntity() {};
 
@@ -42,15 +41,6 @@ public class NotificationEntity {
 		this.sender_id = sender_id;
 		this.create = create;
 		this.message = message;
-	}
-	
-	public void addUser(Users user) {
-		this.users.add(user);
-		user.getNotificationEntity().add(this);
-	}
-	
-	public Set<Users> getUsers() {
-		return this.users;
 	}
 
 	public int getId() {

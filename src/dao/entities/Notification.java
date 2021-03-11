@@ -1,11 +1,6 @@
 package dao.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -17,15 +12,22 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "user_id", nullable = false)
-	private int user_id;
-	
-	@Column(name = "notification_id", nullable = false)
-	private int notification_id;
-	
 	@Column(name = "read", nullable = false)
 	@ColumnDefault("false")
 	private boolean read;
+
+	@OneToOne(cascade= CascadeType.ALL)
+	@JoinColumn(name="notification_entity_id", referencedColumnName = "id")
+	private NotificationEntity notificationEntity;
+
+	public void setNotificationEntity(NotificationEntity notificationEntity) {
+		this.notificationEntity = notificationEntity;
+		notificationEntity.setNotification(this);
+	}
+
+	public NotificationEntity getNotificationEntity() {
+		return this.notificationEntity;
+	}
 
 	public int getId() {
 		return id;
@@ -33,22 +35,6 @@ public class Notification {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
-	}
-
-	public int getNotification_id() {
-		return notification_id;
-	}
-
-	public void setNotification_id(int notification_id) {
-		this.notification_id = notification_id;
 	}
 
 	public boolean isRead() {

@@ -1,10 +1,12 @@
 package tests.repository;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Resource;
-
+import configurations.DataSourceConfigurationDev;
+import configurations.DatabaseConfiguration;
+import configurations.SecurityConfig;
+import dao.entities.EntityTypes;
+import dao.entities.Users;
+import dao.repository.EntityTypesRepository;
+import dao.repository.ManageUsersRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,15 +15,11 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import configurations.DataSourceConfigurationDev;
-import configurations.DatabaseConfiguration;
-import configurations.SecurityConfig;
-import dao.entities.EntityTypes;
-import dao.entities.Users;
-import dao.repository.EntityTypesRepository;
-import dao.repository.ManageUsersRepository;
 import tests.ConfigurationTest;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class,

@@ -18,7 +18,7 @@ public class StoreDatabaseObserver implements Observer {
 	@Override
 	public void update(NotificationEntity entity) {
 		logger.debug("Update database with notification entity ");
-		notificationService.addNotificationForFollowers(entity);
+		notificationService.addNotification(entity);
 	}
 
 }

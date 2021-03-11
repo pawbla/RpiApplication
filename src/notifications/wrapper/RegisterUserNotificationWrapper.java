@@ -14,6 +14,6 @@ public class RegisterUserNotificationWrapper extends NotificationWrapper {
     }
 
     private String prepareMessage(Users user) {
-        return "A new User: " + user.getUserName() + " has been registered.";
+        return "Nowy użytkownik: " + user.getUserName() + " został zarejestrowany.";
     }
  }

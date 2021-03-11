@@ -29,11 +29,11 @@ INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VAL
 INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (3, 8, DATE '2020-03-12', 'NOTIFICATION MESSAGE TEST');
 INSERT INTO notification_entity (entity_type_id, sender_id, create, message) VALUES (2, 8, DATE '2020-04-12', 'Notification to test remove in service');
 
-INSERT INTO notification (user_id, notification_id) VALUES (2, 3);
-INSERT INTO notification (user_id, notification_id) VALUES (2, 4);
+INSERT INTO notification (notification_entity_id) VALUES (3);
+INSERT INTO notification (notification_entity_id) VALUES (4);
 
-INSERT INTO notification (user_id, notification_id) VALUES (5, 1);
-INSERT INTO notification (user_id, notification_id) VALUES (6, 1);
+INSERT INTO notification (notification_entity_id) VALUES (1);
+INSERT INTO notification (notification_entity_id) VALUES (2);
 
 UPDATE notification SET read = TRUE WHERE id = 2;
 UPDATE notification SET read = TRUE WHERE id = 3;

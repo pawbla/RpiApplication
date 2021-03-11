@@ -1,6 +1,5 @@
 package notifications.wrapper;
 
-import dao.entities.Users;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +14,6 @@ public class RemoveUserNotificationWrapper extends NotificationWrapper {
     }
 
     private String prepareMessage(int user_id) {
-        return "User: " + user_id + " has been removed.";
+        return "Użytkownik o ID " + user_id + " został usunięty.";
     }
 }

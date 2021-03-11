@@ -1,10 +1,9 @@
 package tests.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import configurations.DataSourceConfigurationDev;
+import configurations.DatabaseConfiguration;
+import configurations.SecurityConfig;
+import dao.entities.EntityTypes;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,14 +13,13 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import configurations.DataSourceConfigurationDev;
-import configurations.DatabaseConfiguration;
-import configurations.SecurityConfig;
-import dao.entities.EntityTypes;
 import services.FollowersService;
 import services.ManageUsersService;
 import tests.ConfigurationTest;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DatabaseConfiguration.class, DataSourceConfigurationDev.class,

@@ -1,40 +1,24 @@
 package dao.repository;
 
-import java.util.Date;
-import java.util.List;
-
+import dao.entities.Notification;
+import dao.entities.NotificationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import dao.entities.Notification;
-import dao.entities.NotificationEntity;
+import java.util.List;
 
 @Repository
 @Transactional
-public interface NotificationRepository extends JpaRepository<NotificationEntity, Long> {
-	NotificationEntity findById(int id);
-		
-	@Transactional
-	@Modifying
-	@Query("DELETE FROM NotificationEntity WHERE id=:id")
-	public void deleteNotificationEntityById(final int id);
-	
-	@Query("FROM Notification WHERE user_id = :user_id")
-	public List<Notification> findNotificationsByUserId(int user_id);
-	
-	@Query("FROM Notification WHERE id = :id")
-	public Notification findNotificationsById(int id);
-	
-	@Transactional
-	@Modifying
-	@Query("UPDATE Notification SET read = :status WHERE id = :id")
-	public void updateReadStatus(boolean status, int id);
-	
-	List<NotificationEntity> findByCreateBefore(Date date);
-	
-	@Query("FROM Notification WHERE notification_id = :notification_id AND read = :read")
-	public List<Notification> findNotificationByEntityIdAndRead(int notification_id, boolean read);
+public interface NotificationRepository extends JpaRepository<Notification, Integer> {
+    
+    @Query("SELECT n FROM NotificationEntity n")
+    List<NotificationEntity> findAllNotificationEntities();
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Notification SET read = :status WHERE id = :id")
+    public void updateReadStatus(boolean status, int id);
 }

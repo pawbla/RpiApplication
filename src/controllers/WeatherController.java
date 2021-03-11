@@ -1,23 +1,20 @@
 package controllers;
 
-
 import controllers.renderers.*;
-import dao.entities.EntityTypes;
+import dao.entities.Users;
+import exceptions.RemoveAllAdminsException;
+import exceptions.UpdatePasswordException;
+import model.PasswordUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import dao.entities.Users;
 import services.FollowersService;
 import services.ManageUsersService;
-import exceptions.RemoveAllAdminsException;
-import exceptions.UpdatePasswordException;
-import model.PasswordUpdate;
+import services.NotificationService;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -47,7 +44,13 @@ public class WeatherController {
 	private FollowedNotificationsRenderer followedNotifications;
 
 	@Autowired
+	private NotificationsRenderer notificationsRenderer;
+
+	@Autowired
 	private FollowersService followersService;
+
+	@Autowired
+	private NotificationService notificationService;
 	
 	@GetMapping(value = "/weather", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -106,7 +109,7 @@ public class WeatherController {
 		}
 	}
 	
-	@GetMapping(value = "/connectorss", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/connectors", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> getConnectorsDetails() {
 		return ResponseEntity.ok().body(connectorsDetails.getJSON());
@@ -118,12 +121,27 @@ public class WeatherController {
 		return ResponseEntity.ok().body(followedNotifications.getJSON(user_id));
 	}
 
-	@PutMapping(value = "/followednotifications/{user_id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@PatchMapping(value = "/followednotifications/{user_id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateFollowedNotifications(
 			@PathVariable("user_id") String user_id,
 			@RequestBody Map<String, Boolean> changedEntity) {
 			followersService.updateFollowedEntities(Integer.parseInt(user_id), changedEntity);
 			return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/notifications", produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<String> getNotifications(@RequestParam("user_id") int user_id) {
+		return ResponseEntity.ok().body(notificationsRenderer.getJSON(user_id));
+	}
+
+	@PatchMapping(value = "/notifications", produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<String> updateReadStatus (@RequestBody Map<String, Boolean> notifications) {
+		notifications.forEach((id, isRead) -> {
+			notificationService.changeReadStatus(Integer.parseInt(id), isRead);
+		});
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

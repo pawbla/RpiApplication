@@ -1,11 +1,8 @@
 package services;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.Resource;
-
+import dao.entities.Notification;
+import dao.entities.NotificationEntity;
+import dao.repository.NotificationRepository;
 import notifications.wrapper.NotificationWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,12 +12,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import dao.entities.Notification;
-import dao.entities.NotificationEntity;
-import dao.entities.Users;
-import dao.repository.EntityTypesRepository;
-import dao.repository.ManageUsersRepository;
-import dao.repository.NotificationRepository;
+import javax.annotation.Resource;
+import java.util.Calendar;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,15 +24,12 @@ public class NotificationServiceImpl implements NotificationService {
 	 * Logger
 	 */
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
-	
-	@Resource
-	private EntityTypesRepository entityTypesRepository;
-	
+
 	@Resource
 	private NotificationRepository notificationRepository;
-	
-	@Resource
-	private ManageUsersRepository manageUsersRepository;
+
+	@Autowired
+	private FollowersService followersService;
 
 	@Autowired
 	@Qualifier("removeExpired")
@@ -46,35 +38,28 @@ public class NotificationServiceImpl implements NotificationService {
 	private static final int SENDER_ID = 2;
 
 	@Override
-	public void addNotificationForFollowers(NotificationEntity notificationEntity) {
-		entityTypesRepository.findById(notificationEntity.getEntity_type_id()).getUsers().forEach(user -> {
-			notificationEntity.addUser(manageUsersRepository.findByUserId(user.getId()));
-			notificationRepository.save(notificationEntity);
-		});
-	}
-
-	@Override
-	public List<Notification> getNotifications(final int user_id) {
-		return notificationRepository.findNotificationsByUserId(user_id);
+	public List<Notification> getNotifications(int user_id) {
+		List<Integer> followedIds = followersService.getFollowedEntities(user_id).stream()
+				.map(followedEntity -> followedEntity.getId()).collect(Collectors.toList());
+		return notificationRepository.findAll().stream()
+				.filter(notification -> followedIds.contains(notification.getNotificationEntity().getEntity_type_id()))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public NotificationEntity getNotificationEntity(int id) {
-		return notificationRepository.findById(id);
+		return notificationRepository.findById(id).get().getNotificationEntity();
 	}
 
 	@Override
-	public void removeNotification(int id, int user_id) {
-		NotificationEntity entity = notificationRepository.findById(id);
-		Optional<Users> usert = entity.getUsers().stream().filter(userL -> userL.getId() == user_id).findAny();
-		usert.get().getEntityTypes().remove(entity);
-		entity.getUsers().remove(usert.get());
-		notificationRepository.save(entity);
-		this.removeNotificationEntityWhenNoRelation(id);
+	public void addNotification(NotificationEntity notificationEntity) {
+		Notification notification = new Notification();
+		notification.setNotificationEntity(notificationEntity);
+		notificationRepository.save(notification);
 	}
 
 	@Override
-	public void setReadStatus(boolean status, int id) {
+	public void changeReadStatus(int id, boolean status) {
 		notificationRepository.updateReadStatus(status, id);
 	}
 
@@ -85,12 +70,12 @@ public class NotificationServiceImpl implements NotificationService {
 		//set one month ago date
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		System.out.println(" read");
-		notificationRepository.findByCreateBefore(cal.getTime()).forEach(entity -> {
-			notificationRepository.findNotificationByEntityIdAndRead(entity.getId(), true).forEach(notification -> {
-				this.removeNotification(notification.getNotification_id(), notification.getUser_id());
-				notifyRemoveExpired.notifyObserver(SENDER_ID, notification);
-			});
+		notificationRepository.findAll().stream().filter(notification ->
+			notification.getNotificationEntity().getCreate().before(cal.getTime())
+				&& notification.isRead()
+		).forEach(notification -> {
+			this.removeNotification(notification.getId());
+			notifyRemoveExpired.notifyObserver(SENDER_ID, notification);
 		});
 	}
 
@@ -98,21 +83,18 @@ public class NotificationServiceImpl implements NotificationService {
 	@Scheduled(cron = "0 0 1 * * MON")
 	public void removeExpiredAndUnReadNotifications() {
 		logger.info("Execute scheduled remove expired and unread notification");
-		System.out.println(" unread");
 		//set date half a year ago
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -6);
-		notificationRepository.findByCreateBefore(cal.getTime()).forEach(entity -> {
-			notificationRepository.findNotificationByEntityIdAndRead(entity.getId(), false).forEach(notification -> {
-				this.removeNotification(notification.getNotification_id(), notification.getUser_id());
-				notifyRemoveExpired.notifyObserver(SENDER_ID, notification);
-			});
-		});				
+		notificationRepository.findAll().stream().filter(notification ->
+				notification.getNotificationEntity().getCreate().before(cal.getTime())
+		).forEach(notification -> {
+			this.removeNotification(notification.getId());
+			notifyRemoveExpired.notifyObserver(SENDER_ID, notification);
+		});
 	}
-	
-	private void removeNotificationEntityWhenNoRelation(int id) {
-		if (notificationRepository.findById(id).getUsers().size() == 0) {
-			notificationRepository.deleteNotificationEntityById(id);
-		}
+
+	private void removeNotification(int id) {
+		notificationRepository.deleteById(id);
 	}
 }

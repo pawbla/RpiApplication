@@ -42,9 +42,8 @@ CREATE TABLE notification_entity (
 
 CREATE TABLE notification (
 	id INT NOT NULL AUTO_INCREMENT,
-	user_id INT NOT NULL,
-	notification_id INT NOT NULL,
 	read BOOL NOT NULL DEFAULT FALSE,
+	notification_entity_id INT NOT NULL,
 	PRIMARY KEY (id)
 );
 

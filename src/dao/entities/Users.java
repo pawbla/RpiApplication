@@ -48,9 +48,6 @@ public class Users {
 	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
 	private Set<EntityTypes> entityTypes = new HashSet<>();
 	
-	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-	private Set<NotificationEntity> notificationEntity = new HashSet<>();
-	
 	public int getId() {
 		return user_id;
 	}
@@ -106,14 +103,6 @@ public class Users {
 	
 	public void setEntityTypes(final Set<EntityTypes> entityTypes) {
 		this.entityTypes = entityTypes;
-	}
-	
-	public Set<NotificationEntity> getNotificationEntity() {
-		return this.notificationEntity;
-	}
-	
-	public void setNotificationEntity(final Set<NotificationEntity> notificationEntity) {
-		this.notificationEntity = notificationEntity;
 	}
 	
 	@Override

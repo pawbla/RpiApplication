@@ -15,6 +15,6 @@ public class RemoveExpiredNotificationWrapper extends NotificationWrapper {
     }
 
     private String prepareMessage(Notification notification) {
-        return "Notification " + notification.getNotification_id() + " has expired and has been removed";
+        return "Powiadomienie " + notification.getId()    + " zostało usunięte jako przestarzałe";
     }
 }
