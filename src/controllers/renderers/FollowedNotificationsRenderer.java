@@ -1,6 +1,8 @@
 package controllers.renderers;
 
 import dao.entities.EntityTypes;
+import dao.entities.Notification;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,24 +19,20 @@ public class FollowedNotificationsRenderer {
 
     public String getJSON(int user_id) {
         response = new JSONObject();
-
+        JSONArray array = new JSONArray();
         Set<EntityTypes> followedEntities = followersService.getFollowedEntities(user_id);
 
         followersService.getAllEntityTypes().forEach(entityTypes -> {
-            response.put(String.valueOf(entityTypes.getId()), getDescription(entityTypes, followedEntities));
+           array.put(this.parseFollowedNotifications(entityTypes, followedEntities));
         });
-
+        response.put("followed_notifications", array);
         return response.toString();
     }
 
-    private JSONObject getDescription(EntityTypes entityTypes, Set<EntityTypes> followedEntities) {
-        JSONObject descr = new JSONObject();
-        descr.put("type", entityTypes.getEntityType());
-        boolean followed = false;
-        if (followedEntities.contains(entityTypes)) {
-            followed = true;
-        }
-        descr.put("followed", followed);
-        return descr;
+    private JSONObject parseFollowedNotifications(EntityTypes entity, Set<EntityTypes> followedEntities) {
+        return new JSONObject()
+                .put("id", entity.getId())
+                .put("type", entity.getEntityType())
+                .put("followed", followedEntities.contains(entity));
     }
 }

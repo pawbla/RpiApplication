@@ -24,6 +24,15 @@ public class NotificationsRenderer {
         return response.toString();
     }
 
+    public String getSizeJson(int user_id) {
+        JSONObject response = new JSONObject();
+        long size = notificationService.getNotifications(user_id).stream().filter(notification -> !notification.isRead()
+        ).count();
+        response.put("read", (int) size);
+
+        return response.toString();
+    }
+
     private JSONObject parseNotifications(Notification notification) {
         return new JSONObject()
                 .put("id", notification.getId())

@@ -1,6 +1,7 @@
 package controllers;
 
 import controllers.renderers.*;
+import dao.entities.Notification;
 import dao.entities.Users;
 import exceptions.RemoveAllAdminsException;
 import exceptions.UpdatePasswordException;
@@ -15,6 +16,7 @@ import services.FollowersService;
 import services.ManageUsersService;
 import services.NotificationService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -129,17 +131,23 @@ public class WeatherController {
 			return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/notifications", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/notifications/list", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<String> getNotifications(@RequestParam("user_id") int user_id) {
+	public ResponseEntity<String> getNotificationsList(@RequestParam("user_id") int user_id) {
 		return ResponseEntity.ok().body(notificationsRenderer.getJSON(user_id));
+	}
+
+	@GetMapping(value = "/notifications/size", produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<String> getNotificationsSize(@RequestParam("user_id") int user_id) {
+		return ResponseEntity.ok().body(notificationsRenderer.getSizeJson(user_id));
 	}
 
 	@PatchMapping(value = "/notifications", produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<String> updateReadStatus (@RequestBody Map<String, Boolean> notifications) {
-		notifications.forEach((id, isRead) -> {
-			notificationService.changeReadStatus(Integer.parseInt(id), isRead);
+	public ResponseEntity<String> updateReadStatus (@RequestBody List<Notification> notifications) {
+		notifications.forEach(notification -> {
+			notificationService.changeReadStatus(notification.getId(), notification.isRead());
 		});
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
