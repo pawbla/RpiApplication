@@ -42,59 +42,72 @@
 <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript">
-		setInterval(function(){ 
-			const url = "http://localhost:8081/internal"; 
-			 $.ajax({
-			    url: url,
-			    dataType: 'jsonp', 
-			    statusCode: {
-			    	200: function() {
-			        	console.log( "status code 200 returned" );
-			        	window.location.href = url;
-			    	},
-			        404: function() {
-			        	console.log( "status code 404 returned" );
-			        }
-			    },
-			    error:function(){
-			        console.log("Error");
-			    }
-			});
-		}, 3000);
+		var count = 0;
+		var info = "";
+		var drawHolder;
+		function draw() {
+			var pos = 0;
+			var maxVal = 93;
+			var minVal = 0;
+			var up = true;
+			drawHolder = setInterval(function(){
+				if (up) {
+					pos++;
+				} else {
+					pos--;
+				}
+				if (up && pos >= maxVal) {
+					up = false;
+				}
+				if (!up && pos <= minVal) {
+					up = true;
+				}
+				document.getElementById("status").style.left = pos + "%";
+			}, 20);
+		}
+		function intervals() {
+			draw();
+			var intervalHolder = setInterval(function(){ 
+				const url = "http://localhost:8081/internal"; 
+				$.ajax({
+					url: url,
+					dataType: 'jsonp', 
+					statusCode: {
+						200: function() {
+							console.log( "status code 200 returned");
+							clearInterval(drawHolder);
+							clearInterval(intervalHolder);
+							document.getElementById('counter').value = count + "== status code 200 returned";
+							count++;
+							window.location.href = url;
+						},
+						404: function() {
+							console.log( "status code 404 returned");
+							document.getElementById('counter').value = count + "status code 404 returned";
+							count++;
+						}
+					},
+					error:function(){
+						console.log("Error");
+						document.getElementById('counter').value = count + " == ERROR";
+						count++;
+					}
+				});
+			}, 3000);
+		}
 
-			
+	intervals();
+	
 	</script>
 <div class="main">
 	<div>
 	<h2>Ładowanie systemu</h2>
-	
-
+	<h4>Może to potrwać kilka minut...</h4>
 	<div id="progress_bar">
 		<div id="status"></div>
 	</div>
-	<h4>Może to potrwać kilka minut...</h4>
+	<h4>Counter: <input id='counter'></input></input></h4>
 </div>
 </div>
-<script type="text/javascript">
-	var pos = 0;
-	var maxVal = 93;
-	var minVal = 0;
-	var up = true;
-	var element = document.getElementById("status"); 
-	setInterval(function(){
-		if (up) {
-			pos++;
-		} else {
-			pos--;
-		}
-		if (up && pos >= maxVal) {
-			up = false;
-		}
-		if (!up && pos <= minVal) {
-			up = true;
-		}
-		element.style.left = pos + "%";
-	}, 20);
-</script>
 </body>
 </html>
