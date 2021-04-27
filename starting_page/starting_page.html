@@ -2,11 +2,16 @@
 <html>
 <head>
 	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
 		.main {
 			width: 480px;
     		height: 320px;
     		background: black;
     		color: white;
+			margin: 0;
     	}
     	.main > div {
     		position: relative;
@@ -42,7 +47,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript">
-		var count = 0;
 		var info = "";
 		var drawHolder;
 		function draw() {
@@ -77,19 +81,15 @@
 							console.log( "status code 200 returned");
 							clearInterval(drawHolder);
 							clearInterval(intervalHolder);
-							document.getElementById('counter').value = count + "== status code 200 returned";
-							count++;
 							window.location.href = url;
 						},
 						404: function() {
 							console.log( "status code 404 returned");
-							document.getElementById('counter').value = count + "status code 404 returned";
 							count++;
 						}
 					},
 					error:function(){
 						console.log("Error");
-						document.getElementById('counter').value = count + " == ERROR";
 						count++;
 					}
 				});
@@ -106,7 +106,6 @@
 	<div id="progress_bar">
 		<div id="status"></div>
 	</div>
-	<h4>Counter: <input id='counter'></input></input></h4>
 </div>
 </div>
 </body>
