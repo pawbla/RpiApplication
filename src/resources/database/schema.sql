@@ -35,14 +35,14 @@ CREATE TABLE notification_entity (
 	id INT NOT NULL AUTO_INCREMENT,
 	entity_type_id INT,
 	sender_id INT NOT NULL,
-	create DATETIME NOT NULL,
+	createdate DATETIME NOT NULL,
 	message  VARCHAR(256) NOT NULL,
 	PRIMARY KEY (id)
 );
 
 CREATE TABLE notification (
 	id INT NOT NULL AUTO_INCREMENT,
-	read BOOL NOT NULL DEFAULT FALSE,
+	isread BOOL NOT NULL DEFAULT false,
 	notification_entity_id INT NOT NULL,
 	PRIMARY KEY (id)
 );

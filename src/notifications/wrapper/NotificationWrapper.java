@@ -2,9 +2,7 @@ package notifications.wrapper;
 
 import notifications.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public abstract class NotificationWrapper {
 
     @Autowired

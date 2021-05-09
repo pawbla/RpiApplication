@@ -1,5 +1,6 @@
 package connectors.airLyConnector;
 
+import connectors.RestInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -14,9 +15,9 @@ import connectors.registry.ConnectorsRegistryInterface;
 public class AirLyHandler extends AbstractHandler {
 	
 	@Autowired
-	public AirLyHandler(@Qualifier("AirLy") ParserInterface parser,
-			@Qualifier("AirLy") ConnectorInterface connector, ConnectorsRegistryInterface registry) {
-		super(registry);
+	public AirLyHandler(RestInterface restConnector, @Qualifier("AirLy") ParserInterface parser,
+						@Qualifier("AirLy") ConnectorInterface connector, ConnectorsRegistryInterface registry) {
+		super(restConnector, registry);
 		this.setConnector(connector.getConnector());
 		this.setParser(parser);
 	}

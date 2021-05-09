@@ -1,12 +1,12 @@
 package connectors.handler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import connectors.RestConnector;
+import connectors.RestInterface;
 import connectors.models.Connector;
 import connectors.models.Response;
 import connectors.parser.ParserInterface;
 import connectors.registry.ConnectorsRegistryInterface;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public abstract class AbstractHandler implements HandlerInterface {
 	
@@ -16,18 +16,18 @@ public abstract class AbstractHandler implements HandlerInterface {
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
 	private ParserInterface parser;
-	private RestConnector restConnector;
+	private RestInterface restConnector;
 	private Connector connector;
 	private ConnectorsRegistryInterface registry;
 	private int delay;
 	private int confTime;
 	
-	public AbstractHandler(ConnectorsRegistryInterface registry) {
+	public AbstractHandler(RestInterface restConnector, ConnectorsRegistryInterface registry) {
 		this.registry = registry;
+		this.restConnector = restConnector;
 	}
 	
 	public void setConnector(Connector connector) {
-		this.restConnector = new RestConnector();
 		this.restConnector.setConnector(connector);
 		this.connector = connector;	
 		this.registry.registerConnector(connector);

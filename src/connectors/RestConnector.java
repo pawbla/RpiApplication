@@ -1,22 +1,25 @@
 package connectors;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import connectors.models.Connector;
+import connectors.models.Response;
 import notifications.wrapper.NotificationWrapper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import connectors.models.Connector;
-import connectors.models.Response;
-	
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+@Service
+@Scope("prototype")
 public class RestConnector implements RestInterface {
 	/**
 	 * Logger
@@ -28,14 +31,14 @@ public class RestConnector implements RestInterface {
 	private Response response;
 	private DateFormat dateFormat;
 
-	@Autowired
-	@Qualifier("sensorError")
-	NotificationWrapper sensorErrorNotification;
+	private NotificationWrapper sensorErrorNotification;
 
 	private static final int SENDER_ID = 4;
-	
-	public RestConnector() {
+
+	@Autowired
+	public RestConnector(@Qualifier("sensorError") NotificationWrapper sensorErrorNotification) {
 		logger.info("Create REST Template object.");
+		this.sensorErrorNotification = sensorErrorNotification;
 		rest = new RestTemplate();
 		dateFormat = new SimpleDateFormat("MM.dd HH:mm");
 		response = new Response();

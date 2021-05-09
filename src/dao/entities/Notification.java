@@ -12,7 +12,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "read", nullable = false)
+	@Column(name = "isread", nullable = false)
 	@ColumnDefault("false")
 	private boolean read;
 

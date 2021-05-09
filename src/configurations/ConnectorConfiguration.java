@@ -37,8 +37,8 @@ public class ConnectorConfiguration {
 	
 	@EventListener(ApplicationReadyEvent.class)
 	@Scheduled(cron="0 0/30 * ? * *", zone="Europe/Warsaw")  //cron at every 30 minutes
-	public void fetchAccuWeatherData() { 
-		airLy.setRecovery(1, 30); // when incorrect response received call api every 1 minute within 30 minutes
+	public void fetchAccuWeatherData() {
+		accuWeather.setRecovery(1, 30); // when incorrect response received call api every 1 minute within 30 minutes
 		accuWeather.execute();
 	}
 	
@@ -68,7 +68,7 @@ public class ConnectorConfiguration {
 	@EventListener(ApplicationReadyEvent.class)
 	@Scheduled(cron="10 0 0 * * ?", zone="Europe/Warsaw") //cron configured at 00:00:10am every day
 	public void fetchSunRiseSetData() {
-		airLy.setRecovery(10, 1400); // when incorrect response received call api every 10 minute within 1400 minutes
+		sunRiseSet.setRecovery(10, 1400); // when incorrect response received call api every 10 minute within 1400 minutes
 		sunRiseSet.execute();
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class RegisterUserNotificationWrapper extends NotificationWrapper {
     private final static int ENTITY_TYPE = 1;
 
+    @Override
     public void notifyObserver(final int sender_id,  final Object obj) {
         subject.notifyObserver(ENTITY_TYPE, sender_id, this.prepareMessage((Users) obj));
     }

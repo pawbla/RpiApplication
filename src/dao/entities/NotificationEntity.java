@@ -19,7 +19,7 @@ public class NotificationEntity {
 	@Column(name = "sender_id", nullable = false)
 	private int sender_id;
 	
-	@Column(name = "create", nullable = false)
+	@Column(name = "createdate", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date create;
 
